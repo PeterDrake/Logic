@@ -2,3 +2,4 @@
 bin
 *.lock
 *.DS_Store
+target
