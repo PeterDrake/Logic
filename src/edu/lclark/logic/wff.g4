@@ -1,13 +1,12 @@
 grammar wff;
-
-options {
-    language = Java;
-}
-
-formula: letters connectives letters
-	   | formula connectives formula
-	   | letters
-	   ;
+	   
+formula: leftparen formula rightparen
+	| not formula
+	| letters
+	| truth
+	| falsity
+	| formula connectives formula
+	;
 
 letters: 'p'
 	   | 'q'
@@ -15,16 +14,27 @@ letters: 'p'
 	   | 's'
 	   | 't'
 	   ;
+	   
+leftparen: '(' ;
+rightparen: ')' ;
 	  
-connectives: '-'
-		   | '.'
-		   | '⋁'
-		   | '→'
-		   | '↔'
+connectives: and
+		   | inclusive_or
+		   | conditional
+		   | biconditional
 		   ;
 		   
-truths: '⊤'
-	  | '⊥'
-	  ;
+biconditional: ('↔' | '<->');
 
-WS : [ \r\t\n]+ -> skip ;
+conditional: ('→' | '->');
+		   
+and: ('.' | '&' | '^') ;
+
+inclusive_or: ('v' | '⋁') ;
+
+not: ('-' | '¬') ;
+		   
+truth: ('⊤' | 't' | '1');
+falsity: ('⊥' | 'f' | '0');
+
+WS : (' ' | '\t' | '\r' | '\n') -> skip ;
