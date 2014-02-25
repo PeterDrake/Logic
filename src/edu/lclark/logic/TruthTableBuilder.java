@@ -33,18 +33,20 @@ public class TruthTableBuilder implements View {
 			letters[numLetters++] = 't';
 	}
 
+	/** Initializes the truth table */
 	public void initTable() {
-		int size = (int) Math.pow(2, numLetters);
-		truthValues = new boolean[size][numLetters];
-		for (int i = 0; i < numLetters; i++)
-			popColumn(i, size, (int) Math.pow(2, i + 1));
-	}
-
-	/** Takes column and size of partitions, distributes truths */
-	private void popColumn(int c, int size, int numPartitions) {
-		for (int p = 0; p < numPartitions; p += 2)
-			for (int i = 0; i < size; i++)
-				truthValues[i][c] = true;
+	    int numRows = 1 << numLetters; // 2 ^ numLetters
+	    truthValues = new boolean[numRows][numLetters];
+	    for (int col = 0; col < numLetters; col++) {
+	        int numPartitions = 1 << (col + 1); // 2 ^ (col+1)
+	        int partionLength = numRows / numPartitions;
+	        for (int p = 0; p < numPartitions - 1; p += 2) {
+	            int start = p * partionLength;
+	            for (int row = 0; row < partionLength; row++) {
+	                truthValues[row + start][col] = true;
+	            }
+	        }
+	    }
 	}
 
 	public boolean getValue(int row, int column) {
@@ -63,4 +65,14 @@ public class TruthTableBuilder implements View {
 
 	}
 
+	public String toString() {
+	    String s = "";
+	    for (boolean[] row : truthValues) {
+	        for (boolean val : row) {
+	            s += val ? "1" : "0";
+	        }
+	        s += "\n";
+	    }
+	    return s;
+	}
 }
