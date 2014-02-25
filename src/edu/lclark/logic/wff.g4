@@ -1,5 +1,7 @@
 grammar wff;
 	   
+prog: formula EOF;
+
 formula: leftparen formula rightparen
 	| not formula
 	| letters
