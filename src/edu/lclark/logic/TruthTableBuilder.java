@@ -18,6 +18,10 @@ public class TruthTableBuilder implements View {
 	public int getNumLetters() {
 		return numLetters;
 	}
+	
+	public char getLetter(int i) {
+	    return letters[i];
+	}
 
 	/** Scans formula for letters, counts them */
 	private void countLetters() {
@@ -67,6 +71,10 @@ public class TruthTableBuilder implements View {
 
 	public String toString() {
 	    String s = "";
+	    for (int i = 0; i < numLetters; i++) {
+	        s += letters[i];
+	    }
+	    s += "\n";
 	    for (boolean[] row : truthValues) {
 	        for (boolean val : row) {
 	            s += val ? "1" : "0";
