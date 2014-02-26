@@ -21,15 +21,16 @@ public class WffChecker {
 		}
 	}
 	
-	public boolean isValidSyntax() {
-		try {
-			tree = parser.prog();
-		}
-		catch (RuntimeException re) {
-			return false;
-		}
-		return true;
-	}
+//	public boolean isValidSyntax() {
+//		try {
+//			tree = parser.prog();
+//		}
+//		catch (RuntimeException re) {
+//			System.out.println("invalid");
+//			return false;
+//		}
+//		return true;
+//	}
 	
 	public void printTree() {
 		System.out.println(tree.toStringTree(parser));
@@ -39,18 +40,31 @@ public class WffChecker {
 		tree.inspect(parser);
 	}
 	
-	public void setInputString(String is) {
+	public boolean setInputString(String is) {
 		input = new ANTLRInputStream(is);
 		lexer = new wffLexer(input); 
 		tokens = new CommonTokenStream(lexer); 
 		parser = new wffParser(tokens);
+		
+		lexer.removeErrorListeners();
+		parser.removeErrorListeners();
 		parser.setErrorHandler(new BailErrorStrategy());
+		
+		try {
+			tree = parser.prog();
+		}
+		catch (RuntimeException re) {
+			System.out.println("invalid");
+			return false;
+		}
+		return true;
 	}
 	
 	public static void main(String[] args) {
 		WffChecker wc = new WffChecker();
-		wc.setInputString("Q");
-		wc.isValidSyntax();
+		wc.setInputString("p.q");
+//		wc.isValidSyntax();
+		wc.printTree();
 	}
 }
 

@@ -10,23 +10,23 @@ public class LogicCLI implements View {
 	private WffChecker wc;
 	
 	@Command
-	public boolean wff(String s) {
-		wc.setInputString(s);
-		return wc.isValidSyntax();
+	public void wff(String s) {
+		System.out.println(wc.setInputString(s));
+//		System.out.println(wc.isValidSyntax());
 	}
 	
 	@Command
-	public boolean tree(String s) {
+	public void tree(String s) {
 		wc.setInputString(s);
+//		wc.isValidSyntax();
 		wc.printTree();
-		return wc.isValidSyntax();
 	}
 	
 	@Command
-	public boolean gui(String s) {
+	public void gui(String s) {
 		wc.setInputString(s);
+//		wc.isValidSyntax();
 		wc.guiTree();
-		return wc.isValidSyntax();
 	}
 	
 	public LogicCLI() {

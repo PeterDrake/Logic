@@ -23,33 +23,32 @@ public class WffCheckerTest {
 	
 	@Test
 	public void WffChecker1() {
-		wc.setInputString("p . q");
-		assertTrue(wc.isValidSyntax());
+		assertTrue(wc.setInputString("p . q"));
+//		assertTrue(wc.isValidSyntax());
 	}
 	
 	@Test
 	public void WffChecker2() {
-		wc.setInputString("p .^ q");
-		assertFalse(wc.isValidSyntax());
+		assertFalse(wc.setInputString("p .^ q"));
+//		assertFalse(wc.isValidSyntax());
 	}
 	
 	@Test
 	public void WffChecker3() {
-		wc.setInputString("p q");
-		assertFalse(wc.isValidSyntax());
+		assertFalse(wc.setInputString("p q"));
+//		assertFalse(wc.isValidSyntax());
 	}
 	
 	@Test
 	public void WffChecker4() {
-		wc.setInputString("-(-((p).(-(q))))");
-		assertTrue(wc.isValidSyntax());
+		assertTrue(wc.setInputString("-(-((p).(-(q))))"));
+//		assertTrue(wc.isValidSyntax());
 	}
 	
 	@Test
 	public void WffChecker5() {
-		wc.setInputString("-(-((p).(-(q))))");
-		wc2.setInputString("--(p.-q)");
-		assertEquals(wc.isValidSyntax(), wc2.isValidSyntax());
+		assertEquals(wc.setInputString("-(-((p).(-(q))))"), wc2.setInputString("--(p.-q)"));
+//		assertEquals(wc.isValidSyntax(), wc2.isValidSyntax());
 	}
 
 }
