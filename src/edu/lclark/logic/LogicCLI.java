@@ -7,16 +7,18 @@ import asg.cliche.ShellFactory;
 
 public class LogicCLI implements View {
 	
+	private WffChecker wc;
+	
 	@Command
 	public boolean wff(String s) {
-		WffChecker wc = new WffChecker();
+		wc = new WffChecker();
 		wc.setInputString(s);
 		return wc.isValidSyntax();
 	}
 	
 	@Command
 	public boolean tree(String s) {
-		WffChecker wc = new WffChecker();
+		wc = new WffChecker();
 		wc.setInputString(s);
 		wc.printTree();
 		return wc.isValidSyntax();
@@ -24,8 +26,9 @@ public class LogicCLI implements View {
 	
 	@Command
 	public boolean gui(String s) {
-		WffChecker wc = new WffChecker();
+		wc = new WffChecker();
 		wc.setInputString(s);
+		wc.guiTree();
 		return wc.isValidSyntax();
 	}
 	
