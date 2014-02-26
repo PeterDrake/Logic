@@ -24,31 +24,26 @@ public class WffCheckerTest {
 	@Test
 	public void WffChecker1() {
 		assertTrue(wc.setInputString("p . q"));
-//		assertTrue(wc.isValidSyntax());
 	}
 	
 	@Test
 	public void WffChecker2() {
 		assertFalse(wc.setInputString("p .^ q"));
-//		assertFalse(wc.isValidSyntax());
 	}
 	
 	@Test
 	public void WffChecker3() {
 		assertFalse(wc.setInputString("p q"));
-//		assertFalse(wc.isValidSyntax());
 	}
 	
 	@Test
 	public void WffChecker4() {
 		assertTrue(wc.setInputString("-(-((p).(-(q))))"));
-//		assertTrue(wc.isValidSyntax());
 	}
 	
 	@Test
 	public void WffChecker5() {
 		assertEquals(wc.setInputString("-(-((p).(-(q))))"), wc2.setInputString("--(p.-q)"));
-//		assertEquals(wc.isValidSyntax(), wc2.isValidSyntax());
 	}
 
 }

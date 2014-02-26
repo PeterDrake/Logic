@@ -12,20 +12,17 @@ public class LogicCLI implements View {
 	@Command
 	public void wff(String s) {
 		System.out.println(wc.setInputString(s));
-//		System.out.println(wc.isValidSyntax());
 	}
 	
 	@Command
 	public void tree(String s) {
 		wc.setInputString(s);
-//		wc.isValidSyntax();
 		wc.printTree();
 	}
 	
 	@Command
 	public void gui(String s) {
 		wc.setInputString(s);
-//		wc.isValidSyntax();
 		wc.guiTree();
 	}
 	

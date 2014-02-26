@@ -20,18 +20,7 @@ public class WffChecker {
 			throw new RuntimeException(e); // Bail out }
 		}
 	}
-	
-//	public boolean isValidSyntax() {
-//		try {
-//			tree = parser.prog();
-//		}
-//		catch (RuntimeException re) {
-//			System.out.println("invalid");
-//			return false;
-//		}
-//		return true;
-//	}
-	
+
 	public void printTree() {
 		System.out.println(tree.toStringTree(parser));
 	}
@@ -54,7 +43,7 @@ public class WffChecker {
 			tree = parser.prog();
 		}
 		catch (RuntimeException re) {
-			System.out.println("invalid");
+//			System.out.println("invalid");
 			return false;
 		}
 		return true;
@@ -63,7 +52,6 @@ public class WffChecker {
 	public static void main(String[] args) {
 		WffChecker wc = new WffChecker();
 		wc.setInputString("p.q");
-//		wc.isValidSyntax();
 		wc.printTree();
 	}
 }
