@@ -14,7 +14,8 @@ public class WffChecker {
 		public BailwffLexer(CharStream input) {
 			super(input);
 		}
-
+		
+		@Override
 		public void recover(LexerNoViableAltException e) {
 			throw new RuntimeException(e); // Bail out }
 		}
@@ -44,6 +45,12 @@ public class WffChecker {
 		tokens = new CommonTokenStream(lexer); 
 		parser = new wffParser(tokens);
 		parser.setErrorHandler(new BailErrorStrategy());
+	}
+	
+	public static void main(String[] args) {
+		WffChecker wc = new WffChecker();
+		wc.setInputString("Q");
+		wc.isValidSyntax();
 	}
 }
 

@@ -11,14 +11,12 @@ public class LogicCLI implements View {
 	
 	@Command
 	public boolean wff(String s) {
-		wc = new WffChecker();
 		wc.setInputString(s);
 		return wc.isValidSyntax();
 	}
 	
 	@Command
 	public boolean tree(String s) {
-		wc = new WffChecker();
 		wc.setInputString(s);
 		wc.printTree();
 		return wc.isValidSyntax();
@@ -26,14 +24,16 @@ public class LogicCLI implements View {
 	
 	@Command
 	public boolean gui(String s) {
-		wc = new WffChecker();
 		wc.setInputString(s);
 		wc.guiTree();
 		return wc.isValidSyntax();
 	}
 	
+	public LogicCLI() {
+		wc = new WffChecker();
+	}
+	
 	public static void main(String[] args) throws IOException  {
-		ShellFactory.createConsoleShell("wffchecker", "", new LogicCLI())
-            .commandLoop();
+		ShellFactory.createConsoleShell("wffchecker", "", new LogicCLI()).commandLoop();
     }
 }
