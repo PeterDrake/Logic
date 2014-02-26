@@ -9,14 +9,15 @@ prog:  | formula (BICONDITIONAL formula)? EOF
 	   | formula (operators formula)? EOF 
 	   ;
 
-formula: NOT formula
-	   | LEFTPAREN formula RIGHTPAREN
+formula: LEFTPAREN formula RIGHTPAREN
+	   | NOT formula
 	   | expr (BICONDITIONAL expr)?
 	   | expr (CONDITIONAL expr)?
 	   | expr (operators expr)?
 	   ;
 	   
-expr: leftpartial expr
+expr: LEFTPAREN expr RIGHTPAREN
+	| leftpartial expr
 	| expr rightpartial
 	| LEFTPAREN expr RIGHTPAREN
 	| NOT expr
@@ -30,6 +31,15 @@ rightpartial: (operators LETTERS)+ ;
 operators: AND
 		 | INCLUSIVE_OR
 		 ;
+
+//prog : equivalence EOF ;
+//equivalence : implication ( BICONDITIONAL implication )* ;
+//implication : disjunction ( CONDITIONAL disjunction )* ;
+//disjunction : conjunction ( INCLUSIVE_OR conjunction )* ;
+//conjunction : negation ( AND negation )* ;
+//negation : NOT parenthesis | parenthesis ;
+//parenthesis : LEFTPAREN equivalence RIGHTPAREN | atom ;
+//atom : TRUTH | FALSITY | LETTERS ;
 
 /*
  * LEXER RULES
