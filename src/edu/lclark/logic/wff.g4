@@ -1,63 +1,64 @@
 grammar wff;
+
+/*
+ * PARSER RULES
+ */
 	   
 prog: formula EOF ;
 
-//formula: leftparen formula rightparen
-//	| not formula
-//	| letters
-//	| truth
-//	| falsity
-//	| formula subconnectives formula
-//	| formula connectives formula
-//	;
-
-formula: leftparen expr rightparen
+formula: LEFTPAREN expr RIGHTPAREN
 	   | leftpartial expr
 	   | expr rightpartial
 	   | expr
-	   | not expr
+	   | NOT expr
 	  //| expr subconnectives expr
 
 	   ;
 	   
-expr: letters
-	| truth
-	| falsity
+expr: LETTERS
+	| TRUTH
+	| FALSITY
 	;
 	
-rightpartial: subconnectives letters;
-leftpartial: letters subconnectives;
+rightpartial: subconnectives LETTERS;
+leftpartial: LETTERS subconnectives;
+	   
+subconnectives: AND
+		   | INCLUSIVE_OR
+		   ;
+		   
+connectives: CONDITIONAL
+		   | BICONDITIONAL
+		   ;
 
+/*
+ * LEXER RULES
+ */
 
-letters: 'p'
+FORALL: 'V' | '∀' ;
+EXISTS: 'E' | '∃' ;
+	   
+LEFTPAREN: '(' ;
+RIGHTPAREN: ')' ;
+	  
+BICONDITIONAL: '↔' | '<->';
+
+CONDITIONAL: '→' | '->';
+		   
+AND: '.' | '&' | '^' ;
+
+INCLUSIVE_OR: 'v' | '⋁' ;
+
+NOT: '-' | '¬' ;
+		   
+TRUTH: '⊤' | 't' | '1';
+FALSITY: '⊥' | 'f' | '0';
+
+LETTERS: 'p'
 	   | 'q'
 	   | 'r'
 	   | 's'
 	   | 't'
 	   ;
 	   
-leftparen: '(' ;
-rightparen: ')' ;
-	  
-subconnectives: and
-		   | inclusive_or
-		   ;
-		   
-connectives: conditional
-		   | biconditional
-		   ;
-		   
-biconditional: ('↔' | '<->');
-
-conditional: ('→' | '->');
-		   
-and: ('.' | '&' | '^') ;
-
-inclusive_or: ('v' | '⋁') ;
-
-not: ('-' | '¬') ;
-		   
-truth: ('⊤' | 't' | '1');
-falsity: ('⊥' | 'f' | '0');
-
-WS : (' ' | '\t' | '\r' | '\n') -> skip ;
+WS : ' ' | '\t' | '\r' | '\n' -> skip ;
