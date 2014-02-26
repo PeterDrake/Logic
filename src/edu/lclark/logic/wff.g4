@@ -4,32 +4,32 @@ grammar wff;
  * PARSER RULES
  */
 	   
-prog: formula EOF ;
+prog:  | formula (BICONDITIONAL formula)? EOF
+	   | formula (CONDITIONAL formula)? EOF
+	   | formula (operators formula)? EOF 
+	   ;
 
-formula: LEFTPAREN expr RIGHTPAREN
-	   | leftpartial expr
-	   | expr rightpartial
-	   | expr
-	   | NOT expr
-	  //| expr subconnectives expr
-
+formula: NOT formula
+	   | LEFTPAREN formula RIGHTPAREN
+	   | expr (BICONDITIONAL expr)?
+	   | expr (CONDITIONAL expr)?
+	   | expr (operators expr)?
 	   ;
 	   
-expr: LETTERS
-	| TRUTH
-	| FALSITY
+expr: leftpartial expr
+	| expr rightpartial
+	| LEFTPAREN expr RIGHTPAREN
+	| NOT expr
+	| LETTERS
 	;
 	
-rightpartial: subconnectives LETTERS;
-leftpartial: LETTERS subconnectives;
-	   
-subconnectives: AND
-		   | INCLUSIVE_OR
-		   ;
-		   
-connectives: CONDITIONAL
-		   | BICONDITIONAL
-		   ;
+leftpartial: (LETTERS operators)+ ;
+
+rightpartial: (operators LETTERS)+ ;
+
+operators: AND
+		 | INCLUSIVE_OR
+		 ;
 
 /*
  * LEXER RULES
@@ -49,16 +49,11 @@ AND: '.' | '&' | '^' ;
 
 INCLUSIVE_OR: 'v' | '⋁' ;
 
-NOT: '-' | '¬' ;
+NOT: '-' | '¬' | '~' ;
 		   
-TRUTH: '⊤' | 't' | '1';
-FALSITY: '⊥' | 'f' | '0';
+TRUTH: '⊤' | '1';
+FALSITY: '⊥' | '0';
 
-LETTERS: 'p'
-	   | 'q'
-	   | 'r'
-	   | 's'
-	   | 't'
-	   ;
+LETTERS: 'p' | 'q' | 'r' | 's' | 't' ;
 	   
-WS : ' ' | '\t' | '\r' | '\n' -> skip ;
+WS : (' ' | '\t' | '\r' | '\n') -> skip ;

@@ -9,6 +9,8 @@ public class WffChecker {
 	private wffLexer lexer;
 	private CommonTokenStream tokens;
 	private wffParser parser;
+	private String is;
+	private RuleContext tree;
 
 	public static class BailwffLexer extends wffLexer {
 		public BailwffLexer(CharStream input) {
@@ -20,57 +22,35 @@ public class WffChecker {
 		}
 	}
 	
-	public boolean isValidSyntaxTree() {
-		try {
-			ParseTree tree = parser.prog();
-			System.out.println(tree.toStringTree(parser));
-		}
-		catch (RuntimeException re) {
-			System.out.println("Invalid syntax");
-			return false;
-		}
-		return true;
-	}
-	
 	public boolean isValidSyntax() {
 		try {
-			parser.prog();
+			tree = parser.prog();
 		}
 		catch (RuntimeException re) {
-			System.out.println("Invalid syntax");
 			return false;
 		}
 		return true;
 	}
 	
-	public WffChecker(String is) {
-		input = new ANTLRInputStream(is); 
-		lexer = new wffLexer(input); 
-		tokens = new CommonTokenStream(lexer); 
-		parser = new wffParser(tokens);
-		//parser.setErrorHandler(new BailErrorStrategy());
+	public RuleContext getTree() {
+		return tree;
 	}
 	
-	public static void main(String[] args) throws Exception {
-		
-		ANTLRInputStream input;
-		wffLexer lexer;
-		CommonTokenStream tokens;
-		wffParser parser;
-		
-		String is = "pvq";
-		
-		input = new ANTLRInputStream(is); 
+	public wffParser getParser() {
+		return parser;
+	}
+	
+	public void printTree() {
+		System.out.println(tree.toStringTree(parser));
+	}
+	
+	public void setInputString(String is) {
+		this.is = is;
+		input = new ANTLRInputStream(is);
 		lexer = new wffLexer(input); 
 		tokens = new CommonTokenStream(lexer); 
 		parser = new wffParser(tokens);
 		parser.setErrorHandler(new BailErrorStrategy());
-		try {
-		parser.prog();
-		}
-		catch (RuntimeException re) {
-			System.out.println("Invalid syntax");
-		}
 	}
 }
 

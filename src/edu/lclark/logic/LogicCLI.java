@@ -9,14 +9,24 @@ public class LogicCLI implements View {
 	
 	@Command
 	public boolean wff(String s) {
-		WffChecker wc = new WffChecker(s);
+		WffChecker wc = new WffChecker();
+		wc.setInputString(s);
 		return wc.isValidSyntax();
 	}
 	
 	@Command
 	public boolean tree(String s) {
-		WffChecker wc = new WffChecker(s);
-		return wc.isValidSyntaxTree();
+		WffChecker wc = new WffChecker();
+		wc.setInputString(s);
+		wc.printTree();
+		return wc.isValidSyntax();
+	}
+	
+	@Command
+	public boolean gui(String s) {
+		WffChecker wc = new WffChecker();
+		wc.setInputString(s);
+		return wc.isValidSyntax();
 	}
 	
 	public static void main(String[] args) throws IOException  {
