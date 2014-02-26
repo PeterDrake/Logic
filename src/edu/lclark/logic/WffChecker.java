@@ -1,6 +1,7 @@
 package edu.lclark.logic;
 
 import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.tree.ParseTree;
 
 public class WffChecker {
 	
@@ -19,6 +20,18 @@ public class WffChecker {
 		}
 	}
 	
+	public boolean isValidSyntaxTree() {
+		try {
+			ParseTree tree = parser.prog();
+			System.out.println(tree.toStringTree(parser));
+		}
+		catch (RuntimeException re) {
+			System.out.println("Invalid syntax");
+			return false;
+		}
+		return true;
+	}
+	
 	public boolean isValidSyntax() {
 		try {
 			parser.prog();
@@ -35,7 +48,7 @@ public class WffChecker {
 		lexer = new wffLexer(input); 
 		tokens = new CommonTokenStream(lexer); 
 		parser = new wffParser(tokens);
-		parser.setErrorHandler(new BailErrorStrategy());
+		//parser.setErrorHandler(new BailErrorStrategy());
 	}
 	
 	public static void main(String[] args) throws Exception {

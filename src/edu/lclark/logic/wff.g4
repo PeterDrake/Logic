@@ -1,14 +1,33 @@
 grammar wff;
 	   
-prog: formula EOF;
+prog: formula EOF ;
 
-formula: leftparen formula rightparen
-	| not formula
-	| letters
+//formula: leftparen formula rightparen
+//	| not formula
+//	| letters
+//	| truth
+//	| falsity
+//	| formula subconnectives formula
+//	| formula connectives formula
+//	;
+
+formula: leftparen expr rightparen
+	   | leftpartial expr
+	   | expr rightpartial
+	   | expr
+	   | not expr
+	  //| expr subconnectives expr
+
+	   ;
+	   
+expr: letters
 	| truth
 	| falsity
-	| formula connectives formula
 	;
+	
+rightpartial: subconnectives letters;
+leftpartial: letters subconnectives;
+
 
 letters: 'p'
 	   | 'q'
@@ -20,9 +39,11 @@ letters: 'p'
 leftparen: '(' ;
 rightparen: ')' ;
 	  
-connectives: and
+subconnectives: and
 		   | inclusive_or
-		   | conditional
+		   ;
+		   
+connectives: conditional
 		   | biconditional
 		   ;
 		   
