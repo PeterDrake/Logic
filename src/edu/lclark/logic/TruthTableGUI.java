@@ -38,13 +38,13 @@ public class TruthTableGUI extends JPanel implements View {
         int numLetters = truthTableBuilder.getNumLetters();
         int numRows = truthTableBuilder.getNumRows();
         for (int i = 0; i < numLetters + numColumns; i++) {
-            if (i >= numLetters) panel.add(new JLabel("FEISO"));
+            if (i >= numLetters) panel.add(new JLabel("-New Column-"));
             else panel.add(new JLabel("" + truthTableBuilder.getLetter(i)));
         }
         for (int row = 0; row < numRows; row++) {
             for (int col = 0; col < numLetters + numColumns; col++) {
                 JLabel label;
-                if (col >= numLetters) label = new JLabel("HI");
+                if (col >= numLetters) label = new JLabel("-");
                 else label = new JLabel(truthTableBuilder.getValue(row, col) ? "⊤" : "⊥");
                 label.setPreferredSize(new Dimension(CELL_WIDTH, CELL_HEIGHT));
                 label.setOpaque(false);
@@ -59,7 +59,6 @@ public class TruthTableGUI extends JPanel implements View {
         int numRows = truthTableBuilder.getNumRows();
         remove(panel);
         panel = new JPanel();
-        System.out.println(numLetters + numColumns);
         panel.setLayout(new GridLayout(numRows + 1, numLetters + numColumns));
         fillInTruthTable();
         add(panel);
