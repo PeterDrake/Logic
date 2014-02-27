@@ -22,6 +22,10 @@ public class TruthTableBuilder implements View {
 	public char getLetter(int i) {
 	    return letters[i];
 	}
+	
+	public int getNumRows() {
+	    return 1 << numLetters; // 2 ^ numLetters
+	}
 
 	/** Scans formula for letters, counts them */
 	private void countLetters() {

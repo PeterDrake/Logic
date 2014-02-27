@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.geom.Line2D;
-
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
@@ -22,26 +21,50 @@ public class InputCanvas extends JPanel implements View {
     public InputCanvas() {
         setLayout(new FlowLayout(FlowLayout.LEFT));
         setVisible(true);
-        truthTableBuilder = new TruthTableBuilder("pqrs");
+        truthTableBuilder = new TruthTableBuilder("pqr");
         drawTruthTable();
         add(panel);
+        addColumn();
     }
 
     private void drawTruthTable() {
         int numLetters = truthTableBuilder.getNumLetters();
-        int numRows = 1 << numLetters; // 2 ^ numLetters
+        int numRows = truthTableBuilder.getNumRows();
         panel.setLayout(new GridLayout(numRows + 1, numLetters));
-        for (int i = 0; i < numLetters; i++) {
-            panel.add(new JLabel("" + truthTableBuilder.getLetter(i)));
+        fillInTruthTable();
+    }
+
+    private void fillInTruthTable() {
+        int numLetters = truthTableBuilder.getNumLetters();
+        int numRows = truthTableBuilder.getNumRows();
+        for (int i = 0; i < numLetters + numColumns; i++) {
+            if (i >= numLetters) panel.add(new JLabel("FEISO"));
+            else panel.add(new JLabel("" + truthTableBuilder.getLetter(i)));
         }
         for (int row = 0; row < numRows; row++) {
-            for (int col = 0; col < numLetters; col++) {
-                JLabel label = new JLabel(truthTableBuilder.getValue(row, col) ? "⊤" : "⊥");
+            for (int col = 0; col < numLetters + numColumns; col++) {
+                JLabel label;
+                if (col >= numLetters) label = new JLabel("HI");
+                else label = new JLabel(truthTableBuilder.getValue(row, col) ? "⊤" : "⊥");
                 label.setPreferredSize(new Dimension(CELL_WIDTH, CELL_HEIGHT));
                 label.setOpaque(false);
                 panel.add(label);
             }
         }
+    }
+
+    private void addColumn() {
+        numColumns++;
+        int numLetters = truthTableBuilder.getNumLetters();
+        int numRows = truthTableBuilder.getNumRows();
+        remove(panel);
+        panel = new JPanel();
+        System.out.println(numLetters + numColumns);
+        panel.setLayout(new GridLayout(numRows + 1, numLetters + numColumns));
+        /*for (int i = 0; i < 2; i++)
+        panel.add(new JLabel("HI"));*/
+        fillInTruthTable();
+        add(panel);
     }
 
     public void paintComponent(Graphics g) {
@@ -53,5 +76,4 @@ public class InputCanvas extends JPanel implements View {
             // g2.draw(new Line2D.Double(0, y, InputFrame.DEFAULT_WIDTH, y));
         }
     }
-
 }
