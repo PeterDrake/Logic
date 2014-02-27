@@ -14,10 +14,10 @@ public class ButtonPanel extends JPanel {
 	 */
 
 	private JTextField textField;
+	private String text;
 
-	public ButtonPanel() {
+	public ButtonPanel(ActionListener submitAction) {
 		setLayout(new BorderLayout());
-
 		textField = new JTextField();
 		textField.setEditable(false);
 		//textField.setText("you can change text fields");
@@ -68,10 +68,13 @@ public class ButtonPanel extends JPanel {
 		addButton("delete", "deletes the last character in the text field",
 				misc, new DeleteAction());
 		addButton("submit", "submits what is in the text field", misc,
-				new SubmitAction());
+				submitAction);
 
 		buttons.add(misc);
 		add(buttons, BorderLayout.CENTER);
+	}
+	public String getText() {
+		return textField.getText();
 	}
 
 	private void addButton(String label, String toolTip, JPanel panel,
@@ -79,18 +82,14 @@ public class ButtonPanel extends JPanel {
 		JButton button = new JButton(label);
 		button.setToolTipText(toolTip);
 		button.addActionListener(listener);
+		button.setBackground(Color.GREEN);
+		button.setOpaque(true);
 		panel.add(button);
 	}
 
 	private class ClearAction implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
 			textField.setText("");
-		}
-	}
-
-	private class SubmitAction implements ActionListener {
-		public void actionPerformed(ActionEvent event) {
-			
 		}
 	}
 
