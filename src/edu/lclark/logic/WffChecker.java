@@ -22,8 +22,8 @@ public class WffChecker {
 		}
 	}
 
-	public void printTree() {
-		System.out.println(tree.toStringTree(parser));
+	public String printTree() {
+		return tree.toStringTree(parser);
 	}
 	
 	// Opens a dialogue box with the parser tree broken down

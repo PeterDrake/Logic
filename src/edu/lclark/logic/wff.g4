@@ -31,8 +31,8 @@ equivalence : implication ( BICONDITIONAL implication )* ;
 implication : disjunction ( CONDITIONAL disjunction )* ;
 disjunction : conjunction ( INCLUSIVE_OR conjunction )* ;
 conjunction : negation ( AND negation )* ;
-negation : NOT parenthesis | parenthesis ;
-parenthesis : LEFTPAREN equivalence RIGHTPAREN | atom ;
+negation : NOT parentheses | parentheses ;
+parentheses : LEFTPAREN equivalence RIGHTPAREN | atom ;
 atom : TRUTH | FALSITY | LETTERS ;
 
 /*
