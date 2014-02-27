@@ -45,7 +45,7 @@ public class TruthTableGUI extends JPanel implements View {
             for (int col = 0; col < numLetters + numColumns; col++) {
                 JLabel label;
                 if (col >= numLetters) label = new JLabel("-");
-                else label = new JLabel(truthTableBuilder.getValue(row, col) ? "⊤" : "⊥");
+                else label = new JLabel(truthTableBuilder.getValue(row, col) ? "T" : "F");
                 label.setPreferredSize(new Dimension(CELL_WIDTH, CELL_HEIGHT));
                 label.setOpaque(false);
                 panel.add(label);

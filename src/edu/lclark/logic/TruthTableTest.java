@@ -12,8 +12,7 @@ public class TruthTableTest {
 	@Before public void initialize() {
 	    table = new TruthTable("pqr");
 	}
-	
-	
+
 	public void testNumLetters() {
 		assertEquals(3, table.getNumLetters());
 		// fail("Not yet implemented");
