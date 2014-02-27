@@ -43,7 +43,17 @@ public class WffCheckerTest {
 	
 	@Test
 	public void WffChecker5() {
-		assertEquals(wc.setInputString("-(-((p).(-(q))))"), wc2.setInputString("--(p.-q)"));
+		assertEquals(wc.setInputString("-(-((p).(-(q))))"), wc2.setInputString("-(-(p.-q))"));
+	}
+	
+	@Test
+	public void WffChecker6() {
+		assertTrue(wc.setInputString("p -> q -> r"));
+	}
+	
+	@Test
+	public void WffChecker7() {
+		assertTrue(wc.setInputString("-p.q ⋁ r → s.t"));
 	}
 
 }
