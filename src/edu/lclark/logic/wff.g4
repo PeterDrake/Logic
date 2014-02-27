@@ -17,16 +17,10 @@ formula: LEFTPAREN formula RIGHTPAREN
 	   ;
 	   
 expr: LEFTPAREN expr RIGHTPAREN
-	| leftpartial expr
-	| expr rightpartial
-	| LEFTPAREN expr RIGHTPAREN
+	| (LETTERS operators)+ expr (operators LETTERS)*
 	| NOT expr
 	| LETTERS
 	;
-	
-leftpartial: (LETTERS operators)+ ;
-
-rightpartial: (operators LETTERS)+ ;
 
 operators: AND
 		 | INCLUSIVE_OR

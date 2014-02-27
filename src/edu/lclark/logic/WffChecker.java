@@ -10,6 +10,7 @@ public class WffChecker {
 	private wffParser parser;
 	private RuleContext tree;
 
+	// This overrides the lexer's error messages
 	public static class BailwffLexer extends wffLexer {
 		public BailwffLexer(CharStream input) {
 			super(input);
@@ -25,9 +26,15 @@ public class WffChecker {
 		System.out.println(tree.toStringTree(parser));
 	}
 	
+	// Opens a dialogue box with the parser tree broken down
+	
 	public void guiTree() {
 		tree.inspect(parser);
 	}
+	
+	// Basically a constructor, but because of the way
+	// ANTLR works we can't do that unless we pass a string
+	// to the constructor which is not optimal
 	
 	public boolean setInputString(String is) {
 		input = new ANTLRInputStream(is);
@@ -35,10 +42,17 @@ public class WffChecker {
 		tokens = new CommonTokenStream(lexer); 
 		parser = new wffParser(tokens);
 		
+		// Removes error listeners from the lexer (gets rid of ANTLR error input!)
 		lexer.removeErrorListeners();
+		
+		// Removes error listeners from the parser (gets rid of ANTLR error input!)
 		parser.removeErrorListeners();
+		
+		// Sets the error handler strategy BailErrorStrategy is an example
+		// from the ANTLR reference, basically just throws exceptions
 		parser.setErrorHandler(new BailErrorStrategy());
 		
+		// There will be a RuntimeException if there is invalid syntax, so we catch it 
 		try {
 			tree = parser.prog();
 		}
@@ -49,6 +63,7 @@ public class WffChecker {
 		return true;
 	}
 	
+	// Super basic test
 	public static void main(String[] args) {
 		WffChecker wc = new WffChecker();
 		wc.setInputString("p.q");
