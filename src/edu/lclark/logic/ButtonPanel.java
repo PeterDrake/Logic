@@ -19,7 +19,7 @@ public class ButtonPanel extends JPanel {
 	public ButtonPanel(ActionListener submitAction) {
 		setLayout(new BorderLayout());
 		textField = new JTextField();
-		textField.setEditable(false);
+		textField.setEditable(true);
 		//textField.setText("you can change text fields");
 		add(textField, BorderLayout.NORTH);
 
