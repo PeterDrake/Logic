@@ -45,7 +45,7 @@ public class TruthTableGUI extends JPanel implements View {
             for (int col = 0; col < numLetters + numColumns; col++) {
                 JLabel label;
                 if (col >= numLetters) label = new JLabel("HI");
-                else label = new JLabel(truthTableBuilder.getValue(row, col) ? "⊤" : "⊥");
+                else label = new JLabel(truthTableBuilder.getValue(row, col) ? "���" : "���");
                 label.setPreferredSize(new Dimension(CELL_WIDTH, CELL_HEIGHT));
                 label.setOpaque(false);
                 panel.add(label);
@@ -59,7 +59,6 @@ public class TruthTableGUI extends JPanel implements View {
         int numRows = truthTableBuilder.getNumRows();
         remove(panel);
         panel = new JPanel();
-        System.out.println(numLetters + numColumns);
         panel.setLayout(new GridLayout(numRows + 1, numLetters + numColumns));
         fillInTruthTable();
         add(panel);
