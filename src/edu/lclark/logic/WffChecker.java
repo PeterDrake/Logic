@@ -9,6 +9,8 @@ public class WffChecker {
 	private CommonTokenStream tokens;
 	private wffParser parser;
 	private RuleContext tree;
+	
+	private VerboseListener errorListener;
 
 	// This overrides the lexer's error messages
 	public static class BailwffLexer extends wffLexer {
@@ -32,6 +34,10 @@ public class WffChecker {
 		tree.inspect(parser);
 	}
 	
+	public String getErrors() {
+		return errorListener.getErrorText();
+	}
+	
 	// Basically a constructor, but because of the way
 	// ANTLR works we can't do that unless we pass a string
 	// to the constructor which is not optimal
@@ -42,15 +48,18 @@ public class WffChecker {
 		tokens = new CommonTokenStream(lexer); 
 		parser = new wffParser(tokens);
 		
-		// Removes error listeners from the lexer (gets rid of ANTLR error input!)
+		// Removes error listeners from the lexer (gets rid of ANTLR error output!)
 		lexer.removeErrorListeners();
 		
-		// Removes error listeners from the parser (gets rid of ANTLR error input!)
+		// Removes error listeners from the parser (gets rid of ANTLR error output!)
 		parser.removeErrorListeners();
 		
 		// Sets the error handler strategy BailErrorStrategy is an example
 		// from the ANTLR reference, basically just throws exceptions
-		parser.setErrorHandler(new BailErrorStrategy());
+//		parser.setErrorHandler(new BailErrorStrategy());
+		
+		errorListener = new VerboseListener();
+		parser.addErrorListener(errorListener);
 		
 		// There will be a RuntimeException if there is invalid syntax, so we catch it 
 		try {
@@ -66,8 +75,8 @@ public class WffChecker {
 	// Super basic test
 	public static void main(String[] args) {
 		WffChecker wc = new WffChecker();
-		wc.setInputString("p.q");
-		wc.printTree();
+		wc.setInputString("pq");
+		System.out.println(wc.getErrors());
 	}
 }
 
