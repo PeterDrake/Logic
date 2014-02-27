@@ -42,8 +42,8 @@ atom : TRUTH | FALSITY | LETTERS ;
 FORALL: 'V' | '∀' ;
 EXISTS: 'E' | '∃' ;
 	   
-LEFTPAREN: '(' ;
-RIGHTPAREN: ')' ;
+LEFTPAREN: '(' | '[' ;
+RIGHTPAREN: ')' | ']' ;
 	  
 BICONDITIONAL: '↔' | '<->';
 

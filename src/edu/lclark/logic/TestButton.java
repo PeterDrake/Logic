@@ -32,7 +32,8 @@ public class TestButton {
 	private static class SubmitAction implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
 			formula = buttons.getText();
-			System.out.println(formula);
+			WffChecker wc = new WffChecker();
+			System.out.println('"' + formula + '"' + ": " + wc.setInputString(formula));
 		}
 	}
 }

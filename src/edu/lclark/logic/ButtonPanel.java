@@ -44,7 +44,7 @@ public class ButtonPanel extends JPanel {
 		connectives.setLayout(new GridLayout(5, 1));
 		addButton("-", "negation", connectives, new InsertAction("-"));
 		addButton(".", "and", connectives, new InsertAction("."));
-		addButton("⋁", "or", connectives, new InsertAction("V"));
+		addButton("⋁", "or", connectives, new InsertAction("⋁"));
 		addButton("→", "conditional", connectives, new InsertAction("→"));
 		addButton("↔", "biconditional", connectives, new InsertAction("↔"));
 		buttons.add(connectives);
@@ -82,8 +82,6 @@ public class ButtonPanel extends JPanel {
 		JButton button = new JButton(label);
 		button.setToolTipText(toolTip);
 		button.addActionListener(listener);
-		button.setBackground(Color.GREEN);
-		button.setOpaque(true);
 		panel.add(button);
 	}
 
