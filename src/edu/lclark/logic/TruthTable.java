@@ -83,13 +83,13 @@ public class TruthTable implements View {
 
 	public String toString() {
 	    String s = "";
-	    // Add each letter on first line...
+	    // Add each letter on first line, as a label...
 	    for (int i = 0; i < numLetters; i++) {
 	        s += letters[i];
 	    }
 	    s += "\n";
-	    // ...then on each subsequent line, add a 1 or 0
-	    // based on truthValues
+	    // ...then beneath each label, add each truth-value
+	    // as a 0 or 1, based on truthValues:
 	    for (boolean[] row : truthValues) {
 	        for (boolean val : row) {
 	            s += val ? "1" : "0";

@@ -11,7 +11,10 @@ import javax.swing.JLabel;
 
 /** A JPanel that displays a truth-table */
 public class TruthTablePanel extends JPanel implements View {
+    /** Width, in pixels, of each 'cell' in the truth table grid */
     private static final int CELL_WIDTH = 50;
+
+    /** Height, in pixels, of each 'cell' in the truth table grid */
     private static final int CELL_HEIGHT = 20;
 
     /** The underlying model for the truth table */
@@ -30,7 +33,7 @@ public class TruthTablePanel extends JPanel implements View {
         truthTable = new TruthTable("pqr");
         initTable();
         add(panel);
-        // TODO: remove the following line, and this comment
+        // TODO: remove the following line. It's for demonstration only.
         addColumn();
     }
 
@@ -50,22 +53,22 @@ public class TruthTablePanel extends JPanel implements View {
     private void fillInTruthTable() {
         int numLetters = truthTable.getNumLetters();
         int numRows = truthTable.getNumRows();
-        JLabel label;
+        JLabel cell;
         // Adds labels, as first row of table:
         for (int col = 0; col < numLetters + numColumnsAdded; col++) {
             if (col >= numLetters) {
                 // This is an added formula on the right-hand-side of the table
                 // TODO: Put a formula here instead of the hard-coded string "[formula]"
-                label = new JLabel("[formula]");
+                cell = new JLabel("[formula]");
             } else {
                 /* This is on the left-hand-side of the table, part of
                  * the possible truth-value combinations for each letter
                  */
-                label = new JLabel("" + truthTable.getLetter(col));
+                cell = new JLabel("" + truthTable.getLetter(col));
             }
-            label.setPreferredSize(new Dimension(CELL_WIDTH, CELL_HEIGHT));
-            label.setOpaque(false);
-            panel.add(label);
+            cell.setPreferredSize(new Dimension(CELL_WIDTH, CELL_HEIGHT));
+            cell.setOpaque(false);
+            panel.add(cell);
         }
         // Adds truth-value rows to table:
         for (int row = 0; row < numRows; row++) {
@@ -74,17 +77,17 @@ public class TruthTablePanel extends JPanel implements View {
                 if (col >= numLetters) {
                     // This is an added formula on the right-hand-side of the table
                     // TODO: Put a real truth-value here instead of the hard-coded string "-"
-                    label = new JLabel("-");
+                    cell = new JLabel("-");
                 } else {
                     /* This is on the left-hand-side of the table, part of
                      * the possible truth-value combinations for each letter
                      */
                     // TODO: Replace "T" and "F" with actual symbols
-                    label = new JLabel(truthTable.getValue(row, col) ? "T" : "F");
+                    cell = new JLabel(truthTable.getValue(row, col) ? "T" : "F");
                 }
-                label.setPreferredSize(new Dimension(CELL_WIDTH, CELL_HEIGHT));
-                label.setOpaque(false);
-                panel.add(label);
+                cell.setPreferredSize(new Dimension(CELL_WIDTH, CELL_HEIGHT));
+                cell.setOpaque(false);
+                panel.add(cell);
             }
         }
     }
@@ -93,10 +96,10 @@ public class TruthTablePanel extends JPanel implements View {
     private void addColumn() {
         int numLetters = truthTable.getNumLetters();
         int numRows = truthTable.getNumRows();
-        numColumnsAdded++;
-        // Replaces existing panel with new panel that has 1 extra column:
+        // Replaces existing panel with new panel that has 1 extra added column:
         remove(panel);
         panel = new JPanel();
+        numColumnsAdded++;
         panel.setLayout(new GridLayout(numRows + 1, numLetters + numColumnsAdded));
         fillInTruthTable();
         add(panel);
