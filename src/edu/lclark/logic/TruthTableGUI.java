@@ -1,76 +1,27 @@
 package edu.lclark.logic;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridLayout;
-import java.awt.geom.Line2D;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
+import java.awt.EventQueue;
+import javax.swing.JFrame;
 
-public class TruthTableGUI extends JPanel implements View {
-    private TruthTable truthTableBuilder;
-    private JPanel panel = new JPanel();
-
-    private static final int CELL_WIDTH = 50;
-    private static final int CELL_HEIGHT = 20;
-
-    private static int numColumns;
+/** A GUI that displays a truth table */
+public class TruthTableGUI extends JFrame {
+    public static final int DEFAULT_WIDTH = 800;
+    public static final int DEFAULT_HEIGHT = 693;
 
     public TruthTableGUI() {
-        setLayout(new FlowLayout(FlowLayout.LEFT));
-        setVisible(true);
-        truthTableBuilder = new TruthTable("pqr");
-        drawTruthTable();
-        add(panel);
-        addColumn();
+        add(new TruthTablePanel());
+        pack();
     }
 
-    private void drawTruthTable() {
-        int numLetters = truthTableBuilder.getNumLetters();
-        int numRows = truthTableBuilder.getNumRows();
-        panel.setLayout(new GridLayout(numRows + 1, numLetters));
-        fillInTruthTable();
-    }
-
-    private void fillInTruthTable() {
-        int numLetters = truthTableBuilder.getNumLetters();
-        int numRows = truthTableBuilder.getNumRows();
-        for (int i = 0; i < numLetters + numColumns; i++) {
-            if (i >= numLetters) panel.add(new JLabel("-New Column-"));
-            else panel.add(new JLabel("" + truthTableBuilder.getLetter(i)));
-        }
-        for (int row = 0; row < numRows; row++) {
-            for (int col = 0; col < numLetters + numColumns; col++) {
-                JLabel label;
-                if (col >= numLetters) label = new JLabel("-");
-                else label = new JLabel(truthTableBuilder.getValue(row, col) ? "T" : "F");
-                label.setPreferredSize(new Dimension(CELL_WIDTH, CELL_HEIGHT));
-                label.setOpaque(false);
-                panel.add(label);
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                TruthTableGUI gui = new TruthTableGUI();
+                gui.setTitle("Truth Table");
+                gui.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+                gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                gui.setVisible(true);
             }
-        }
-    }
-
-    private void addColumn() {
-        numColumns++;
-        int numLetters = truthTableBuilder.getNumLetters();
-        int numRows = truthTableBuilder.getNumRows();
-        remove(panel);
-        panel = new JPanel();
-        panel.setLayout(new GridLayout(numRows + 1, numLetters + numColumns));
-        fillInTruthTable();
-        add(panel);
-    }
-
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
-        int numLines = 1 + (1 << truthTableBuilder.getNumLetters());
-        for (int i = 0; i < numLines; i++) {
-            int y = i * CELL_HEIGHT;
-            // g2.draw(new Line2D.Double(0, y, InputFrame.DEFAULT_WIDTH, y));
-        }
+        });
     }
 }
