@@ -11,8 +11,9 @@ public class ButtonPanel extends JPanel {
 	 * Connectives: -, ., ⋁, →, ↔ 
 	 * Parentheses: (, ), [, ] 
 	 * Truth-values: ⊤, ⊥
-	 * Other: ', ␣
+	 * Other: ', ⨆
 	 */
+	
 	/**
 	 * The text field that buttons output to 
 	 */
@@ -56,7 +57,7 @@ public class ButtonPanel extends JPanel {
 		JPanel primenspace = new JPanel();
 		primenspace.setLayout(new GridLayout(1, 2));
 		addButton("'", "prime", primenspace, new InsertAction("'"));
-		addButton("␣", "space", primenspace, new InsertAction(" "));
+		addButton("⨆", "space", primenspace, new InsertAction(" "));
 		misc.add(primenspace);
 		
 		// Makes a panel with left and right parens
