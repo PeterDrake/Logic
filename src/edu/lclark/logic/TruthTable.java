@@ -36,18 +36,13 @@ public class TruthTable implements View {
 	    return 1 << numLetters; // same as: (int) Math.pow(2, numLetters)
 	}
 
-	/** Returns how many letters are in target formula */
+	/** Updates letters and numLetters to reflect how many different letters are in target formula */
 	private void countLetters() {
-		if (formula.indexOf('p') >= 0)
-			letters[numLetters++] = 'p';
-		if (formula.indexOf('q') >= 0)
-			letters[numLetters++] = 'q';
-		if (formula.indexOf('r') >= 0)
-			letters[numLetters++] = 'r';
-		if (formula.indexOf('s') >= 0)
-			letters[numLetters++] = 's';
-		if (formula.indexOf('t') >= 0)
-			letters[numLetters++] = 't';
+		for (char letter : "pqrst".toCharArray()) {
+			if (formula.indexOf(letter) >= 0) {
+				letters[numLetters++] = letter;
+			}
+		}
 	}
 
 	/** Initializes truth-table with each truth-value combination of the letters */

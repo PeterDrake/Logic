@@ -14,7 +14,6 @@ public class ButtonPanel extends JPanel {
 	 */
 
 	private JTextField textField;
-	private String text;
 
 	public ButtonPanel(ActionListener submitAction) {
 		setLayout(new BorderLayout());

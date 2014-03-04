@@ -38,10 +38,11 @@ public class WffChecker {
 		return errorListener.getErrorText();
 	}
 	
-	// Basically a constructor, but because of the way
-	// ANTLR works we can't do that unless we pass a string
-	// to the constructor which is not optimal
-	
+	/** 
+	 * Basically a constructor, but because of the way
+	 * ANTLR works we can't do that unless we pass a string
+	 * to the constructor which is not optimal
+	 */
 	public boolean setInputString(String is) {
 		input = new ANTLRInputStream(is);
 		lexer = new wffLexer(input); 
