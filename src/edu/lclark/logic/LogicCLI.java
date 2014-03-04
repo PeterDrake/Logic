@@ -17,7 +17,7 @@ public class LogicCLI implements View {
 	@Command
 	public void tree(String s) {
 		wc.setInputString(s);
-		wc.printTree();
+		System.out.println(wc.printTree());
 	}
 	
 	@Command
