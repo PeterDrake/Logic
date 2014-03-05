@@ -42,7 +42,7 @@ public class TruthTablePanel extends JPanel implements View {
         setVisible(true);     
         truthTable = new TruthTable(formula);
         initTable();
-        add(addColumnButton);
+//        add(addColumnButton);
         add(panel);
         addColumn(new TruthTableColumn(formula, null));
     }

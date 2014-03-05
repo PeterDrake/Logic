@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** A truth table model for a well-formed formula */
-public class TruthTable implements View {
+public class TruthTable implements Model {
     /** The well-formed formula this truth table represents */
-	final private String formula;
+	private final String formula;
 
 	/** The letters found in the formula */
-	final private char[] letters = new char[5];
+	private final char[] letters = new char[5];
 
 	/** The number of letters in the formula */
 	private int numLetters;
@@ -55,18 +55,13 @@ public class TruthTable implements View {
 	    columns.add(column);
 	}
 
-	/** Returns how many letters are in target formula */
+	/** Updates letter and numLetters to reflect how many letters are in target formula */
 	private void countLetters() {
-		if (formula.indexOf('p') >= 0)
-			letters[numLetters++] = 'p';
-		if (formula.indexOf('q') >= 0)
-			letters[numLetters++] = 'q';
-		if (formula.indexOf('r') >= 0)
-			letters[numLetters++] = 'r';
-		if (formula.indexOf('s') >= 0)
-			letters[numLetters++] = 's';
-		if (formula.indexOf('t') >= 0)
-			letters[numLetters++] = 't';
+	    for (char letter : "pqrst".toCharArray()) {
+	        if (formula.indexOf(letter) >= 0) {
+	            letters[numLetters++] = letter;
+	        }
+	    }
 	}
 
 	/** Initializes truth-table with each truth-value combination of the letters */
@@ -101,23 +96,5 @@ public class TruthTable implements View {
 
 	public void checkFragment() {
 	    // TODO
-	}
-
-	public String toString() {
-	    String s = "";
-	    // Add each letter on first line, as a label...
-	    for (int i = 0; i < numLetters; i++) {
-	        s += letters[i];
-	    }
-	    s += "\n";
-	    // ...then beneath each label, add each truth-value
-	    // as a 0 or 1, based on truthValues:
-	    for (boolean[] row : truthValues) {
-	        for (boolean val : row) {
-	            s += val ? "1" : "0";
-	        }
-	        s += "\n";
-	    }
-	    return s;
 	}
 }
