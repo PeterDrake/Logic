@@ -21,8 +21,8 @@ public class TruthTableTest {
 	@Test
 	public void testGetValue() {
 	    System.out.println(table.toString());
-		assertEquals(true, table.getValue(0, 0));
-		assertEquals(false, table.getValue(4, 0));
+		assertEquals(true, table.getColumn(0).getValue(0));
+		assertEquals(false, table.getColumn(4).getValue(0));
 	}
 
 }

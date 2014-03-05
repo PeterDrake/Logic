@@ -15,7 +15,6 @@ public class TruthTable implements Model {
 	private int numLetters;
 
 	/** The set of all possible combinations of truth-values for each letter in the formula */
-	private boolean[][] truthValues;
 	private List<TruthTableColumn> columns;
 
 	/** Constructor; takes target formula */
@@ -67,7 +66,6 @@ public class TruthTable implements Model {
 	/** Initializes truth-table with each truth-value combination of the letters */
 	private void initTable() {
 	    int numRows = getNumRows();
-	    truthValues = new boolean[numRows][numLetters];
 	    columns = new ArrayList<TruthTableColumn>(numLetters);
 	    // For each column...
 	    for (int col = 0; col < numLetters; col++) {
@@ -79,15 +77,10 @@ public class TruthTable implements Model {
 	            int start = p * partionLength;
 	            // ...for each row in that partition:
 	            for (int row = 0; row < partionLength; row++) {
-	                truthValues[row + start][col] = true;
 	                columns.get(col).setValue(row + start + 1, true);
 	            }
 	        }
 	    }
-	}
-
-	public boolean getValue(int row, int column) {
-		return truthValues[row][column];
 	}
 
 	public void addTargetFormula() {
