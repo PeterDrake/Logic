@@ -46,4 +46,26 @@ public class TruthTableCheckerTest {
 					checker.disjunction(2, letterValues, 0, 1)[i]);
 		}
 	}
+	
+	@Test
+	public void conditionalTest() {
+		boolean[][] letterValues = { { true, false, true, false },
+				{ true, true, false, false } };
+		boolean[] correctValues = { true, true, false, true };
+		for (int i = 0; i < correctValues.length; i++) {
+			assertEquals(correctValues[i],
+					checker.conditional(2, letterValues, 0, 1)[i]);
+		}
+	}
+	
+	@Test
+	public void biconditionalTest() {
+		boolean[][] letterValues = { { true, false, true, false },
+				{ true, true, false, false } };
+		boolean[] correctValues = { true, false, false, true };
+		for (int i = 0; i < correctValues.length; i++) {
+			assertEquals(correctValues[i],
+					checker.biconditional(2, letterValues, 0, 1)[i]);
+		}
+	}
 }

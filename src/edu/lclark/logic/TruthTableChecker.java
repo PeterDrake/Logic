@@ -38,6 +38,7 @@ public class TruthTableChecker {
 
 		return values;
 	}
+
 	public boolean[] disjunction(int numLetters, boolean[][] allPossibleValues,
 			int letter1, int letter2) {
 		boolean[] values = new boolean[(int) Math.pow(2, numLetters)];
@@ -47,9 +48,35 @@ public class TruthTableChecker {
 				values[i] = true;
 			}
 		}
-		
+
 		return values;
 	}
-	
 
+	public boolean[] conditional(int numLetters, boolean[][] allPossibleValues,
+			int letter1, int letter2) {
+		boolean[] values = new boolean[(int) Math.pow(2, numLetters)];
+		for (int i = 0; i < values.length; i++) {
+			if (allPossibleValues[letter1][i] == true
+					&& allPossibleValues[letter2][i] == false) {
+				values[i] = false;
+			} else {
+				values[i] = true;
+			}
+		}
+		return values;
+
+	}
+
+	public boolean[] biconditional(int numLetters,
+			boolean[][] allPossibleValues, int letter1, int letter2) {
+		boolean[] values = new boolean[(int) Math.pow(2, numLetters)];
+		for (int i = 0; i < values.length; i++) {
+			if (allPossibleValues[letter1][i] == allPossibleValues[letter2][i]) {
+				values[i] = true;
+			} else {
+				values[i] = false;
+			}
+		}
+		return values;
+	}
 }
