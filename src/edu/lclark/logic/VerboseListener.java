@@ -10,16 +10,17 @@ package edu.lclark.logic;
 ***/
 
 import org.antlr.v4.runtime.*;
+
 import java.util.*;
 
 public class VerboseListener extends BaseErrorListener {
 
-	String errtext = "Valid WFF";
+	public String errors = "The entered formula is a wff.";
 
-	public String getErrorText() {
-		return errtext;
+	public String getErrors() {		
+		return errors;
 	}
-
+	
 	@Override
 	public void syntaxError(Recognizer<?, ?> recognizer,
 			Object offendingSymbol,
@@ -29,8 +30,7 @@ public class VerboseListener extends BaseErrorListener {
 	{
 		List<String> stack = ((Parser)recognizer).getRuleInvocationStack();
 		Collections.reverse(stack);
-		errtext = "line "+line+":"+charPositionInLine+" at "+
-				offendingSymbol+": "+msg;
+		errors = "line " + line + ":" + charPositionInLine + " " + msg;
 	}
 
 }
