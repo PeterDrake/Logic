@@ -42,8 +42,8 @@ public class TestButton {
 			formula = buttons.getText();
 			WffChecker wc = new WffChecker();
 			wc.setInputString(formula);
-			output.setText(wc.getErrors());
 			wc.guiTree();
+			output.setText(wc.getErrors());
 		}
 	}
 }

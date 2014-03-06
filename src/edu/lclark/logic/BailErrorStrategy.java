@@ -70,19 +70,19 @@ public class BailErrorStrategy extends DefaultErrorStrategy {
      */
 	@Override
 	public void recover(Parser recognizer, RecognitionException e) {
-//		if ( lastErrorIndex==recognizer.getInputStream().index() &&
-//			lastErrorStates != null &&
-//			lastErrorStates.contains(recognizer.getState()) ) {
-//			String errors = "seen error condition before index="+
-//							   lastErrorIndex+", states="+lastErrorStates;
-//			
-//			recognizer.consume();
-//		}
-//		lastErrorIndex = recognizer.getInputStream().index();
-//		if ( lastErrorStates==null ) lastErrorStates = new IntervalSet();
-//		lastErrorStates.add(recognizer.getState());
-//		IntervalSet followSet = getErrorRecoverySet(recognizer);
-//		consumeUntil(recognizer, followSet);
+		if ( lastErrorIndex==recognizer.getInputStream().index() &&
+			lastErrorStates != null &&
+			lastErrorStates.contains(recognizer.getState()) ) {
+			String errors = "seen error condition before index="+
+							   lastErrorIndex+", states="+lastErrorStates;
+			
+			recognizer.consume();
+		}
+		lastErrorIndex = recognizer.getInputStream().index();
+		if ( lastErrorStates==null ) lastErrorStates = new IntervalSet();
+		lastErrorStates.add(recognizer.getState());
+		IntervalSet followSet = getErrorRecoverySet(recognizer);
+		consumeUntil(recognizer, followSet);
 		throw e;
 	}
 
@@ -98,7 +98,7 @@ public class BailErrorStrategy extends DefaultErrorStrategy {
 			context.exception = e;
 		}
 
-        throw new ParseCancellationException(e);
+        throw new ParseCancellationException();
     }
 
     /** Make sure we don't attempt to recover from problems in subrules. */

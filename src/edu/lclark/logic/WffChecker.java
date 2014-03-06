@@ -22,7 +22,9 @@ public class WffChecker {
 		try {
 			tree.inspect(parser);
 		} catch (RuntimeException re) {
-			
+			if(getErrors() == "The entered formula is a wff.") {
+				parser.notifyErrorListeners("There was a problem.");
+			}
 		}
 	}
 	
@@ -66,7 +68,7 @@ public class WffChecker {
 	// Super basic test
 	public static void main(String[] args) {
 		WffChecker wc = new WffChecker();
-		System.out.println(wc.setInputString("pq"));
+		System.out.println(wc.setInputString("p->q->r"));
 		System.out.println(wc.getErrors());
 	}
 }
