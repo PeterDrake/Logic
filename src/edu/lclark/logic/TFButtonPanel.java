@@ -5,7 +5,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-public class ButtonPanel extends JPanel {
+public class TFButtonPanel extends ButtonPanel {
 	/*
 	 * Sentence letters: p, q, r, s, t 
 	 * Connectives: -, ., ⋁, →, ↔ 
@@ -13,18 +13,15 @@ public class ButtonPanel extends JPanel {
 	 * Truth-values: ⊤, ⊥
 	 * Other: ', ⨆
 	 */
-	
-	/**
-	 * The text field that buttons output to 
-	 */
-	private JTextField textField;
 
-	public ButtonPanel(ActionListener submitAction) {
+	public TFButtonPanel(ActionListener submitAction) {
 		setLayout(new BorderLayout());
-		textField = new JTextField();
-		textField.setEditable(true);
-		textField.setFocusable(true);
-		add(textField, BorderLayout.NORTH);
+		//textField = new JTextField();
+		setTextField (new JTextField());
+		//textField.setEditable(true);
+		getTextField().setEditable(true);
+		//add(textField, BorderLayout.NORTH);
+		add(getTextField(), BorderLayout.NORTH);
 
 		// A panel that all the buttons, but the submit button are added to
 		JPanel buttons = new JPanel();
@@ -88,48 +85,6 @@ public class ButtonPanel extends JPanel {
 		submitButton.setFocusable(false);
 		add(submitButton, BorderLayout.SOUTH);
 	}
-	
-	public String getText() {
-		return textField.getText();
-	}
 
-	private void addButton(String label, String toolTip, JPanel panel,
-			ActionListener listener) {
-		JButton button = new JButton(label);
-		button.setToolTipText(toolTip);
-		button.addActionListener(listener);
-		button.setFocusable(false);
-		panel.add(button);
-	}
-
-	private class ClearAction implements ActionListener {
-		public void actionPerformed(ActionEvent event) {
-			textField.setText("");
-		}
-	}
-
-	private class InsertAction implements ActionListener {
-
-		private String symbol;
-
-		public InsertAction(String symbol) {
-			this.symbol = symbol;
-		}
-
-		public void actionPerformed(ActionEvent event) {
-			String result = textField.getText();
-			textField.setText(result + symbol);
-		}
-	}
-
-	private class DeleteAction implements ActionListener {
-		public void actionPerformed(ActionEvent event) {
-			String text = textField.getText();
-			if (!text.isEmpty()){
-				String result = text.substring(0, text.length() - 1);
-				textField.setText(result);
-			}
-		}
-	}
 
 }

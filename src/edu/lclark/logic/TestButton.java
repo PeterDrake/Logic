@@ -27,7 +27,7 @@ public class TestButton {
               output.setEditable(false);
               
               ActionListener submitAction = new SubmitAction();
-              frame.add(buttons = new ButtonPanel(submitAction), BorderLayout.CENTER);
+              frame.add(buttons = new QButtonPanel(submitAction), BorderLayout.CENTER);
               frame.add(output, BorderLayout.SOUTH);
               frame.pack();
               frame.setTitle("Buttons");               
