@@ -23,6 +23,7 @@ public class ButtonPanel extends JPanel {
 		setLayout(new BorderLayout());
 		textField = new JTextField();
 		textField.setEditable(true);
+		textField.setFocusable(true);
 		add(textField, BorderLayout.NORTH);
 
 		// A panel that all the buttons, but the submit button are added to
@@ -84,6 +85,7 @@ public class ButtonPanel extends JPanel {
 		JButton submitButton = new JButton("submit");
 		submitButton.setToolTipText("submits what is in the text field");
 		submitButton.addActionListener(submitAction);
+		submitButton.setFocusable(false);
 		add(submitButton, BorderLayout.SOUTH);
 	}
 	
@@ -96,6 +98,7 @@ public class ButtonPanel extends JPanel {
 		JButton button = new JButton(label);
 		button.setToolTipText(toolTip);
 		button.addActionListener(listener);
+		button.setFocusable(false);
 		panel.add(button);
 	}
 
