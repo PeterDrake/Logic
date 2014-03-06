@@ -26,14 +26,17 @@ grammar wff;
 //		 | INCLUSIVE_OR
 //		 ;
 
-prog : equivalence EOF ;
-equivalence : implication ( BICONDITIONAL implication )* ;
-implication : disjunction ( CONDITIONAL disjunction )* ;
+prog : ( biconditional | conditional ) EOF ;
+//biconditional : conditional ( BICONDITIONAL conditional )* ;
+//conditional : disjunction ( CONDITIONAL disjunction )* ;
+biconditional : disjunction ( BICONDITIONAL disjunction)* ;
+conditional : disjunction CONDITIONAL disjunction ;
 disjunction : conjunction ( INCLUSIVE_OR conjunction )* ;
 conjunction : negation ( AND negation )* ;
 negation : NOT parentheses | parentheses ;
-parentheses : LEFTPAREN equivalence RIGHTPAREN | atom ;
-atom : TRUTH | FALSITY | LETTERS ;
+parentheses : LEFTPAREN biconditional RIGHTPAREN | atom ;
+atom : TRUTH | FALSITY | letters ;
+letters : LETTERS('\'')? ;
 
 /*
  * LEXER RULES
@@ -61,3 +64,5 @@ FALSITY: '⊥' | '0';
 LETTERS: 'p' | 'q' | 'r' | 's' | 't' ;
 	   
 WS : (' ' | '\t' | '\r' | '\n') -> skip ;
+
+ErrorChar : . ;
