@@ -1,8 +1,7 @@
 package edu.lclark.logic;
 
-import java.util.Collections;
+import java.util.*;
 import java.util.List;
-
 import org.antlr.v4.runtime.*;
 
 public class WffCheckerListener extends BaseErrorListener {
@@ -26,9 +25,7 @@ public class WffCheckerListener extends BaseErrorListener {
 	{
 		List<String> stack = ((Parser)recognizer).getRuleInvocationStack();
 		Collections.reverse(stack);
-		errors = "charPosition :" + charPositionInLine + " " + msg;
+		errors = "Error at character position: " + charPositionInLine + ", " + msg;
 		errorPositionInLine = charPositionInLine;
 	}
-
-
 }
