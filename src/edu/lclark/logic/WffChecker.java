@@ -10,7 +10,7 @@ public class WffChecker {
 	private wffParser parser;
 	private RuleContext tree;
 		
-	private VerboseListener errorListener;
+	private WffCheckerListener errorListener;
 
 	public String printTree() {
 		return tree.toStringTree(parser);
@@ -19,13 +19,7 @@ public class WffChecker {
 	// Opens a dialogue box with the parser tree broken down
 	
 	public void guiTree() {
-		try {
 			tree.inspect(parser);
-		} catch (RuntimeException re) {
-			if(getErrors() == "The entered formula is a wff.") {
-				parser.notifyErrorListeners("There was a problem.");
-			}
-		}
 	}
 	
 	public String getErrors() {
@@ -43,16 +37,16 @@ public class WffChecker {
 		parser = new wffParser(tokens);
 		
 		// Removes error listeners from the lexer (gets rid of ANTLR error output!)
-//		lexer.removeErrorListeners(); // remove ConsoleErrorListener
+		// lexer.removeErrorListeners(); // remove ConsoleErrorListener
 		
 		// Removes error listeners from the parser (gets rid of ANTLR error output!)
 		parser.removeErrorListeners(); // remove ConsoleErrorListener
 		
 		// Sets the error handler strategy BailErrorStrategy is an example
 		// from the ANTLR reference, basically just throws exceptions
-		parser.setErrorHandler(new BailErrorStrategy());
+		parser.setErrorHandler(new WffCheckerErrorStrategy());
 		
-		errorListener = new VerboseListener();
+		errorListener = new WffCheckerListener();
 		parser.addErrorListener(errorListener);
 		
 		// There will be a RuntimeException if there is invalid syntax, so we catch it 
@@ -68,7 +62,7 @@ public class WffChecker {
 	// Super basic test
 	public static void main(String[] args) {
 		WffChecker wc = new WffChecker();
-		System.out.println(wc.setInputString("p->q->r"));
+		System.out.println(wc.setInputString("p<->q<->r->p"));
 		System.out.println(wc.getErrors());
 	}
 }
