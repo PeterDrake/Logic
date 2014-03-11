@@ -8,9 +8,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
-
-public class TestButton {
-
+public class TFTestButton {
+	
 	private static String formula;
 	private static ButtonPanel buttons;
 	private static JTextField output;
@@ -27,7 +26,7 @@ public class TestButton {
               output.setEditable(false);
               
               ActionListener submitAction = new SubmitAction();
-              frame.add(buttons = new ButtonPanel(submitAction), BorderLayout.CENTER);
+              frame.add(buttons = new TFButtonPanel(submitAction), BorderLayout.CENTER);
               frame.add(output, BorderLayout.SOUTH);
               frame.pack();
               frame.setTitle("Buttons");               
@@ -42,8 +41,9 @@ public class TestButton {
 			formula = buttons.getText();
 			WffChecker wc = new WffChecker();
 			wc.setInputString(formula);
-			output.setText(wc.getErrors());
 			wc.guiTree();
+			output.setText(wc.getErrors());
 		}
 	}
+
 }
