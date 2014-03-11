@@ -18,7 +18,6 @@ public class ButtonPanel extends JPanel {
 
 	public void setTextField(JTextField textField) {
 		this.textField = textField;
-		;
 	}
 
 	public JTextField getTextField() {

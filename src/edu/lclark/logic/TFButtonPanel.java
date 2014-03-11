@@ -16,11 +16,8 @@ public class TFButtonPanel extends ButtonPanel {
 
 	public TFButtonPanel(ActionListener submitAction) {
 		setLayout(new BorderLayout());
-		//textField = new JTextField();
 		setTextField (new JTextField());
-		//textField.setEditable(true);
 		getTextField().setEditable(true);
-		//add(textField, BorderLayout.NORTH);
 		add(getTextField(), BorderLayout.NORTH);
 
 		// A panel that all the buttons, but the submit button are added to
