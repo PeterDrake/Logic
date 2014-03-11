@@ -5,24 +5,12 @@ import org.antlr.v4.runtime.*;
 public class WffChecker {
 	
 	private ANTLRInputStream input;
-	private wffLexer lexer;
 	private CommonTokenStream tokens;
+	private wffLexer lexer;
 	private wffParser parser;
 	private RuleContext tree;
-	
-	private VerboseListener errorListener;
-
-	// This overrides the lexer's error messages
-	public static class BailwffLexer extends wffLexer {
-		public BailwffLexer(CharStream input) {
-			super(input);
-		}
 		
-		@Override
-		public void recover(LexerNoViableAltException e) {
-			throw new RuntimeException(e); // Bail out }
-		}
-	}
+	private VerboseListener errorListener;
 
 	public String printTree() {
 		return tree.toStringTree(parser);
@@ -31,11 +19,15 @@ public class WffChecker {
 	// Opens a dialogue box with the parser tree broken down
 	
 	public void guiTree() {
-		tree.inspect(parser);
+		try {
+			tree.inspect(parser);
+		} catch (RuntimeException re) {
+			
+		}
 	}
 	
 	public String getErrors() {
-		return errorListener.getErrorText();
+		return errorListener.getErrors();
 	}
 	
 	// Basically a constructor, but because of the way
@@ -49,14 +41,14 @@ public class WffChecker {
 		parser = new wffParser(tokens);
 		
 		// Removes error listeners from the lexer (gets rid of ANTLR error output!)
-		lexer.removeErrorListeners();
+//		lexer.removeErrorListeners(); // remove ConsoleErrorListener
 		
 		// Removes error listeners from the parser (gets rid of ANTLR error output!)
-		parser.removeErrorListeners();
+		parser.removeErrorListeners(); // remove ConsoleErrorListener
 		
 		// Sets the error handler strategy BailErrorStrategy is an example
 		// from the ANTLR reference, basically just throws exceptions
-//		parser.setErrorHandler(new BailErrorStrategy());
+		parser.setErrorHandler(new BailErrorStrategy());
 		
 		errorListener = new VerboseListener();
 		parser.addErrorListener(errorListener);
@@ -66,7 +58,6 @@ public class WffChecker {
 			tree = parser.prog();
 		}
 		catch (RuntimeException re) {
-//			System.out.println("invalid");
 			return false;
 		}
 		return true;
@@ -75,7 +66,7 @@ public class WffChecker {
 	// Super basic test
 	public static void main(String[] args) {
 		WffChecker wc = new WffChecker();
-		wc.setInputString("pq");
+		System.out.println(wc.setInputString("pq"));
 		System.out.println(wc.getErrors());
 	}
 }

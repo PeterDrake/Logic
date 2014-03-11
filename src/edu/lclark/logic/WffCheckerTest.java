@@ -48,12 +48,22 @@ public class WffCheckerTest {
 	
 	@Test
 	public void WffChecker6() {
-		assertTrue(wc.setInputString("p -> q -> r"));
+		assertFalse(wc.setInputString("p -> q -> r"));
 	}
 	
 	@Test
 	public void WffChecker7() {
 		assertTrue(wc.setInputString("-p.q ⋁ r → s.t"));
+	}
+	
+	@Test
+	public void WffChecker8() {
+		assertFalse(wc.setInputString("p -> q <-> r"));
+	}
+	
+	@Test
+	public void WffChecker9() {
+		assertEquals(wc.setInputString("p ⋁ t → [(q → r.t) ↔ s]"), wc2.setInputString("p ⋁ t → [q → (r.t ↔ s)]"));
 	}
 
 }

@@ -9,7 +9,7 @@ public class TruthTableGUI extends JFrame {
     public static final int DEFAULT_HEIGHT = 693;
 
     public TruthTableGUI() {
-        add(new TruthTablePanel());
+        add(new TruthTablePanel("p.qvr"));
         pack();
     }
 
