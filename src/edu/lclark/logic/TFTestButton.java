@@ -15,9 +15,8 @@ public class TFTestButton {
 	private static String formula;
 	private static ButtonPanel buttons;
 	private static JTextField output;
-	
-	public static void main(String[] args) {
 
+	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable()
         {
            public void run()
@@ -35,16 +34,23 @@ public class TFTestButton {
               frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
               frame.setVisible(true);
            }
-        });
+		});
 	}
 
 	private static class SubmitAction extends AbstractAction {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		public void actionPerformed(ActionEvent event) {
 			formula = buttons.getText();
 			WffChecker wc = new WffChecker();
-			wc.setInputString(formula);
-			wc.guiTree();
+			if (wc.setInputString(formula)) {
+				wc.guiTree();
+			}
 			output.setText(wc.getErrors());
+			buttons.hilitTextField(wc.getErrorPositionInLine());
 		}
 	}
 

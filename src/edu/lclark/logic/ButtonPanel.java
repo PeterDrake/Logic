@@ -1,10 +1,14 @@
 package edu.lclark.logic;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.Highlighter;
 
 public class ButtonPanel extends JPanel {
 
@@ -32,7 +36,7 @@ public class ButtonPanel extends JPanel {
 	public JTextField getTextField() {
 		return textField;
 	}
-
+	
 	public String getText() {
 		return textField.getText();
 	}
@@ -44,6 +48,23 @@ public class ButtonPanel extends JPanel {
 		button.addActionListener(listener);
 		button.setFocusable(false);
 		panel.add(button);
+	}
+	
+	public void hilitTextField(int errorPositionInLine) {
+
+		try {
+		final Highlighter hilit;
+		final Highlighter.HighlightPainter painter;
+		
+		hilit = new DefaultHighlighter();
+		painter = new DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW);
+		textField.setHighlighter(hilit);
+		
+			hilit.addHighlight(errorPositionInLine, errorPositionInLine+1, painter);
+		} catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	protected class ClearAction implements ActionListener {
