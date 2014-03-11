@@ -79,4 +79,9 @@ public class TruthTableChecker {
 		}
 		return values;
 	}
+
+	public boolean[] evaluateFormula(String formula) {
+		// TODO method stub
+		return null;
+	}
 }

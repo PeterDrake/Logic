@@ -46,7 +46,7 @@ public class TruthTableCheckerTest {
 					checker.disjunction(2, letterValues, 0, 1)[i]);
 		}
 	}
-	
+
 	@Test
 	public void conditionalTest() {
 		boolean[][] letterValues = { { true, false, true, false },
@@ -57,7 +57,7 @@ public class TruthTableCheckerTest {
 					checker.conditional(2, letterValues, 0, 1)[i]);
 		}
 	}
-	
+
 	@Test
 	public void biconditionalTest() {
 		boolean[][] letterValues = { { true, false, true, false },
@@ -66,6 +66,15 @@ public class TruthTableCheckerTest {
 		for (int i = 0; i < correctValues.length; i++) {
 			assertEquals(correctValues[i],
 					checker.biconditional(2, letterValues, 0, 1)[i]);
+		}
+	}
+
+	@Test
+	public void evaluateFormula() {
+		String formula = "p";
+		boolean[] expectedValues = { true, false };
+		for (int i = 0; i < expectedValues.length; i++) {
+			assertEquals(expectedValues, checker.evaluateFormula(formula));
 		}
 	}
 }
