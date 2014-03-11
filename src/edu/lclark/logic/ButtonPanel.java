@@ -4,13 +4,14 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.Highlighter;
 
 public class ButtonPanel extends JPanel {
 	/*
-	 * Sentence letters: p, q, r, s, t 
-	 * Connectives: -, ., ⋁, →, ↔ 
-	 * Parentheses: (, ), [, ] 
-	 * Truth-values: ⊤, ⊥
+	 * Sentence letters: p, q, r, s, t Connectives: -, ., ⋁, →, ↔ Parentheses:
+	 * (, ), [, ] Truth-values: ⊤, ⊥
 	 */
 
 	private JTextField textField;
@@ -20,7 +21,7 @@ public class ButtonPanel extends JPanel {
 		setLayout(new BorderLayout());
 		textField = new JTextField();
 		textField.setEditable(true);
-		//textField.setText("you can change text fields");
+		// textField.setText("you can change text fields");
 		add(textField, BorderLayout.NORTH);
 
 		JPanel buttons = new JPanel();
@@ -73,6 +74,7 @@ public class ButtonPanel extends JPanel {
 		buttons.add(misc);
 		add(buttons, BorderLayout.CENTER);
 	}
+
 	public String getText() {
 		return textField.getText();
 	}
@@ -83,6 +85,23 @@ public class ButtonPanel extends JPanel {
 		button.setToolTipText(toolTip);
 		button.addActionListener(listener);
 		panel.add(button);
+	}
+	
+	public void hilitTextField(int errorPositionInLine) {
+
+		try {
+		final Highlighter hilit;
+		final Highlighter.HighlightPainter painter;
+		
+		hilit = new DefaultHighlighter();
+		painter = new DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW);
+		textField.setHighlighter(hilit);
+		
+			hilit.addHighlight(errorPositionInLine, errorPositionInLine+1, painter);
+		} catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private class ClearAction implements ActionListener {
@@ -108,7 +127,7 @@ public class ButtonPanel extends JPanel {
 	private class DeleteAction implements ActionListener {
 		public void actionPerformed(ActionEvent event) {
 			String text = textField.getText();
-			if (!text.isEmpty()){
+			if (!text.isEmpty()) {
 				String result = text.substring(0, text.length() - 1);
 				textField.setText(result);
 			}
