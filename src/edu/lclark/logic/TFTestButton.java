@@ -15,7 +15,7 @@ public class TFTestButton {
 	private static String formula;
 	private static ButtonPanel buttons;
 	private static JTextField output;
-	
+
 	public static void main(String[] args) {
 
 		EventQueue.invokeLater(new Runnable()
@@ -42,9 +42,11 @@ public class TFTestButton {
 		public void actionPerformed(ActionEvent event) {
 			formula = buttons.getText();
 			WffChecker wc = new WffChecker();
-			wc.setInputString(formula);
-			wc.guiTree();
+			if (wc.setInputString(formula)) {
+				wc.guiTree();
+			}
 			output.setText(wc.getErrors());
+			buttons.hilitTextField(wc.getErrorPositionInLine());
 		}
 	}
 
