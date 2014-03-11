@@ -14,7 +14,7 @@ public class TFButtonPanel extends ButtonPanel {
 	 * Other: ', ⨆
 	 */
 
-	public TFButtonPanel(ActionListener submitAction) {
+	public TFButtonPanel(Action submitAction) {
 		setLayout(new BorderLayout());
 		setTextField (new JTextField());
 		getTextField().setEditable(true);
@@ -81,6 +81,9 @@ public class TFButtonPanel extends ButtonPanel {
 		submitButton.addActionListener(submitAction);
 		submitButton.setFocusable(false);
 		add(submitButton, BorderLayout.SOUTH);
+		
+		// associate the enter key with submitAction
+		initializeEnterKey(submitAction);
 	}
 
 
