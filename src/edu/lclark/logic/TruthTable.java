@@ -54,6 +54,7 @@ public class TruthTable implements Model {
 	public void addColumn(TruthTableColumn column) {
 	    columns.add(column);
 	}
+	
 
 	/** Updates letter and numLetters to reflect how many letters are in target formula */
 	private void countLetters() {

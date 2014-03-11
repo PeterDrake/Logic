@@ -24,4 +24,8 @@ public class TruthTableColumn {
     public String getLabel() {
         return label;
     }
+    
+    public int getNumRows() {
+    	return rows.length;
+    }
 }
