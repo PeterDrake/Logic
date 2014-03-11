@@ -1,12 +1,9 @@
 package edu.lclark.logic;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
 
-import javax.swing.JFrame;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 
 public class QTestButton {
@@ -26,7 +23,7 @@ public class QTestButton {
               output = new JTextField();
               output.setEditable(false);
               
-              ActionListener submitAction = new SubmitAction();
+              Action submitAction = new SubmitAction();
               frame.add(buttons = new QButtonPanel(submitAction), BorderLayout.CENTER);
               frame.add(output, BorderLayout.SOUTH);
               frame.pack();
@@ -37,7 +34,7 @@ public class QTestButton {
         });
 	}
 
-	private static class SubmitAction implements ActionListener {
+	private static class SubmitAction extends AbstractAction {
 		public void actionPerformed(ActionEvent event) {
 			formula = buttons.getText();
 			WffChecker wc = new WffChecker();

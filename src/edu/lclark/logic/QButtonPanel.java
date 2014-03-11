@@ -1,21 +1,13 @@
 package edu.lclark.logic;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import edu.lclark.logic.ButtonPanel.ClearAction;
-import edu.lclark.logic.ButtonPanel.DeleteAction;
-import edu.lclark.logic.ButtonPanel.InsertAction;
+import javax.swing.*;
 
 public class QButtonPanel extends ButtonPanel {
 
-	public QButtonPanel(ActionListener submitAction) {
+	public QButtonPanel(Action submitAction) {
 		setLayout(new BorderLayout());
 		setTextField(new JTextField());
 		getTextField().setEditable(true);
@@ -117,6 +109,8 @@ public class QButtonPanel extends ButtonPanel {
 		submitButton.setFocusable(false);
 		add(submitButton, BorderLayout.SOUTH);
 
+		// associate the enter key with submitAction
+		initializeEnterKey(submitAction);
 	}
 
 }
