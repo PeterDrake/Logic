@@ -41,8 +41,7 @@ public class TestButton {
 		public void actionPerformed(ActionEvent event) {
 			formula = buttons.getText();
 			WffChecker wc = new WffChecker();
-			if(wc.setInputString(formula))
-				wc.guiTree();
+			if (wc.setInputString(formula)) wc.guiTree();
 			output.setText(wc.getErrors());
 		}
 	}
