@@ -1,4 +1,4 @@
-grammar wff;
+grammar Wff;
 
 /*
  * PARSER RULES

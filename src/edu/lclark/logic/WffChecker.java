@@ -6,8 +6,8 @@ public class WffChecker {
 	
 	private ANTLRInputStream input;
 	private CommonTokenStream tokens;
-	private wffLexer lexer;
-	private wffParser parser;
+	private WffLexer lexer;
+	private WffParser parser;
 	private RuleContext tree;
 		
 	private WffCheckerListener errorListener;
@@ -32,9 +32,9 @@ public class WffChecker {
 	
 	public boolean setInputString(String is) {
 		input = new ANTLRInputStream(is);
-		lexer = new wffLexer(input); 
+		lexer = new WffLexer(input); 
 		tokens = new CommonTokenStream(lexer); 
-		parser = new wffParser(tokens);
+		parser = new WffParser(tokens);
 		
 		// Removes error listeners from the lexer (gets rid of ANTLR error output!)
 		// lexer.removeErrorListeners(); // remove ConsoleErrorListener
