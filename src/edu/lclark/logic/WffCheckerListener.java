@@ -7,8 +7,12 @@ import org.antlr.v4.runtime.*;
 
 public class WffCheckerListener extends BaseErrorListener {
 
-	public String errors = "The entered formula is a wff.";
-
+	private String errors = "The entered formula is a wff.";
+	private int errorPositionInLine = 0; 
+	
+	public int getErrorPositionInLine() {
+		return errorPositionInLine;
+	}
 	public String getErrors() {		
 		return errors;
 	}
@@ -22,7 +26,8 @@ public class WffCheckerListener extends BaseErrorListener {
 	{
 		List<String> stack = ((Parser)recognizer).getRuleInvocationStack();
 		Collections.reverse(stack);
-		errors = "line " + line + ":" + charPositionInLine + " " + msg;
+		errors = "charPosition :" + charPositionInLine + " " + msg;
+		errorPositionInLine = charPositionInLine;
 	}
 
 

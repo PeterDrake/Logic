@@ -26,6 +26,10 @@ public class WffChecker {
 		return errorListener.getErrors();
 	}
 	
+	public int getErrorPositionInLine() {
+		return errorListener.getErrorPositionInLine();
+	}
+	
 	// Basically a constructor, but because of the way
 	// ANTLR works we can't do that unless we pass a string
 	// to the constructor which is not optimal

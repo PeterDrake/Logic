@@ -1,12 +1,15 @@
 package edu.lclark.logic;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.Highlighter;
 
 
 public class TestButton {
@@ -41,9 +44,12 @@ public class TestButton {
 		public void actionPerformed(ActionEvent event) {
 			formula = buttons.getText();
 			WffChecker wc = new WffChecker();
-			if(wc.setInputString(formula))
+			if(wc.setInputString(formula)) {
 				wc.guiTree();
+			}
 			output.setText(wc.getErrors());
+			buttons.hilitTextField(wc.getErrorPositionInLine());
+
 		}
 	}
 }
