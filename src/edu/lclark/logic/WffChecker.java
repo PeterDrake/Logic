@@ -51,7 +51,7 @@ public class WffChecker {
 		
 		// There will be a RuntimeException if there is invalid syntax, so we catch it 
 		try {
-			tree = parser.prog();
+			tree = parser.formula();
 		}
 		catch (RuntimeException re) {
 			return false;
