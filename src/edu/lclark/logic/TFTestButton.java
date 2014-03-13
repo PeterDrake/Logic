@@ -45,7 +45,7 @@ public class TFTestButton {
 			if (wc.setInputString(formula)) {
 				wc.guiTree();
 			} else {
-				buttons.hilitTextField(wc.getErrorPositionInLine());
+				buttons.hilitTextField(wc.getErrorPositionInLine(), formula.length());				
 			}
 			output.setText(wc.getErrors());
 		}

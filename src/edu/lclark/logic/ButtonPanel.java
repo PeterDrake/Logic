@@ -50,7 +50,7 @@ public class ButtonPanel extends JPanel {
 		panel.add(button);
 	}
 	
-	public void hilitTextField(int errorPositionInLine) {
+	public void hilitTextField(int errorPositionInLine, int formulaLength) {
 
 		try {
 		final Highlighter hilit;
@@ -60,7 +60,7 @@ public class ButtonPanel extends JPanel {
 		painter = new DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW);
 		textField.setHighlighter(hilit);
 		
-			hilit.addHighlight(errorPositionInLine, errorPositionInLine+1, painter);
+			hilit.addHighlight(errorPositionInLine, formulaLength, painter);
 		} catch (BadLocationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
