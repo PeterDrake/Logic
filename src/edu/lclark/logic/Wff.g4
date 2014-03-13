@@ -27,8 +27,6 @@ grammar Wff;
 //		 ;
 
 formula : ( biconditional | conditional ) EOF ;
-//biconditional : conditional ( BICONDITIONAL conditional )* ;
-//conditional : disjunction ( CONDITIONAL disjunction )* ;
 biconditional : disjunction ( BICONDITIONAL disjunction)* ;
 conditional : disjunction CONDITIONAL disjunction ;
 disjunction : conjunction ( INCLUSIVE_OR conjunction )* ;
@@ -41,9 +39,6 @@ letters : LETTERS('\'')? ;
 /*
  * LEXER RULES
  */
-
-FORALL: 'V' | '∀' ;
-EXISTS: '#' | '∃' ;
 	   
 LEFTPAREN: '(' | '[' ;
 RIGHTPAREN: ')' | ']' ;
@@ -63,6 +58,7 @@ FALSITY: '⊥' | '0';
 
 LETTERS: 'p' | 'q' | 'r' | 's' | 't' 
 	   | 'P' | 'Q' | 'R' | 'S' | 'T'
+	   | 'a' | 'b' | 'c' | 'd' | 'e'
 	   | 'A' | 'B' | 'C' | 'D' | 'E'
 	   ;
 	   
