@@ -2,6 +2,8 @@ package edu.lclark.logic;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 public class TruthTableCheckerTest {
@@ -76,14 +78,67 @@ public class TruthTableCheckerTest {
 	}
 	
 	@Test
-	public void numOperatorsTest(){
-		String string = "p . q" ;
-		assertEquals(1, checker.numOperators(string));
-		String string2 = "p.q v r";
-		assertEquals(2, checker.numOperators(string2));
-		String string3 = "p.q.r .s. t";
-		assertEquals(4, checker.numOperators(string3));
-		String string4 = "(q.r v (r v s . t) -> s.t) <-> (q.s.r.t)";
-		assertEquals(10, checker.numOperators(string4));
+	public void getTopLevelOperatorsTest() {
+		String formula = "p.q";
+		ArrayList<String> ops = new ArrayList<String>();
+		ops.add(".");
+		assertEquals(ops, checker.getTopLevelOperators(formula));
+		formula = "(pvq) . (p->q) v s";
+		ops = new ArrayList<String>();
+		ops.add(".");
+		ops.add("v");
+		assertEquals(ops, checker.getTopLevelOperators(formula));
+		
 	}
+	
+	@Test
+	public void isOperatorTest() {
+		char op = '.';
+		assertTrue(checker.isOperator(op));
+	}
+	
+//	@Test
+//	public void numOperatorsTest(){
+//		String string = "p . q" ;
+//		assertEquals(1, checker.numOperators(string));
+//		String string2 = "p.q v r";
+//		assertEquals(2, checker.numOperators(string2));
+//		String string3 = "p.q.r .s. t";
+//		assertEquals(4, checker.numOperators(string3));
+//		String string4 = "(q.r v (r v s . t) -> s.t) <-> (q.s.r.t)";
+//		assertEquals(1, checker.numOperators(string4));
+//	}
+//	
+//	@Test
+//	public void numOperators2Test(){
+//		String string = "p . q" ;
+//		assertEquals(1, checker.numOperators2(string));
+//		String string2 = "p.q v r";
+//		assertEquals(2, checker.numOperators2(string2));
+//		String string3 = "p.q.r .s. t";
+//		assertEquals(4, checker.numOperators2(string3));
+//		String string4 = "p . (q v r)";
+//		assertEquals(1, checker.numOperators2(string4));
+//		String string5 = "q.rv(rvs.t)";
+//		assertEquals(2, checker.numOperators2(string5));
+//		String string6 = "(q.r v (r v s . t) -> s.t) <-> (q.s.r.t)";
+//		assertEquals(1, checker.numOperators2(string6));
+////		String string7 = "((p.q)vr) <-> (rv((p.r)vq)) . (((r.q)))";
+//		String string7 = "((p.q)vr) <-> q . (((r.q)))";
+//		assertEquals(2, checker.numOperators2(string7));
+//	}
+//	
+//	@Test
+//	public void insideParenthesesTest(){
+//		String string = "p.q";
+//		assertFalse(checker.insideParentheses(string, 1));
+//		string = "(p.q)";
+//		assertTrue(checker.insideParentheses(string, 2));
+//		string = "(p.q)vr";
+//		assertFalse(checker.insideParentheses(string, 5));
+//		string = "(q.rv(rvs.t)->s.t)<->(q.s.r.t)";
+//		assertTrue(checker.insideParentheses(string, 2));
+//		assertTrue(checker.insideParentheses(string, 7));
+//		assertFalse(checker.insideParentheses(string, 19));
+//	}
 }

@@ -1,6 +1,8 @@
 package edu.lclark.logic;
 
 import java.math.*;
+import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class TruthTableChecker {
 
@@ -95,26 +97,105 @@ public class TruthTableChecker {
 		return conjunction(enteredValues, calculatedValues);
 	}
 
-	public int numOperators(String string) {
+	// public int numOperators(String string) {
+	// int count = 0;
+	// int parenthesesLevel = 0;
+	// for (int i = 0; i < string.length(); i++){
+	// char c = string.charAt(i);
+	// if ((c == '.' || c == 'v' || c == '-' || c == '↔' || c == '→' || c == '⋁'
+	// || c == '&' || c == '^') && parenthesesLevel == 0){
+	// count++;
+	// } else if (c == '(') {
+	// parenthesesLevel++ ;
+	// } else if (c == ')') {
+	// parenthesesLevel--;
+	// }
+	// }
+	// return count;
+	// }
+
+	public boolean insideParentheses(String formula, int index) {
+		int parenthesesLevel = 0;
+		for (int i = 0; i < formula.length(); i++) {
+			if (formula.charAt(i) == '(') {
+				parenthesesLevel++;
+			} else if (formula.charAt(i) == ')') {
+				parenthesesLevel--;
+			}
+			if (index == i) {
+				// System.out.println(parenthesesLevel);
+				return (parenthesesLevel != 0);
+			}
+		}
+		return false;
+	}
+
+	public int numOperators2(String formula) {
+		formula = formula.replaceAll("\\s+", "");
 		int count = 0;
-		for (int i = 0; i < string.length(); i++){
-			char c = string.charAt(i);
-			if (c == '.' || c == 'v' || c == '-' || c == '↔' || c == '→' || c == '⋁' || c == '&' || c == '^'){
-				count++;
+		String[] ops = { "↔", "<->", "→", "[^<]->", "\\.", "&", "^", "v", "⋁",
+				"[^<]\\-[^>]", "¬", "~" };
+		for (String op : ops) {
+			String[] formula2 = formula.split(op);
+			int sum = 0;
+			if (formula2.length > 1) {
+				for (int i = 0; i < formula2.length - 1; i++) {
+					String cleanOp = op.replaceAll("\\\\", "");
+					cleanOp = cleanOp.replaceAll("\\[\\^>\\]", "");
+					cleanOp = cleanOp.replaceAll("\\[\\^<\\]", "");
+					sum += formula2[i].length() - i + cleanOp.length() - 1;
+					if (!insideParentheses(formula.replaceAll("\\\\", ""), sum)) {
+						count++;
+					}
+				}
 			}
 		}
 		return count;
-
+	}
+	
+	public boolean isOperator(char c) {
+		String[] ops = { "↔", "-", "→", "<->", ".", "&", "^", "v", "⋁",
+				"->", "¬", "~" };
+		for (String op : ops) {
+			if (op.equals("" + c)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
+	// TODO accept more than one character per operator, 
+	public ArrayList<String> getTopLevelOperators(String formula) {
+		int parenthesesLevel = 0;
+		ArrayList<String> result = new ArrayList<String>();
+		for (int i = 0; i < formula.length(); i++) {
+			char c = formula.charAt(i);
+			if (c == '(') {
+				parenthesesLevel++;
+			} else if (c == ')') {
+				parenthesesLevel--;
+			} else if (isOperator(c) && (parenthesesLevel == 0)) {
+				result.add("" + c);
+			}
+		}
+		return result;
+	}
+
+	
+	// TODO Recursion, accept more than one top level operator
 	public boolean[] evaluateFormula(String formula) {
 		boolean[] calculatedValues = new boolean[truthValues.length];
-		formula.replaceAll(" ", "");
-		if (numOperators(formula) == 0) {
-			return getColumnCalculatedValues(formula.charAt(0));
+		formula = formula.replaceAll(" ", "");
+		ArrayList<String> ops = getTopLevelOperators(formula);
+		for (String op : ops) {
+			op = Pattern.quote(op);
+			String[] subFormula = formula.split(op);
+			System.out.println(subFormula[0]);
+			System.out.println(subFormula[1]);
 		}
-		if (numOperators(formula) == 1) {
-//			if ()
+		if (numOperators2(formula) == 0) {
+			return getColumnCalculatedValues(formula.charAt(0));
+		} else if (numOperators2(formula) == 1) {
 			if (formula.contains("→") || (formula.contains("->"))) {
 				return conditional(
 						getColumnCalculatedValues(formula.charAt(0)),
