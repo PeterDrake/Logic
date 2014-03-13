@@ -44,9 +44,10 @@ public class TFTestButton {
 			WffChecker wc = new WffChecker();
 			if (wc.setInputString(formula)) {
 				wc.guiTree();
+			} else {
+				buttons.hilitTextField(wc.getErrorPositionInLine(), formula.length());				
 			}
 			output.setText(wc.getErrors());
-			buttons.hilitTextField(wc.getErrorPositionInLine());
 		}
 	}
 
