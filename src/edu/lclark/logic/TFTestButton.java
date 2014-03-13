@@ -37,6 +37,11 @@ public class TFTestButton {
 	}
 
 	private static class SubmitAction extends AbstractAction {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		public void actionPerformed(ActionEvent event) {
 			formula = buttons.getText();
 			WffChecker wc = new WffChecker();
