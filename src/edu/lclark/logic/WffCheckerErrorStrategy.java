@@ -1,7 +1,7 @@
 package edu.lclark.logic;
 
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.misc.ParseCancellationException;
+import org.antlr.v4.runtime.misc.*;
 
 public class WffCheckerErrorStrategy extends DefaultErrorStrategy {
 
@@ -23,11 +23,26 @@ public class WffCheckerErrorStrategy extends DefaultErrorStrategy {
 		}
 		throw new ParseCancellationException(e);
 	}
-	
-//	Recognition Exception:
-//	No Viable Alt Exception:
-//	Lexer No Viable Alt Exception:
-//	Input Mismatch Exception:
-//	Failed Predicate Exception:
+
+	@Override
+	public void reportNoViableAlternative(Parser parser, NoViableAltException e)
+			throws RecognitionException {
+		String msg = "Negated constituant not a wff";
+		parser.notifyErrorListeners(e.getOffendingToken(), msg, e);
+	}
+
+	@Override
+	protected void reportInputMismatch(@NotNull Parser recognizer,
+			@NotNull InputMismatchException e) {
+		String msg = "Grouping ambiguity";
+		recognizer.notifyErrorListeners(e.getOffendingToken(), msg, e);
+	}
+
+
+	// Recognition Exception:
+	// No Viable Alt Exception:
+	// Lexer No Viable Alt Exception:
+	// Input Mismatch Exception:
+	// Failed Predicate Exception:
 
 }
