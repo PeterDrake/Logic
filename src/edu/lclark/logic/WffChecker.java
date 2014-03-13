@@ -60,13 +60,19 @@ public class WffChecker {
 		catch (RuntimeException re) {
 			return false;
 		}
+		
+		// a little awkward, but there is one weird case where paren checking is messed up
+		if (getErrors() != "The entered formula is a wff.") {
+			return false;
+		}
+		
 		return true;
 	}
 	
 	// Super basic test
 	public static void main(String[] args) {
 		WffChecker wc = new WffChecker();
-		System.out.println(wc.setInputString("p<->q<->r->p"));
+		System.out.println(wc.setInputString("p->q)"));
 		System.out.println(wc.getErrors());
 	}
 }
