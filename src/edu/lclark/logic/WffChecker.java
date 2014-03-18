@@ -2,6 +2,9 @@ package edu.lclark.logic;
 
 import org.antlr.v4.runtime.*;
 
+/*import edu.lclark.logic.target.WffLexer;
+import edu.lclark.logic.target.WffParser;
+*/
 public class WffChecker {
 	
 	private ANTLRInputStream input;

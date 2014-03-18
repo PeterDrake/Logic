@@ -25,10 +25,44 @@ public class WffCheckerErrorStrategy extends DefaultErrorStrategy {
 	}
 
 	@Override
-	public void reportNoViableAlternative(Parser parser, NoViableAltException e)
-			throws RecognitionException {
-		String msg = "Negated constituant not a wff";
-		parser.notifyErrorListeners(e.getOffendingToken(), msg, e);
+	public void reportNoViableAlternative(@NotNull Parser recognizer,
+			@NotNull NoViableAltException e) {
+		String msg = "";
+		TokenStream tokens = recognizer.getInputStream();
+		String input;
+		if (tokens != null) {
+			if (e.getStartToken().getType() == Token.EOF)
+				input = "<EOF>";
+			else
+				input = tokens
+						.getText(e.getStartToken(), e.getOffendingToken());
+		} else {
+			input = "<unknown input>";
+		}
+		/*if (input.){
+			msg = ""
+					+ escapeWSAndQuote(input);
+		}*/
+		//Checks for parentheis and bracket errors
+		if (!input.startsWith("(") && input.endsWith(")")){
+			msg = "Right parenthesis lacks mate "
+					+ escapeWSAndQuote(input);	
+		}
+		if(!input.startsWith("[") && input.endsWith("]")){
+			msg = "Right bracket lacks mate "
+					+ escapeWSAndQuote(input);
+		}
+		if (input.startsWith("(") && !input.endsWith(")")){
+			msg = "Left parenthesis is not closed"
+					+ escapeWSAndQuote(input);
+		}
+		if(input.startsWith("[") && !input.endsWith("]")){
+			msg = "Left bracket not closed "
+					+ escapeWSAndQuote(input);
+		}
+		System.out.println(e.getOffendingToken().toString());
+		
+		recognizer.notifyErrorListeners(e.getOffendingToken(), msg, e);
 	}
 
 	@Override
@@ -37,7 +71,6 @@ public class WffCheckerErrorStrategy extends DefaultErrorStrategy {
 		String msg = "Grouping ambiguity";
 		recognizer.notifyErrorListeners(e.getOffendingToken(), msg, e);
 	}
-
 
 	// Recognition Exception:
 	// No Viable Alt Exception:
