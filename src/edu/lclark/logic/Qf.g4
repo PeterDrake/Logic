@@ -4,8 +4,6 @@ grammar Qf;
  * PARSER RULES
  */
 
-formula : EOF ;
-
 //formula : ( biconditional | conditional ) EOF ;
 //biconditional : disjunction ( BICONDITIONAL disjunction)* ;
 //conditional : disjunction CONDITIONAL disjunction ;
@@ -15,6 +13,23 @@ formula : EOF ;
 //parentheses : LEFTPAREN ( biconditional | conditional ) RIGHTPAREN | atom ;
 //atom : TRUTH | FALSITY | letters ;
 //letters : LETTERS('\'')? ;
+
+formula	: (LEFTPAREN (FORALL | EXISTS) variable RIGHTPAREN)? (biconditional | conditional) EOF;
+biconditional : disjunction ( BICONDITIONAL disjunction)* ;
+conditional : disjunction CONDITIONAL disjunction ;
+disjunction : conjunction (INCLUSIVE_OR conjunction)* ;
+conjunction : negation (CONJUNCTION negation)* ;
+negation : NEGATION? parentheses ;
+parentheses : LEFTPAREN ( biconditional | conditional ) RIGHTPAREN | predicate ;
+predicate : preposition predicateTuple ;
+predicateTuple : term (',' term)* ;
+term : function | variable ;
+function : constant functionTuple | constant ;
+functionTuple : LEFTPAREN (constant | variable) (',' (constant | variable) )* RIGHTPAREN;
+
+variable : VARIABLES('\'')? ;
+constant : CONSTANTS('\'')? ;
+preposition : PREPOSITIONS('\'')? ;
 
 /*
  * LEXER RULES
@@ -39,15 +54,11 @@ NEGATION: '-' | '¬' | '~' ;
 TRUTH: '⊤' | '1';
 FALSITY: '⊥' | '0';
 
-PREDICATELETTERS: 'F' | 'G' | 'H'
-				| 'I' | 'J' | 'K' ;
+PREPOSITIONS: 'F' | 'G' | 'H' | 'I' | 'J' | 'K' ;
 
-LETTERS: 'p' | 'q' | 'r' | 's' | 't' 
-	   | 'P' | 'Q' | 'R' | 'S' | 'T'
-	   | 'a' | 'b' | 'c' | 'd' | 'e'
-	   | 'A' | 'B' | 'C' | 'D' | 'E'
-	   | 'x' | 'y' | 'z' | 'v' | 'w'
-	   ;
+VARIABLES: 'x' | 'y' | 'z' | 'v' | 'w' ;
+	   
+CONSTANTS: 'a' | 'b' | 'c' | 'd' | 'e' ;
 	   
 SUBSCRIPTS: '₁' | '₂' | '₃' | '₄' | '₅' ;
 	   

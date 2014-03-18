@@ -31,7 +31,7 @@ biconditional : disjunction ( BICONDITIONAL disjunction)* ;
 conditional : disjunction CONDITIONAL disjunction ;
 disjunction : conjunction ( INCLUSIVE_OR conjunction )* ;
 conjunction : negation ( CONJUNCTION negation )* ;
-negation : NEGATION parentheses | parentheses ;
+negation : NEGATION? parentheses ;
 parentheses : LEFTPAREN ( biconditional | conditional ) RIGHTPAREN | atom ;
 atom : TRUTH | FALSITY | letters ;
 letters : LETTERS('\'')? ;
