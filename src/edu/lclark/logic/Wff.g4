@@ -1,4 +1,4 @@
-grammar wff;
+grammar Wff;
 
 /*
  * PARSER RULES
@@ -26,14 +26,12 @@ grammar wff;
 //		 | INCLUSIVE_OR
 //		 ;
 
-prog : ( biconditional | conditional ) EOF ;
-//biconditional : conditional ( BICONDITIONAL conditional )* ;
-//conditional : disjunction ( CONDITIONAL disjunction )* ;
+formula : ( biconditional | conditional ) EOF ;
 biconditional : disjunction ( BICONDITIONAL disjunction)* ;
 conditional : disjunction CONDITIONAL disjunction ;
 disjunction : conjunction ( INCLUSIVE_OR conjunction )* ;
-conjunction : negation ( AND negation )* ;
-negation : NOT parentheses | parentheses ;
+conjunction : negation ( CONJUNCTION negation )* ;
+negation : NEGATION parentheses | parentheses ;
 parentheses : LEFTPAREN ( biconditional | conditional ) RIGHTPAREN | atom ;
 atom : TRUTH | FALSITY | letters ;
 letters : LETTERS('\'')? ;
@@ -41,27 +39,28 @@ letters : LETTERS('\'')? ;
 /*
  * LEXER RULES
  */
-
-FORALL: 'V' | '∀' ;
-EXISTS: 'E' | '∃' ;
 	   
 LEFTPAREN: '(' | '[' ;
 RIGHTPAREN: ')' | ']' ;
 	  
-BICONDITIONAL: '↔' | '<->';
+BICONDITIONAL: '↔' | '<->' | '≡';
 
-CONDITIONAL: '→' | '->';
+CONDITIONAL: '→' | '->' | '⊃';
 		   
-AND: '.' | '&' | '^' ;
+CONJUNCTION: '.' | '&' | '^' ;
 
 INCLUSIVE_OR: 'v' | '⋁' ;
 
-NOT: '-' | '¬' | '~' ;
+NEGATION: '-' | '¬' | '~' ;
 		   
 TRUTH: '⊤' | '1';
 FALSITY: '⊥' | '0';
 
-LETTERS: 'p' | 'q' | 'r' | 's' | 't' ;
+LETTERS: 'p' | 'q' | 'r' | 's' | 't' 
+	   | 'P' | 'Q' | 'R' | 'S' | 'T'
+	   | 'a' | 'b' | 'c' | 'd' | 'e'
+	   | 'A' | 'B' | 'C' | 'D' | 'E'
+	   ;
 	   
 WS : (' ' | '\t' | '\r' | '\n') -> skip ;
 

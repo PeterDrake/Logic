@@ -3,8 +3,6 @@ package edu.lclark.logic;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JFrame;
@@ -15,7 +13,7 @@ public class TFTestButton {
 	private static String formula;
 	private static ButtonPanel buttons;
 	private static JTextField output;
-	
+
 	public static void main(String[] args) {
 
 		EventQueue.invokeLater(new Runnable()
@@ -39,11 +37,19 @@ public class TFTestButton {
 	}
 
 	private static class SubmitAction extends AbstractAction {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
 		public void actionPerformed(ActionEvent event) {
 			formula = buttons.getText();
 			WffChecker wc = new WffChecker();
-			wc.setInputString(formula);
-			wc.guiTree();
+			if (wc.setInputString(formula)) {
+				wc.guiTree();
+			} else {
+				buttons.hilitTextField(wc.getErrorPositionInLine(), formula.length());				
+			}
 			output.setText(wc.getErrors());
 		}
 	}

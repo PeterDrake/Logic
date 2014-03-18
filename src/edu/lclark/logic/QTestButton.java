@@ -38,8 +38,11 @@ public class QTestButton {
 		public void actionPerformed(ActionEvent event) {
 			formula = buttons.getText();
 			WffChecker wc = new WffChecker();
-			wc.setInputString(formula);
-			wc.guiTree();
+			if (wc.setInputString(formula)) {
+				wc.guiTree();
+			} else {
+				buttons.hilitTextField(wc.getErrorPositionInLine(), formula.length());				
+			}
 			output.setText(wc.getErrors());
 		}
 	}

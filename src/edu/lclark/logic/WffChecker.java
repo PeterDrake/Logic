@@ -6,11 +6,11 @@ public class WffChecker {
 	
 	private ANTLRInputStream input;
 	private CommonTokenStream tokens;
-	private wffLexer lexer;
-	private wffParser parser;
+	private WffLexer lexer;
+	private WffParser parser;
 	private RuleContext tree;
 		
-	private VerboseListener errorListener;
+	private WffCheckerListener errorListener;
 
 	public String printTree() {
 		return tree.toStringTree(parser);
@@ -19,17 +19,15 @@ public class WffChecker {
 	// Opens a dialogue box with the parser tree broken down
 	
 	public void guiTree() {
-		try {
 			tree.inspect(parser);
-		} catch (RuntimeException re) {
-			if(getErrors() == "The entered formula is a wff.") {
-				parser.notifyErrorListeners("There was a problem.");
-			}
-		}
 	}
 	
 	public String getErrors() {
 		return errorListener.getErrors();
+	}
+	
+	public int getErrorPositionInLine() {
+		return errorListener.getErrorPositionInLine();
 	}
 	
 	// Basically a constructor, but because of the way
@@ -38,37 +36,43 @@ public class WffChecker {
 	
 	public boolean setInputString(String is) {
 		input = new ANTLRInputStream(is);
-		lexer = new wffLexer(input); 
+		lexer = new WffLexer(input); 
 		tokens = new CommonTokenStream(lexer); 
-		parser = new wffParser(tokens);
+		parser = new WffParser(tokens);
 		
 		// Removes error listeners from the lexer (gets rid of ANTLR error output!)
-//		lexer.removeErrorListeners(); // remove ConsoleErrorListener
+		// lexer.removeErrorListeners(); // remove ConsoleErrorListener
 		
 		// Removes error listeners from the parser (gets rid of ANTLR error output!)
 		parser.removeErrorListeners(); // remove ConsoleErrorListener
 		
 		// Sets the error handler strategy BailErrorStrategy is an example
 		// from the ANTLR reference, basically just throws exceptions
-		parser.setErrorHandler(new BailErrorStrategy());
+		parser.setErrorHandler(new WffCheckerErrorStrategy());
 		
-		errorListener = new VerboseListener();
+		errorListener = new WffCheckerListener();
 		parser.addErrorListener(errorListener);
 		
 		// There will be a RuntimeException if there is invalid syntax, so we catch it 
 		try {
-			tree = parser.prog();
+			tree = parser.formula();
 		}
 		catch (RuntimeException re) {
 			return false;
 		}
+		
+		// a little awkward, but there is one weird case where paren checking is messed up
+		if (getErrors() != "The entered formula is a wff.") {
+			return false;
+		}
+		
 		return true;
 	}
 	
 	// Super basic test
 	public static void main(String[] args) {
 		WffChecker wc = new WffChecker();
-		System.out.println(wc.setInputString("p->q->r"));
+		System.out.println(wc.setInputString("p->q)"));
 		System.out.println(wc.getErrors());
 	}
 }
