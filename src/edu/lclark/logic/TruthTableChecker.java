@@ -87,33 +87,17 @@ public class TruthTableChecker {
 		return values;
 	}
 
+	/** Takes column with user-entered values and returns which ones are correct */
 	public boolean[] compareValues(TruthTableColumn column) {
-		boolean[] enteredValues = new boolean[column.getNumRows()];
 		boolean[] calculatedValues = evaluateFormula(column.getLabel());
+		boolean[] results = new boolean[column.getNumRows()];
 		for (int i = 0; i < column.getNumRows(); i++) {
-			enteredValues[i] = column.getValue(i);
+			results[i] = column.getValue(i) == calculatedValues[i];
 		}
-
-		return conjunction(enteredValues, calculatedValues);
+		return results;
 	}
 
-	// public int numOperators(String string) {
-	// int count = 0;
-	// int parenthesesLevel = 0;
-	// for (int i = 0; i < string.length(); i++){
-	// char c = string.charAt(i);
-	// if ((c == '.' || c == 'v' || c == '-' || c == '↔' || c == '→' || c == '⋁'
-	// || c == '&' || c == '^') && parenthesesLevel == 0){
-	// count++;
-	// } else if (c == '(') {
-	// parenthesesLevel++ ;
-	// } else if (c == ')') {
-	// parenthesesLevel--;
-	// }
-	// }
-	// return count;
-	// }
-
+	/** Returns true if index of String is inside parentheses */
 	public boolean insideParentheses(String formula, int index) {
 		int parenthesesLevel = 0;
 		for (int i = 0; i < formula.length(); i++) {
@@ -123,14 +107,14 @@ public class TruthTableChecker {
 				parenthesesLevel--;
 			}
 			if (index == i) {
-				// System.out.println(parenthesesLevel);
 				return (parenthesesLevel != 0);
 			}
 		}
 		return false;
 	}
 
-	public int numOperators2(String formula) {
+	/** Returns the number of operators */
+	public int numOperators(String formula) {
 		formula = formula.replaceAll("\\s+", "");
 		int count = 0;
 		String[] ops = { "↔", "<->", "→", "[^<]->", "\\.", "&", "^", "v", "⋁",
@@ -152,36 +136,46 @@ public class TruthTableChecker {
 		}
 		return count;
 	}
-	
-	public boolean isOperator(char c) {
-		String[] ops = { "↔", "-", "→", "<->", ".", "&", "^", "v", "⋁",
-				"->", "¬", "~" };
+
+	public boolean isOperator(String c) {
+		String[] ops = { "↔", "-", "→", "<->", ".", "&", "^", "v", "⋁", "->",
+				"¬", "~" };
 		for (String op : ops) {
-			if (op.equals("" + c)) {
+			if (op.equals(c)) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	// TODO accept more than one character per operator, 
+	/** Returns all operators outside of parentheses */
 	public ArrayList<String> getTopLevelOperators(String formula) {
 		int parenthesesLevel = 0;
 		ArrayList<String> result = new ArrayList<String>();
 		for (int i = 0; i < formula.length(); i++) {
-			char c = formula.charAt(i);
-			if (c == '(') {
+			String c = formula.charAt(i) + "";
+			if (c.equals("(")) {
 				parenthesesLevel++;
-			} else if (c == ')') {
+			} else if (c.equals(")")) {
 				parenthesesLevel--;
-			} else if (isOperator(c) && (parenthesesLevel == 0)) {
-				result.add("" + c);
+			} else if (parenthesesLevel == 0) {
+				if (i < formula.length() - 2
+						&& isOperator(formula.substring(i, i + 3))) {
+					result.add(formula.substring(i, i + 3));
+					i += 2;
+				} else if (i < formula.length() - 1
+						&& isOperator(formula.substring(i, i + 2))) {
+					result.add(formula.substring(i, i + 2));
+					i++;
+				} else if (isOperator(c)) {
+					result.add("" + c);
+
+				}
 			}
 		}
 		return result;
 	}
 
-	
 	// TODO Recursion, accept more than one top level operator
 	public boolean[] evaluateFormula(String formula) {
 		boolean[] calculatedValues = new boolean[truthValues.length];
@@ -193,9 +187,9 @@ public class TruthTableChecker {
 			System.out.println(subFormula[0]);
 			System.out.println(subFormula[1]);
 		}
-		if (numOperators2(formula) == 0) {
+		if (numOperators(formula) == 0) {
 			return getColumnCalculatedValues(formula.charAt(0));
-		} else if (numOperators2(formula) == 1) {
+		} else if (numOperators(formula) == 1) {
 			if (formula.contains("→") || (formula.contains("->"))) {
 				return conditional(
 						getColumnCalculatedValues(formula.charAt(0)),
