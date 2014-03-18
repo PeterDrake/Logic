@@ -11,14 +11,18 @@ public class TruthTableGUI extends JFrame {
     public static final int DEFAULT_HEIGHT = 693;
 
     private static ButtonPanel buttons;
+    private static JTextField errorField;
     
     public TruthTableGUI() {
-    	//this.setLayout(new BorderLayout());
+    	errorField = new JTextField();
     	JPanel panel = new JPanel();
+    	panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    	System.out.println(panel.getLayout());
     	buttons = new TFButtonPanel(new SubmitAction(this));
     	panel.add(buttons);
+    	panel.add(errorField);
     	add(panel, BorderLayout.NORTH);
-        pack();
+        //pack();
     }
 
     public static void main(String[] args) {
@@ -42,10 +46,16 @@ public class TruthTableGUI extends JFrame {
 		}
 		
 		public void actionPerformed(ActionEvent event) {
-			gui.getContentPane().removeAll();
-			gui.add(new TruthTablePanel(buttons.getText()));
-			gui.repaint();
-			gui.setVisible(true);
+			String formula = buttons.getText();
+			WffChecker checker = new WffChecker();
+			if (checker.setInputString(formula)) {
+				gui.getContentPane().removeAll();
+				gui.add(new TruthTablePanel(formula));
+				gui.setVisible(true);
+			} else {
+				errorField.setText(checker.getErrors());
+				buttons.hilitTextField(checker.getErrorPositionInLine());
+			}
 		}
 	}
 }

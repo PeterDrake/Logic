@@ -1,5 +1,6 @@
 package edu.lclark.logic;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
@@ -7,6 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -35,14 +37,13 @@ public class TruthTablePanel extends JPanel implements View {
         addColumnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                addColumn(new TruthTableColumn("[new]", null));
+                addColumn(new TruthTableColumn("p.q", null));
             }
         });
-        setLayout(new FlowLayout(FlowLayout.LEFT));
-        setVisible(true);     
+        setLayout(new FlowLayout(FlowLayout.LEFT));   
         truthTable = new TruthTable(formula);
         initTable();
-//        add(addColumnButton);
+        add(addColumnButton);
         add(panel);
         addColumn(new TruthTableColumn(formula, null));
     }
