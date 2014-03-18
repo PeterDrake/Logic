@@ -69,15 +69,31 @@ public class TruthTableCheckerTest {
 		}
 	}
 
+    boolean[][] calculatedValues1 = {
+            { true, true, true, true, false, false, false, false },
+            { true, true, false, false, true, true, false, false},
+            { true, false, true, false, true, false, true, false } };
+    
+    char[] letters1 = { 'p', 'q', 'r' };
+    
+    TruthTableChecker checker1 = new TruthTableChecker("p . qvr",
+            calculatedValues1, letters1);
+    
 	@Test
 	public void evaluateFormulaTest() {
 		String formula = "p.q";
-		boolean[] expectedValues = { true, false, false, false };
+		boolean[] expectedValues = { true, false, false, false  };
 		assertEquals(-1, checker.compare(checker.evaluateFormula(formula),
 				expectedValues));
-		formula = "p.q.r";
+	    boolean[] expectedValues1 = { true, true, true, false, true, false, true, false };
+		formula = "p.qvr";
+	    assertEquals(-1, checker1.compare(checker1.evaluateFormula(formula),
+	            expectedValues1));
+        formula = "(p.q)vr";
+        assertEquals(-1, checker1.compare(checker1.evaluateFormula(formula),
+                expectedValues1));
 	}
-	
+
 	@Test
 	public void getTopLevelOperatorsTest() {
 		String formula = "p.q";
