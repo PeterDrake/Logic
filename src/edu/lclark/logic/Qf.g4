@@ -4,15 +4,17 @@ grammar Qf;
  * PARSER RULES
  */
 
-formula : ( biconditional | conditional ) EOF ;
-biconditional : disjunction ( BICONDITIONAL disjunction)* ;
-conditional : disjunction CONDITIONAL disjunction ;
-disjunction : conjunction ( INCLUSIVE_OR conjunction )* ;
-conjunction : negation ( CONJUNCTION negation )* ;
-negation : NEGATION parentheses | parentheses ;
-parentheses : LEFTPAREN ( biconditional | conditional ) RIGHTPAREN | atom ;
-atom : TRUTH | FALSITY | letters ;
-letters : LETTERS('\'')? ;
+formula : EOF ;
+
+//formula : ( biconditional | conditional ) EOF ;
+//biconditional : disjunction ( BICONDITIONAL disjunction)* ;
+//conditional : disjunction CONDITIONAL disjunction ;
+//disjunction : conjunction ( INCLUSIVE_OR conjunction )* ;
+//conjunction : negation ( CONJUNCTION negation )* ;
+//negation : NEGATION parentheses | parentheses ;
+//parentheses : LEFTPAREN ( biconditional | conditional ) RIGHTPAREN | atom ;
+//atom : TRUTH | FALSITY | letters ;
+//letters : LETTERS('\'')? ;
 
 /*
  * LEXER RULES
@@ -46,6 +48,8 @@ LETTERS: 'p' | 'q' | 'r' | 's' | 't'
 	   | 'A' | 'B' | 'C' | 'D' | 'E'
 	   | 'x' | 'y' | 'z' | 'v' | 'w'
 	   ;
+	   
+SUBSCRIPTS: '₁' | '₂' | '₃' | '₄' | '₅' ;
 	   
 WS : (' ' | '\t' | '\r' | '\n') -> skip ;
 
