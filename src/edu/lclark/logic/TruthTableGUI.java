@@ -7,8 +7,8 @@ import javax.swing.*;
 
 /** A GUI that displays a truth table */
 public class TruthTableGUI extends JFrame {
-    public static final int DEFAULT_WIDTH = 800;
-    public static final int DEFAULT_HEIGHT = 693;
+	public static final int DEFAULT_WIDTH = 800;
+	public static final int DEFAULT_HEIGHT = 693;
 
     private static ButtonPanel buttons;
     private static JTextField errorField;
@@ -46,6 +46,7 @@ public class TruthTableGUI extends JFrame {
 		}
 		
 		public void actionPerformed(ActionEvent event) {
+			buttons.removeHilits();
 			String formula = buttons.getText();
 			WffChecker checker = new WffChecker();
 			if (checker.setInputString(formula)) {
@@ -54,8 +55,9 @@ public class TruthTableGUI extends JFrame {
 				gui.setVisible(true);
 			} else {
 				errorField.setText(checker.getErrors());
-				buttons.hilitTextField(checker.getErrorPositionInLine());
+				buttons.hilitTextField(checker.getErrorPositionInLine(), formula.length());
 			}
 		}
+
 	}
 }
