@@ -72,6 +72,7 @@ public class WffCheckerErrorStrategy extends DefaultErrorStrategy {
 		recognizer.notifyErrorListeners(e.getOffendingToken(), msg, e);
 	}
 
+
 	// Recognition Exception:
 	// No Viable Alt Exception:
 	// Lexer No Viable Alt Exception:

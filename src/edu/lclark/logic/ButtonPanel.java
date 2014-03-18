@@ -16,17 +16,20 @@ public class ButtonPanel extends JPanel {
 	 * The text field that buttons output to
 	 */
 	private JTextField textField;
+	private Highlighter hilit;
+	private Highlighter.HighlightPainter painter;
 
 	public ButtonPanel() {
 
 	}
-	
+
 	public void initializeEnterKey(Action submitAction) {
-	    InputMap imap = getTextField().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-	    imap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "panel.submit");
-	    
-	    ActionMap amap = getTextField().getActionMap();
-	    amap.put("panel.submit", submitAction);
+		InputMap imap = getTextField().getInputMap(
+				JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+		imap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "panel.submit");
+
+		ActionMap amap = getTextField().getActionMap();
+		amap.put("panel.submit", submitAction);
 	}
 
 	public void setTextField(JTextField textField) {
@@ -49,18 +52,25 @@ public class ButtonPanel extends JPanel {
 		button.setFocusable(false);
 		panel.add(button);
 	}
-	
-	public void hilitTextField(int errorPositionInLine) {
 
-		try {
-		final Highlighter hilit;
-		final Highlighter.HighlightPainter painter;
-		
+	public void initializeHilit() {
 		hilit = new DefaultHighlighter();
 		painter = new DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW);
 		textField.setHighlighter(hilit);
-		
-			hilit.addHighlight(errorPositionInLine, errorPositionInLine+1, painter);
+	}
+
+	public void removeHilits() {
+		hilit.removeAllHighlights();
+	}
+
+	public void hilitTextField(int errorPositionInLine, int formulaLength) {
+
+		try {
+			if (errorPositionInLine == formulaLength) {
+				textField.setText(textField.getText() + " ");
+			}
+			hilit.addHighlight(errorPositionInLine, errorPositionInLine + 1,
+					painter);
 		} catch (BadLocationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

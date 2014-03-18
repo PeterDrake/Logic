@@ -1,30 +1,8 @@
-grammar Wff;
+grammar Qf;
 
 /*
  * PARSER RULES
  */
-	   
-//prog:  | formula (BICONDITIONAL formula)? EOF
-//	   | formula (CONDITIONAL formula)? EOF
-//	   | formula (operators formula)? EOF 
-//	   ;
-//
-//formula: LEFTPAREN formula RIGHTPAREN
-//	   | NOT formula
-//	   | expr (BICONDITIONAL expr)?
-//	   | expr (CONDITIONAL expr)?
-//	   | expr (operators expr)?
-//	   ;
-//	   
-//expr: LEFTPAREN expr RIGHTPAREN
-//	| (LETTERS operators)+ expr (operators LETTERS)?
-//	| NOT expr
-//	| LETTERS
-//	;
-//
-//operators: AND
-//		 | INCLUSIVE_OR
-//		 ;
 
 formula : ( biconditional | conditional ) EOF ;
 biconditional : disjunction ( BICONDITIONAL disjunction)* ;
@@ -39,6 +17,9 @@ letters : LETTERS('\'')? ;
 /*
  * LEXER RULES
  */
+
+FORALL: 'V' | '∀' ;
+EXISTS: '#' | '∃' ;
 	   
 LEFTPAREN: '(' | '[' ;
 RIGHTPAREN: ')' | ']' ;
@@ -56,10 +37,14 @@ NEGATION: '-' | '¬' | '~' ;
 TRUTH: '⊤' | '1';
 FALSITY: '⊥' | '0';
 
+PREDICATELETTERS: 'F' | 'G' | 'H'
+				| 'I' | 'J' | 'K' ;
+
 LETTERS: 'p' | 'q' | 'r' | 's' | 't' 
 	   | 'P' | 'Q' | 'R' | 'S' | 'T'
 	   | 'a' | 'b' | 'c' | 'd' | 'e'
 	   | 'A' | 'B' | 'C' | 'D' | 'E'
+	   | 'x' | 'y' | 'z' | 'v' | 'w'
 	   ;
 	   
 WS : (' ' | '\t' | '\r' | '\n') -> skip ;
