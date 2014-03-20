@@ -84,6 +84,9 @@ public class TFButtonPanel extends ButtonPanel {
 		
 		// associate the enter key with submitAction
 		initializeEnterKey(submitAction);
+		
+		// initialize the highlighter
+		initializeHilit();
 	}
 
 

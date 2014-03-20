@@ -30,24 +30,25 @@ public class LogicCLI implements View {
 		QfWffChecker qfwc = new QfWffChecker(s);
 		System.out.println(qfwc.checkWff());
 	}
-	
+
 	@Command
 	public void qftree(String s) {
 		QfWffChecker qfwc = new QfWffChecker(s);
 		System.out.println(qfwc.printTree());
 	}
-	
+
 	@Command
 	public void qfgui(String s) {
 		QfWffChecker qfwc = new QfWffChecker(s);
 		qfwc.guiTree();
 	}
-	
+
 	public LogicCLI() {
 		
 	}
-	
-	public static void main(String[] args) throws IOException  {
-		ShellFactory.createConsoleShell("wffchecker", "", new LogicCLI()).commandLoop();
-    }
+
+	public static void main(String[] args) throws IOException {
+		ShellFactory.createConsoleShell("wffchecker", "", new LogicCLI())
+				.commandLoop();
+	}
 }

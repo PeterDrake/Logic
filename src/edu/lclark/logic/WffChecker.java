@@ -3,18 +3,18 @@ package edu.lclark.logic;
 import org.antlr.v4.runtime.*;
 
 public class WffChecker {
-	
+
 	private ANTLRInputStream input;
 	private CommonTokenStream tokens;
 	private RuleContext tree;
 	private Parser parser;
-		
+
 	private WffCheckerListener errorListener;
 
 	public String printTree() {
 		return getTree().toStringTree(parser);
 	}
-	
+
 	// Opens a dialogue box with the parser tree broken down
 	public void guiTree() {
 			getTree().inspect(parser);
@@ -30,11 +30,11 @@ public class WffChecker {
 		setErrorListener(new WffCheckerListener());
 		parser.addErrorListener(getErrorListener());
 	}
-	
+		
 	public String getErrors() {
 		return getErrorListener().getErrors();
 	}
-	
+
 	public int getErrorPositionInLine() {
 		return errorListener.getErrorPositionInLine();
 	}
@@ -71,4 +71,3 @@ public class WffChecker {
 		this.tree = tree;
 	}
 }
-
