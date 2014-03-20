@@ -52,6 +52,16 @@ public class QButtonPanel extends ButtonPanel {
 		addButton("v", "sentence letter", lowerCase, new InsertAction("v"));
 		addButton("w", "sentence letter", lowerCase, new InsertAction("w"));
 		buttons.add(lowerCase);
+		
+		JPanel constants = new JPanel();
+		constants.setLayout(new GridLayout(5, 1));
+
+		addButton("a", "constant", constants, new InsertAction("a"));
+		addButton("b", "constant", constants, new InsertAction("b"));
+		addButton("c", "constant", constants, new InsertAction("c"));
+		addButton("d", "constant", constants, new InsertAction("d"));
+		addButton("e", "constant", constants, new InsertAction("e"));
+		buttons.add(constants);
 
 		// Creates a new panel with the remaining buttons
 		JPanel misc = new JPanel();
@@ -61,18 +71,12 @@ public class QButtonPanel extends ButtonPanel {
 		JPanel capSentenceLetters = new JPanel();
 		capSentenceLetters.setLayout(new GridLayout(6, 1));
 
-		addButton("F", "sentence letter", capSentenceLetters, new InsertAction(
-				"F"));
-		addButton("G", "sentence letter", capSentenceLetters, new InsertAction(
-				"G"));
-		addButton("H", "sentence letter", capSentenceLetters, new InsertAction(
-				"H"));
-		addButton("I", "sentence letter", capSentenceLetters, new InsertAction(
-				"I"));
-		addButton("J", "sentence letter", capSentenceLetters, new InsertAction(
-				"J"));
-		addButton("K", "sentence letter", capSentenceLetters, new InsertAction(
-				"K"));
+		addButton("F", "sentence letter", capSentenceLetters, new InsertAction("F"));
+		addButton("G", "sentence letter", capSentenceLetters, new InsertAction("G"));
+		addButton("H", "sentence letter", capSentenceLetters, new InsertAction("H"));
+		addButton("I", "sentence letter", capSentenceLetters, new InsertAction("I"));
+		addButton("J", "sentence letter", capSentenceLetters, new InsertAction("J"));
+		addButton("K", "sentence letter", capSentenceLetters, new InsertAction("K"));
 		buttons.add(capSentenceLetters);
 
 		JPanel quantifiers = new JPanel();
