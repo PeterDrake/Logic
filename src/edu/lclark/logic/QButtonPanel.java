@@ -16,7 +16,7 @@ public class QButtonPanel extends ButtonPanel {
 		// A panel that all the buttons, but the submit button are added to
 		JPanel buttons = new JPanel();
 		buttons.setLayout(new FlowLayout());
-		
+
 		// Makes a panel with all the connectives
 		JPanel connectives = new JPanel();
 		connectives.setLayout(new GridLayout(5, 1));
@@ -41,7 +41,7 @@ public class QButtonPanel extends ButtonPanel {
 		addButton("t", "sentence letter", sentenceLetters,
 				new InsertAction("t"));
 		buttons.add(sentenceLetters);
-		
+
 		// ///////////
 		JPanel lowerCase = new JPanel();
 		lowerCase.setLayout(new GridLayout(5, 1));
@@ -56,19 +56,25 @@ public class QButtonPanel extends ButtonPanel {
 		// Creates a new panel with the remaining buttons
 		JPanel misc = new JPanel();
 		misc.setLayout(new GridLayout(6, 1));
-		
+
 		// ///////////////
 		JPanel capSentenceLetters = new JPanel();
 		capSentenceLetters.setLayout(new GridLayout(6, 1));
 
-		addButton("F", "sentence letter", capSentenceLetters, new InsertAction("F"));
-		addButton("G", "sentence letter", capSentenceLetters, new InsertAction("G"));
-		addButton("H", "sentence letter", capSentenceLetters, new InsertAction("H"));
-		addButton("I", "sentence letter", capSentenceLetters, new InsertAction("I"));
-		addButton("J", "sentence letter", capSentenceLetters, new InsertAction("J"));
-		addButton("K", "sentence letter", capSentenceLetters, new InsertAction("K"));
+		addButton("F", "sentence letter", capSentenceLetters, new InsertAction(
+				"F"));
+		addButton("G", "sentence letter", capSentenceLetters, new InsertAction(
+				"G"));
+		addButton("H", "sentence letter", capSentenceLetters, new InsertAction(
+				"H"));
+		addButton("I", "sentence letter", capSentenceLetters, new InsertAction(
+				"I"));
+		addButton("J", "sentence letter", capSentenceLetters, new InsertAction(
+				"J"));
+		addButton("K", "sentence letter", capSentenceLetters, new InsertAction(
+				"K"));
 		buttons.add(capSentenceLetters);
-		
+
 		JPanel quantifiers = new JPanel();
 		quantifiers.setLayout(new GridLayout(1, 2));
 		addButton("∀", "for all", quantifiers, new InsertAction("∀"));
@@ -98,7 +104,8 @@ public class QButtonPanel extends ButtonPanel {
 
 		// Adds the clear and submit button
 		addButton("clear", "clears the text field", misc, new ClearAction());
-		addButton("delete", "deletes the last character in the text field", misc, new DeleteAction());
+		addButton("delete", "deletes the last character in the text field",
+				misc, new DeleteAction());
 		buttons.add(misc);
 
 		add(buttons, BorderLayout.CENTER);
@@ -111,6 +118,9 @@ public class QButtonPanel extends ButtonPanel {
 
 		// associate the enter key with submitAction
 		initializeEnterKey(submitAction);
+
+		// initialize the highlighter
+		initializeHilit();
 	}
 
 }
