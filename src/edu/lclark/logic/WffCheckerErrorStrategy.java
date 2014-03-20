@@ -2,8 +2,10 @@ package edu.lclark.logic;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.misc.*;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
-public class WffCheckerErrorStrategy extends DefaultErrorStrategy {
+public class WffCheckerErrorStrategy extends DefaultErrorStrategy{
 
 	@Override
 	public void recover(Parser recognizer, RecognitionException e) {
@@ -27,7 +29,7 @@ public class WffCheckerErrorStrategy extends DefaultErrorStrategy {
 	@Override
 	public void reportNoViableAlternative(@NotNull Parser recognizer,
 			@NotNull NoViableAltException e) {
-		String msg = "";
+		String msg = "Negated constituent not a Wff or incorrect usage of negation";
 		TokenStream tokens = recognizer.getInputStream();
 		String input;
 		if (tokens != null) {
@@ -43,21 +45,18 @@ public class WffCheckerErrorStrategy extends DefaultErrorStrategy {
 			msg = ""
 					+ escapeWSAndQuote(input);
 		}*/
+		System.out.println(tokens.getText());
+		System.out.println(input);
 		//Checks for parentheis and bracket errors
-		if (!input.startsWith("(") && input.endsWith(")")){
-			msg = "Right parenthesis lacks mate "
+		if (!tokens.getText().startsWith("(") && tokens.getText().endsWith(")")){
+			msg += "Right parenthesis lacks mate "
 					+ escapeWSAndQuote(input);	
-		}
-		if(!input.startsWith("[") && input.endsWith("]")){
-			msg = "Right bracket lacks mate "
+		}else if (tokens.getText().startsWith("(") && !tokens.getText().endsWith(")")){
+			msg += " and/or left parenthesis is not closed"
 					+ escapeWSAndQuote(input);
 		}
-		if (input.startsWith("(") && !input.endsWith(")")){
-			msg = "Left parenthesis is not closed"
-					+ escapeWSAndQuote(input);
-		}
-		if(input.startsWith("[") && !input.endsWith("]")){
-			msg = "Left bracket not closed "
+		if(tokens.getText().startsWith("[") && !tokens.getText().endsWith("]")){
+			msg += " and/or Unnecessary brackets"
 					+ escapeWSAndQuote(input);
 		}
 		System.out.println(e.getOffendingToken().toString());
@@ -70,6 +69,21 @@ public class WffCheckerErrorStrategy extends DefaultErrorStrategy {
 			@NotNull InputMismatchException e) {
 		String msg = "Grouping ambiguity";
 		recognizer.notifyErrorListeners(e.getOffendingToken(), msg, e);
+	}
+	
+	@Override
+	protected void reportUnwantedToken(@NotNull Parser recognizer) {
+		if (inErrorRecoveryMode(recognizer)) {
+			return;
+		}
+
+		beginErrorCondition(recognizer);
+
+		Token t = recognizer.getCurrentToken();
+		//String tokenName = getTokenErrorDisplay(t);
+		//IntervalSet expecting = getExpectedTokens(recognizer);
+		String msg = "Unnecessary brackets";
+		recognizer.notifyErrorListeners(t, msg, null);
 	}
 
 
