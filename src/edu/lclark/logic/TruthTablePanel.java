@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -31,21 +32,31 @@ public class TruthTablePanel extends JPanel implements View {
 
 	/** The button that adds a new column */
 	private final JButton addColumnButton;
+	
+	/** The truth-table checker that checks column */
+	//private TruthTableChecker checker;
+	
+	/** The label for the target formula */
+	private JLabel targetFormulaLabel;
 
-    public TruthTablePanel(String formula) {
+    public TruthTablePanel(final ButtonPanel buttons) {
+    	String formula = buttons.getText();
+    	targetFormulaLabel = new JLabel("Target formula: " + formula);
         addColumnButton = new JButton("Add Column");
         addColumnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                addColumn(new TruthTableColumn("p.q", null));
+               buttons.setVisible(true);
             }
         });
         setLayout(new FlowLayout(FlowLayout.LEFT));   
         truthTable = new TruthTable(formula);
         initTable();
-        add(addColumnButton);
+        JPanel temp = new JPanel(new BorderLayout());
+        temp.add(targetFormulaLabel, BorderLayout.NORTH);
+        temp.add(addColumnButton, BorderLayout.SOUTH);
+        add(temp);
         add(panel);
-        addColumn(new TruthTableColumn(formula, null));
     }
 
 	/**
@@ -68,8 +79,10 @@ public class TruthTablePanel extends JPanel implements View {
 	private void fillInTruthTable() {
 		int numRows = truthTable.getNumRows();
 		int numColumns = truthTable.getNumColumns();
-		for (int col = 0; col < numColumns; col++)
+		for (int col = 0; col < numColumns; col++) {
+			if (col == truthTable.getNumLetters()) continue;
 			addCell(new JLabel(truthTable.getColumn(col).getLabel()));
+		}
 		for (int row = 0; row < numRows; row++)
 			addRow(row);
 	}
@@ -79,11 +92,11 @@ public class TruthTablePanel extends JPanel implements View {
 		int numColumns = truthTable.getNumColumns();
 		int numLetters = truthTable.getNumLetters();
 		for (int col = 0; col < numColumns; col++) {
+			if (col == numLetters) continue;
 			JComponent cell;
 			if (col < numLetters) {
 				// Add a JLabel:
-				cell = new JLabel(truthTable.getColumn(col).getValue(row) ? "T"
-						: "F");
+				cell = new JLabel(truthTable.getColumn(col).getValue(row) ? "T" : "F");
 			} else {
 				// Add a JTextField:
 				cell = new JTextField();
@@ -100,7 +113,7 @@ public class TruthTablePanel extends JPanel implements View {
 	}
 
 	/** Adds a column to the truth table, on the right */
-	private void addColumn(TruthTableColumn column) {
+	public void addColumn(TruthTableColumn column) {
 		int numRows = truthTable.getNumRows();
 		// Replaces existing panel with new panel that has 1 extra added column:
 		remove(panel);
@@ -120,4 +133,5 @@ public class TruthTablePanel extends JPanel implements View {
 		Graphics2D g2 = (Graphics2D) g;
 		// g2.draw(new Line2D.Double(x1,y2, x2,y2);
 	}
+	
 }

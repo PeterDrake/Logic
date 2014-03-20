@@ -43,6 +43,10 @@ public class ButtonPanel extends JPanel {
 	public String getText() {
 		return textField.getText();
 	}
+	
+	public void clearText() {
+		textField.setText("");
+	}
 
 	protected void addButton(String label, String toolTip, JPanel panel,
 			ActionListener listener) {
