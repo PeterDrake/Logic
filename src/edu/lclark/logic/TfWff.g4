@@ -1,37 +1,15 @@
-grammar Wff;
+grammar TfWff;
 
 /*
  * PARSER RULES
  */
-	   
-//prog:  | formula (BICONDITIONAL formula)? EOF
-//	   | formula (CONDITIONAL formula)? EOF
-//	   | formula (operators formula)? EOF 
-//	   ;
-//
-//formula: LEFTPAREN formula RIGHTPAREN
-//	   | NOT formula
-//	   | expr (BICONDITIONAL expr)?
-//	   | expr (CONDITIONAL expr)?
-//	   | expr (operators expr)?
-//	   ;
-//	   
-//expr: LEFTPAREN expr RIGHTPAREN
-//	| (LETTERS operators)+ expr (operators LETTERS)?
-//	| NOT expr
-//	| LETTERS
-//	;
-//
-//operators: AND
-//		 | INCLUSIVE_OR
-//		 ;
 
 formula : ( biconditional | conditional ) EOF ;
 biconditional : disjunction ( BICONDITIONAL disjunction)* ;
 conditional : disjunction CONDITIONAL disjunction ;
 disjunction : conjunction ( INCLUSIVE_OR conjunction )* ;
 conjunction : negation ( CONJUNCTION negation )* ;
-negation : NEGATION parentheses | parentheses ;
+negation : NEGATION? parentheses ;
 parentheses : LEFTPAREN ( biconditional | conditional ) RIGHTPAREN | atom ;
 atom : TRUTH | FALSITY | letters ;
 letters : LETTERS('\'')? ;
