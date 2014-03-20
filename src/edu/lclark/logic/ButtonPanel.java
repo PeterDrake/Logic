@@ -15,6 +15,10 @@ public class ButtonPanel extends JPanel {
 	/**
 	 * The text field that buttons output to
 	 */
+	
+	// TODO
+	private static final long serialVersionUID = 1L;
+
 	private JTextField textField;
 	private Highlighter hilit;
 	private Highlighter.HighlightPainter painter;

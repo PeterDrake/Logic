@@ -1,8 +1,6 @@
 package edu.lclark.logic;
 
 import java.awt.*;
-import java.awt.event.*;
-
 import javax.swing.*;
 
 public class TFButtonPanel extends ButtonPanel {
@@ -13,6 +11,9 @@ public class TFButtonPanel extends ButtonPanel {
 	 * Truth-values: ⊤, ⊥
 	 * Other: ', ⨆
 	 */
+
+	// TODO
+	private static final long serialVersionUID = 1L;
 
 	public TFButtonPanel(Action submitAction) {
 		setLayout(new BorderLayout());

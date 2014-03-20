@@ -3,7 +3,6 @@ package edu.lclark.logic;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,8 +12,14 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+//import java.awt.Graphics2D;
+
 /** A JPanel that displays a truth-table */
-public class TruthTablePanel extends JPanel implements View {
+public class TruthTablePanel extends JPanel {
+
+	//TODO
+	private static final long serialVersionUID = 1L;
+
 	/** Width, in pixels, of each 'cell' in the truth table grid */
 	private static final int CELL_WIDTH = 50;
 
@@ -116,7 +121,7 @@ public class TruthTablePanel extends JPanel implements View {
 	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		Graphics2D g2 = (Graphics2D) g;
+		//Graphics2D g2 = (Graphics2D) g;
 		// g2.draw(new Line2D.Double(x1,y2, x2,y2);
 	}
 }
