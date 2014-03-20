@@ -5,7 +5,7 @@ import java.io.IOException;
 import asg.cliche.Command;
 import asg.cliche.ShellFactory;
 
-public class LogicCLI implements View {
+public class LogicCLI {
 		
 	@Command
 	public void tfwff(String s) {

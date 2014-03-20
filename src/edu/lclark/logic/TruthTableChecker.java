@@ -1,6 +1,5 @@
 package edu.lclark.logic;
 
-import java.math.*;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
@@ -13,7 +12,7 @@ public class TruthTableChecker {
 
     public TruthTableChecker(String formula, boolean[][] truthValues,
             char[] letters) {
-        this.formula = formula;
+        this.setFormula(formula);
         this.truthValues = truthValues;
         this.letters = letters;
     }
@@ -221,5 +220,13 @@ public class TruthTableChecker {
         }
         return null;
     }
+
+	public String getFormula() {
+		return formula;
+	}
+
+	public void setFormula(String formula) {
+		this.formula = formula;
+	}
 
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** A truth table model for a well-formed formula */
-public class TruthTable implements Model {
+public class TruthTable {
 	/** The well-formed formula this truth table represents */
 	private final String formula;
 
