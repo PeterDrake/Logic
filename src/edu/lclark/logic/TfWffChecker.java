@@ -1,23 +1,21 @@
 package edu.lclark.logic;
 
-import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 
-public class QfWffChecker extends WffChecker {
+public class TfWffChecker extends WffChecker {
 	
-	private QfWffLexer lexer;
-	private QfWffParser parser;
+	private TfWffLexer lexer;
+	private TfWffParser parser;
 	
-	// Basically a constructor, but because of the way
-	// ANTLR works we can't do that unless we pass a string
-	// to the constructor which is not optimal
-	
-	public QfWffChecker(String is) {
+	public TfWffChecker(String is) {
 		setInput(new ANTLRInputStream(is));
-		lexer = new QfWffLexer(getInput()); 
+		lexer = new TfWffLexer(getInput()); 
 		setTokens(new CommonTokenStream(lexer)); 
-		parser = new QfWffParser(getTokens());
+		parser = new TfWffParser(getTokens());
 		
 		super.swapParserErrorHandling(parser);
+		
 	}
 	
 	public boolean checkWff() {
@@ -39,9 +37,10 @@ public class QfWffChecker extends WffChecker {
 	
 	// Super basic test
 	public static void main(String[] args) {
-		QfWffChecker qfwc = new QfWffChecker("(∀x) (Fx) -> (Gx)");
-		System.out.println(qfwc.checkWff());
-		System.out.println(qfwc.getErrors());
+		TfWffChecker tfwc = new TfWffChecker("p->q)");
+		System.out.println(tfwc.checkWff());
+		System.out.println(tfwc.getErrors());
 	}
-}
 
+	
+}

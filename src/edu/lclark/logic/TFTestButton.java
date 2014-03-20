@@ -44,8 +44,8 @@ public class TFTestButton {
 
 		public void actionPerformed(ActionEvent event) {
 			formula = buttons.getText();
-			WffChecker wc = new WffChecker();
-			if (wc.setInputString(formula)) {
+			TfWffChecker wc = new TfWffChecker(formula);
+			if (wc.checkWff()) {
 				wc.guiTree();
 			} else {
 				buttons.hilitTextField(wc.getErrorPositionInLine(), formula.length());				

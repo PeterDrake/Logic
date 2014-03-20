@@ -1,18 +1,8 @@
-grammar Qf;
+grammar QfWff;
 
 /*
  * PARSER RULES
  */
-
-//formula : ( biconditional | conditional ) EOF ;
-//biconditional : disjunction ( BICONDITIONAL disjunction)* ;
-//conditional : disjunction CONDITIONAL disjunction ;
-//disjunction : conjunction ( INCLUSIVE_OR conjunction )* ;
-//conjunction : negation ( CONJUNCTION negation )* ;
-//negation : NEGATION parentheses | parentheses ;
-//parentheses : LEFTPAREN ( biconditional | conditional ) RIGHTPAREN | atom ;
-//atom : TRUTH | FALSITY | letters ;
-//letters : LETTERS('\'')? ;
 
 formula	: (LEFTPAREN (FORALL | EXISTS) variable RIGHTPAREN)? (biconditional | conditional) EOF;
 biconditional : disjunction ( BICONDITIONAL disjunction)* ;

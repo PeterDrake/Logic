@@ -4,66 +4,71 @@ import static org.junit.Assert.*;
 
 import org.junit.*;
 
-public class WffCheckerTest {
+public class TfWffCheckerTest {
 
-	WffChecker wc;
-	WffChecker wc2;
-	
-	@Before
-    public void setUp() {
-		wc = new WffChecker();
-		wc2 = new WffChecker();
-	}
-	
+	TfWffChecker wc;
+	TfWffChecker wc2;
+
 	@After
 	public void tearDown() {
 		wc = null;
 		wc2 = null;
 	}
-	
+
 	@Test
 	public void WffChecker1() {
-		assertTrue(wc.setInputString("p . q"));
+		wc = new TfWffChecker("p . q");
+		wc.checkWff();
 	}
-	
+
 	@Test
 	public void WffChecker2() {
-		assertFalse(wc.setInputString("p .^ q"));
+		wc = new TfWffChecker("p .^ q");
+		assertFalse(wc.checkWff());
 	}
-	
+
 	@Test
 	public void WffChecker3() {
-		assertFalse(wc.setInputString("p q"));
+		wc = new TfWffChecker("p q");
+		assertFalse(wc.checkWff());
 	}
-	
+
 	@Test
 	public void WffChecker4() {
-		assertTrue(wc.setInputString("-(-((p).(-(q))))"));
+		wc = new TfWffChecker("-(-((p).(-(q))))");
+		assertTrue(wc.checkWff());
 	}
-	
+
 	@Test
 	public void WffChecker5() {
-		assertEquals(wc.setInputString("-(-((p).(-(q))))"), wc2.setInputString("-(-(p.-q))"));
+		wc = new TfWffChecker("-(-((p).(-(q))))");
+		wc2 = new TfWffChecker("-(-(p.-q))");
+		assertEquals(wc.checkWff(), wc2.checkWff());
 	}
-	
+
 	@Test
 	public void WffChecker6() {
-		assertFalse(wc.setInputString("p -> q -> r"));
+		wc = new TfWffChecker("p -> q -> r");
+		assertFalse(wc.checkWff());
 	}
-	
+
 	@Test
 	public void WffChecker7() {
-		assertTrue(wc.setInputString("-p.q ⋁ r → s.t"));
+		wc = new TfWffChecker("-p.q ⋁ r → s.t");
+		assertTrue(wc.checkWff());
 	}
-	
+
 	@Test
 	public void WffChecker8() {
-		assertFalse(wc.setInputString("p -> q <-> r"));
+		wc = new TfWffChecker("p -> q <-> r");
+		assertFalse(wc.checkWff());
 	}
-	
+
 	@Test
 	public void WffChecker9() {
-		assertEquals(wc.setInputString("p ⋁ t → [(q → r.t) ↔ s]"), wc2.setInputString("p ⋁ t → [q → (r.t ↔ s)]"));
+		wc = new TfWffChecker("p ⋁ t → [(q → r.t) ↔ s]");
+		wc2 = new TfWffChecker("p ⋁ t → [q → (r.t ↔ s)]");
+		assertEquals(wc.checkWff(), wc2.checkWff());
 	}
 
 }
