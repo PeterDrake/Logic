@@ -23,11 +23,11 @@ public class WffChecker {
 	}
 	
 	public String getErrors() {
-		return errorListener.getErrors();
+		return getErrorListener().getErrors();
 	}
 	
 	public int getErrorPositionInLine() {
-		return errorListener.getErrorPositionInLine();
+		return getErrorListener().getErrorPositionInLine();
 	}
 	
 	// Basically a constructor, but because of the way
@@ -50,8 +50,8 @@ public class WffChecker {
 		// from the ANTLR reference, basically just throws exceptions
 		parser.setErrorHandler(new WffCheckerErrorStrategy());
 		
-		errorListener = new WffCheckerListener();
-		parser.addErrorListener(errorListener);
+		setErrorListener(new WffCheckerListener());
+		parser.addErrorListener(getErrorListener());
 		
 		// There will be a RuntimeException if there is invalid syntax, so we catch it 
 		try {
@@ -74,6 +74,14 @@ public class WffChecker {
 		WffChecker wc = new WffChecker();
 		System.out.println(wc.setInputString("p->q)"));
 		System.out.println(wc.getErrors());
+	}
+
+	public WffCheckerListener getErrorListener() {
+		return errorListener;
+	}
+
+	public void setErrorListener(WffCheckerListener errorListener) {
+		this.errorListener = errorListener;
 	}
 }
 

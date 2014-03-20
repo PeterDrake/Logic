@@ -2,33 +2,13 @@ package edu.lclark.logic;
 
 import org.antlr.v4.runtime.*;
 
-public class QfWffChecker {
+public class QfWffChecker extends WffChecker {
 	
 	private ANTLRInputStream input;
 	private CommonTokenStream tokens;
 	private QfLexer lexer;
 	private QfParser parser;
 	private RuleContext tree;
-		
-	private WffCheckerListener errorListener;
-
-	public String printTree() {
-		return tree.toStringTree(parser);
-	}
-	
-	// Opens a dialogue box with the parser tree broken down
-	
-	public void guiTree() {
-			tree.inspect(parser);
-	}
-	
-	public String getErrors() {
-		return errorListener.getErrors();
-	}
-	
-	public int getErrorPositionInLine() {
-		return errorListener.getErrorPositionInLine();
-	}
 	
 	// Basically a constructor, but because of the way
 	// ANTLR works we can't do that unless we pass a string
@@ -50,8 +30,8 @@ public class QfWffChecker {
 		// from the ANTLR reference, basically just throws exceptions
 		parser.setErrorHandler(new WffCheckerErrorStrategy());
 		
-		errorListener = new WffCheckerListener();
-		parser.addErrorListener(errorListener);
+		setErrorListener(new WffCheckerListener());
+		parser.addErrorListener(getErrorListener());
 		
 		// There will be a RuntimeException if there is invalid syntax, so we catch it 
 		try {
