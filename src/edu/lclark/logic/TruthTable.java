@@ -61,7 +61,6 @@ public class TruthTable implements Model {
 		columns.add(column);
 	}
 	
-
 	/**
 	 * Updates letter and numLetters to reflect how many letters are in target
 	 * formula
@@ -99,7 +98,8 @@ public class TruthTable implements Model {
 	}
 
 	public boolean getValue(int row, int column) {
-		return truthValues[row][column];
+		return getColumn(column).getValue(row);
+//		return truthValues[row][column];
 	}
 
 	public void addTargetFormula() {
@@ -108,5 +108,9 @@ public class TruthTable implements Model {
 
 	public void checkFragment() {
 		// TODO
+	}
+	
+	public String getTargetFormula() {
+		return formula;
 	}
 }

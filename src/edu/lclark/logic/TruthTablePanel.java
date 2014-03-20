@@ -1,23 +1,14 @@
 package edu.lclark.logic;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
 
-import javax.swing.AbstractAction;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 /** A JPanel that displays a truth-table */
 public class TruthTablePanel extends JPanel implements View {
+	private static final long serialVersionUID = 1L;
+
 	/** Width, in pixels, of each 'cell' in the truth table grid */
 	private static final int CELL_WIDTH = 50;
 
@@ -34,7 +25,7 @@ public class TruthTablePanel extends JPanel implements View {
 	private final JButton addColumnButton;
 	
 	/** The truth-table checker that checks column */
-	//private TruthTableChecker checker;
+	private TruthTableChecker checker;
 	
 	/** The label for the target formula */
 	private JLabel targetFormulaLabel;
@@ -80,7 +71,7 @@ public class TruthTablePanel extends JPanel implements View {
 		int numRows = truthTable.getNumRows();
 		int numColumns = truthTable.getNumColumns();
 		for (int col = 0; col < numColumns; col++) {
-			if (col == truthTable.getNumLetters()) continue;
+//			if (col == truthTable.getNumLetters()) continue;
 			addCell(new JLabel(truthTable.getColumn(col).getLabel()));
 		}
 		for (int row = 0; row < numRows; row++)
@@ -92,16 +83,22 @@ public class TruthTablePanel extends JPanel implements View {
 		int numColumns = truthTable.getNumColumns();
 		int numLetters = truthTable.getNumLetters();
 		for (int col = 0; col < numColumns; col++) {
-			if (col == numLetters) continue;
-			JComponent cell;
+//			final int column = col;
+//			if (col == numLetters) continue;
 			if (col < numLetters) {
 				// Add a JLabel:
-				cell = new JLabel(truthTable.getColumn(col).getValue(row) ? "T" : "F");
+				addCell(new JLabel(truthTable.getColumn(col).getValue(row) ? "T" : "F"));
 			} else {
-				// Add a JTextField:
-				cell = new JTextField();
+				// Add a JButton:
+				final JButton cell = new JButton("");
+				TruthTableColumn column = truthTable.getColumn(col);
+				boolean value = false;
+				if (column != null) {
+					value = column.getValue(row);
+				}
+				cell.addActionListener(new TruthTableButton(value, cell, row, col));
+				addCell(cell);
 			}
-			addCell(cell);
 		}
 	}
 
@@ -130,8 +127,60 @@ public class TruthTablePanel extends JPanel implements View {
 	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		Graphics2D g2 = (Graphics2D) g;
+		//Graphics2D g2 = (Graphics2D) g;
 		// g2.draw(new Line2D.Double(x1,y2, x2,y2);
 	}
 	
+	private class TruthTableButton extends AbstractAction {
+		private static final long serialVersionUID = 1L;
+		
+		private int row;
+		private int column;
+		
+		private boolean value;
+		
+		private JButton button;
+
+		TruthTableButton(boolean value, JButton button, int row, int column) {
+			this.value = value;
+			this.button = button;
+			this.row = row;
+			this.column = column;
+			updateText();
+		}
+		
+		private void updateText() {
+			button.setText(value ? "T" : "F");
+		}
+		
+        @Override
+        public void actionPerformed(ActionEvent event) {
+        	value = !value;
+        	updateText();
+            truthTable.getColumn(column).setValue(row, value);
+            TruthTableColumn col = truthTable.getColumn(column);
+            String formula = col.getLabel();
+            int numRows = truthTable.getNumRows();
+            int numCols = truthTable.getNumColumns();
+            boolean[][] values = new boolean[numRows][numCols];
+            for (int r = 0; r < numRows; r++) {
+            	for (int c = 0; c < numCols; c++) {
+            		values[r][c] = col.getValue(r);
+            	}
+            }
+            int numLetters = truthTable.getNumLetters();
+            char[] letters = new char[numLetters];
+            for (int i = 0; i < numLetters; i++) {
+            	letters[i] = truthTable.getLetter(i);
+            }
+            boolean[] correct = new TruthTableChecker(truthTable.getTargetFormula(), values, letters).evaluateFormula(formula);
+            if (!correct[row]) {
+            	System.out.println(row + " WRONG");
+            }
+        }
+	}
+	
+	public TruthTable getTruthTable() {
+		return truthTable;
+	}
 }

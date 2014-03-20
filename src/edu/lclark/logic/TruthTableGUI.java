@@ -7,6 +7,8 @@ import javax.swing.*;
 
 /** A GUI that displays a truth table */
 public class TruthTableGUI extends JFrame {
+	private static final long serialVersionUID = 1L;
+	
 	public static final int DEFAULT_WIDTH = 800;
 	public static final int DEFAULT_HEIGHT = 693;
 
@@ -46,6 +48,20 @@ public class TruthTableGUI extends JFrame {
 			firstClick = true;
 		}
 
+		/**
+		 * Updates letter and numLetters to reflect how many letters are in target
+		 * formula
+		 */
+		private int countLetters(String formula) {
+			int numLetters = 0;
+			for (char letter : "pqrst".toCharArray()) {
+				if (formula.indexOf(letter) >= 0) {
+					numLetters++;
+				}
+			}
+			return numLetters;
+		}
+
 		public void actionPerformed(ActionEvent event) {
 			buttons.removeHilits();
 			String formula = buttons.getText();
@@ -62,7 +78,8 @@ public class TruthTableGUI extends JFrame {
 				buttons.setVisible(false);
 				errorField.setVisible(false);
 				if (!firstClick) {
-					truthTablePanel.addColumn(new TruthTableColumn(formula, null));
+					int numCols = truthTablePanel.getTruthTable().getNumRows();
+					truthTablePanel.addColumn(new TruthTableColumn(formula, new boolean[numCols]));
 				}
 			} else {
 				errorField.setText(checker.getErrors());

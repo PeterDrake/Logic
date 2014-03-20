@@ -21,6 +21,7 @@ public class TruthTableChecker {
     public boolean[] getColumnCalculatedValues(char letter) {
         for (int i = 0; i < letters.length; i++) {
             if (letters[i] == letter) {
+            	System.out.println("" + letter + " is " + truthValues[i][1]);
                 return truthValues[i];
             }
         }
