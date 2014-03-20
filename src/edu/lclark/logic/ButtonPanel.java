@@ -66,8 +66,10 @@ public class ButtonPanel extends JPanel {
 	public void hilitTextField(int errorPositionInLine, int formulaLength) {
 
 		try {
-			if (errorPositionInLine == formulaLength) {
+			if (errorPositionInLine == formulaLength && !textField.getText().substring(formulaLength-1, formulaLength).equals(" ")) {
 				textField.setText(textField.getText() + " ");
+			} else if (errorPositionInLine == formulaLength && textField.getText().substring(formulaLength-1, formulaLength).equals(" ")) {
+				errorPositionInLine--;
 			}
 			hilit.addHighlight(errorPositionInLine, errorPositionInLine + 1,
 					painter);
