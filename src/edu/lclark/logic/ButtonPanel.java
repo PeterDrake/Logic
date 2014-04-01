@@ -18,6 +18,7 @@ public class ButtonPanel extends JPanel {
 	private JTextField textField;
 	private Highlighter hilit;
 	private Highlighter.HighlightPainter painter;
+	private JTextField errorField;
 
 	public ButtonPanel() {
 
@@ -30,6 +31,22 @@ public class ButtonPanel extends JPanel {
 
 		ActionMap amap = getTextField().getActionMap();
 		amap.put("panel.submit", submitAction);
+	}
+	
+	public void setErrorTextField(JTextField errorField) {
+		this.errorField = errorField;
+	}
+	
+	public JTextField getErrorTextField() {
+		return errorField;
+	}
+	
+	public void setErrorText(String error) {
+		errorField.setText(error);
+	}
+	
+	public String getErrorText() {
+		return errorField.getText();
 	}
 
 	public void setTextField(JTextField textField) {

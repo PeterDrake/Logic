@@ -13,16 +13,13 @@ public class TruthTableGUI extends JFrame {
 	public static final int DEFAULT_HEIGHT = 693;
 
 	private static ButtonPanel buttons;
-	private static JTextField errorField;
 	private static TruthTablePanel truthTablePanel;
 
 	public TruthTableGUI() {
-		errorField = new JTextField();
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		buttons = new TFButtonPanel(new SubmitAction(this));
 		panel.add(buttons);
-		panel.add(errorField);
 		add(panel, BorderLayout.NORTH);
 	}
 
@@ -48,41 +45,43 @@ public class TruthTableGUI extends JFrame {
 			firstClick = true;
 		}
 
-		/**
-		 * Updates letter and numLetters to reflect how many letters are in target
-		 * formula
-		 */
-		private int countLetters(String formula) {
-			int numLetters = 0;
-			for (char letter : "pqrst".toCharArray()) {
-				if (formula.indexOf(letter) >= 0) {
-					numLetters++;
-				}
-			}
-			return numLetters;
-		}
+//		/**
+//		 * Updates letter and numLetters to reflect how many letters are in target
+//		 * formula
+//		 */
+//		private int countLetters(String formula) {
+//			int numLetters = 0;
+//			for (char letter : "pqrst".toCharArray()) {
+//				if (formula.indexOf(letter) >= 0) {
+//					numLetters++;
+//				}
+//			}
+//			return numLetters;
+//		}
 
 		public void actionPerformed(ActionEvent event) {
 			buttons.removeHilits();
 			String formula = buttons.getText();
+			WffChecker checker = new WffChecker();
 
-			if (firstClick) {
+			if (firstClick && checker.setInputString(formula)) {
 				truthTablePanel = new TruthTablePanel(buttons);
 				gui.add(truthTablePanel);
 				firstClick = false;
+				buttons.setErrorText("");
 			}
 
-			WffChecker checker = new WffChecker();
+			
 			if (checker.setInputString(formula)) {
 				buttons.clearText();
 				buttons.setVisible(false);
-				errorField.setVisible(false);
 				if (!firstClick) {
 					int numCols = truthTablePanel.getTruthTable().getNumRows();
 					truthTablePanel.addColumn(new TruthTableColumn(formula, new boolean[numCols]));
+					buttons.setErrorText("");
 				}
 			} else {
-				errorField.setText(checker.getErrors());
+				buttons.setErrorText(checker.getErrors());
 				buttons.hilitTextField(checker.getErrorPositionInLine(), formula.length());
 			}
 		}
