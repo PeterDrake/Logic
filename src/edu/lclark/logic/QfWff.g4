@@ -4,7 +4,7 @@ grammar QfWff;
  * PARSER RULES
  */
 
-formula	: (LEFTPAREN (FORALL | EXISTS) variable RIGHTPAREN)? (biconditional | conditional) EOF;
+formula	: (LEFTPAREN (FORALL | EXISTS) variable RIGHTPAREN)* (biconditional | conditional) EOF;
 biconditional : disjunction ( BICONDITIONAL disjunction)* ;
 conditional : disjunction CONDITIONAL disjunction ;
 disjunction : conjunction (INCLUSIVE_OR conjunction)* ;
@@ -26,7 +26,7 @@ preposition : PREPOSITIONS('\'')? ;
  */
 
 FORALL: 'V' | '∀' ;
-EXISTS: '#' | '∃' ;
+EXISTS: '#' | '∃' | '∃' ;
 	   
 LEFTPAREN: '(' | '[' ;
 RIGHTPAREN: ')' | ']' ;
