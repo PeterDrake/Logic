@@ -37,7 +37,7 @@ public class QfWffCheckerTest {
 	@Test
 	public void WffChecker3() {
 		wc = new QfWffChecker("(∀x) Fxy");
-		assertFalse(wc.checkWff());
+		assertTrue(wc.checkWff());
 	}
 
 	@Test
