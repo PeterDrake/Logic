@@ -24,20 +24,20 @@ public class QfWffCheckerTest {
 	
 	@Test
 	public void WffChecker1() {
-		wc = new QfWffChecker("(∀x) Fx");
+		wc = new QfWffChecker("F₂xy");
 		wc.checkWff();
 	}
 
 	@Test
 	public void WffChecker2() {
-		wc = new QfWffChecker("(∀xy) Fxy");
+		wc = new QfWffChecker("(∀x) Fx");
 		assertTrue(wc.checkWff());
 	}
 
 	@Test
 	public void WffChecker3() {
 		wc = new QfWffChecker("(∀x) Fxy");
-		assertFalse(wc.checkWff());
+		assertTrue(wc.checkWff());
 	}
 
 	@Test
