@@ -46,26 +46,12 @@ public class TruthTableGUI extends JFrame {
 			firstClick = true;
 		}
 
-//		/**
-//		 * Updates letter and numLetters to reflect how many letters are in target
-//		 * formula
-//		 */
-//		private int countLetters(String formula) {
-//			int numLetters = 0;
-//			for (char letter : "pqrst".toCharArray()) {
-//				if (formula.indexOf(letter) >= 0) {
-//					numLetters++;
-//				}
-//			}
-//			return numLetters;
-//		}
-
 		public void actionPerformed(ActionEvent event) {
 			buttons.removeHilits();
 			String formula = buttons.getText();
-			WffChecker checker = new WffChecker();
+			TfWffChecker checker = new TfWffChecker(formula);
 
-			if (firstClick && checker.setInputString(formula)) {
+			if (firstClick && checker.checkWff()) {
 				truthTablePanel = new TruthTablePanel(buttons);
 				gui.add(truthTablePanel);
 				firstClick = false;
@@ -73,7 +59,7 @@ public class TruthTableGUI extends JFrame {
 			}
 
 			
-			if (checker.setInputString(formula)) {
+			if (checker.checkWff()) {
 				buttons.clearText();
 				buttons.setVisible(false);
 				if (!firstClick) {
