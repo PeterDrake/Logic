@@ -5,23 +5,20 @@ import org.antlr.v4.runtime.CommonTokenStream;
 
 public class TfWffChecker extends WffChecker {
 	
-	private TfWffLexer lexer;
-	private TfWffParser parser;
-	
 	public TfWffChecker(String is) {
 		setInput(new ANTLRInputStream(is));
-		lexer = new TfWffLexer(getInput()); 
-		setTokens(new CommonTokenStream(lexer)); 
-		parser = new TfWffParser(getTokens());
+		setLexer(new TfWffLexer(getInput())); 
+		setTokens(new CommonTokenStream(getLexer())); 
+		setParser(new TfWffParser(getTokens()));
 		
-		super.swapParserErrorHandling(parser);
+		super.swapParserErrorHandling(getParser());
 		
 	}
 	
 	public boolean checkWff() {
 		// There will be a RuntimeException if there is invalid syntax, so we catch it 
 		try {
-			setTree(parser.formula());
+			setTree(((TfWffParser) getParser()).formula());
 		}
 		catch (RuntimeException re) {
 			return false;
