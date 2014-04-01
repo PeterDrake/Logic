@@ -15,6 +15,10 @@ public class ButtonPanel extends JPanel {
 	/**
 	 * The text field that buttons output to
 	 */
+	
+	// TODO
+	private static final long serialVersionUID = 1L;
+
 	private JTextField textField;
 	private Highlighter hilit;
 	private Highlighter.HighlightPainter painter;
@@ -87,8 +91,10 @@ public class ButtonPanel extends JPanel {
 	public void hilitTextField(int errorPositionInLine, int formulaLength) {
 
 		try {
-			if (errorPositionInLine == formulaLength) {
+			if (errorPositionInLine == formulaLength && !textField.getText().substring(formulaLength-1, formulaLength).equals(" ")) {
 				textField.setText(textField.getText() + " ");
+			} else if (errorPositionInLine == formulaLength && textField.getText().substring(formulaLength-1, formulaLength).equals(" ")) {
+				errorPositionInLine--;
 			}
 			hilit.addHighlight(errorPositionInLine, errorPositionInLine + 1,
 					painter);

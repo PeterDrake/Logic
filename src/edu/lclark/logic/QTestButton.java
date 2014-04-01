@@ -37,8 +37,8 @@ public class QTestButton {
 		public void actionPerformed(ActionEvent event) {
 			buttons.removeHilits();
 			formula = buttons.getText();
-			WffChecker wc = new WffChecker();
-			if (wc.setInputString(formula)) {
+			QfWffChecker wc = new QfWffChecker(formula);
+			if (wc.checkWff()) {
 				wc.guiTree();
 			} else {
 				buttons.hilitTextField(wc.getErrorPositionInLine(),

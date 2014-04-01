@@ -1,12 +1,16 @@
 package edu.lclark.logic;
 
+
 import java.awt.*;
 import java.awt.event.*;
-
 import javax.swing.*;
 
+//import java.awt.Graphics2D;
+
 /** A JPanel that displays a truth-table */
-public class TruthTablePanel extends JPanel implements View {
+
+public class TruthTablePanel extends JPanel {
+
 	private static final long serialVersionUID = 1L;
 
 	/** Width, in pixels, of each 'cell' in the truth table grid */

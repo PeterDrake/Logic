@@ -1,11 +1,12 @@
 package edu.lclark.logic;
 
 import java.awt.*;
-import java.awt.event.*;
-
 import javax.swing.*;
 
 public class QButtonPanel extends ButtonPanel {
+
+	// TODO
+	private static final long serialVersionUID = 1L;
 
 	public QButtonPanel(Action submitAction) {
 		setLayout(new BorderLayout());

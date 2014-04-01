@@ -1,4 +1,4 @@
-grammar Qf;
+grammar TfWff;
 
 /*
  * PARSER RULES
@@ -9,7 +9,7 @@ biconditional : disjunction ( BICONDITIONAL disjunction)* ;
 conditional : disjunction CONDITIONAL disjunction ;
 disjunction : conjunction ( INCLUSIVE_OR conjunction )* ;
 conjunction : negation ( CONJUNCTION negation )* ;
-negation : NEGATION parentheses | parentheses ;
+negation : NEGATION? parentheses ;
 parentheses : LEFTPAREN ( biconditional | conditional ) RIGHTPAREN | atom ;
 atom : TRUTH | FALSITY | letters ;
 letters : LETTERS('\'')? ;
@@ -17,9 +17,6 @@ letters : LETTERS('\'')? ;
 /*
  * LEXER RULES
  */
-
-FORALL: 'V' | '∀' ;
-EXISTS: '#' | '∃' ;
 	   
 LEFTPAREN: '(' | '[' ;
 RIGHTPAREN: ')' | ']' ;
@@ -37,14 +34,9 @@ NEGATION: '-' | '¬' | '~' ;
 TRUTH: '⊤' | '1';
 FALSITY: '⊥' | '0';
 
-PREDICATELETTERS: 'F' | 'G' | 'H'
-				| 'I' | 'J' | 'K' ;
-
 LETTERS: 'p' | 'q' | 'r' | 's' | 't' 
 	   | 'P' | 'Q' | 'R' | 'S' | 'T'
-	   | 'a' | 'b' | 'c' | 'd' | 'e'
 	   | 'A' | 'B' | 'C' | 'D' | 'E'
-	   | 'x' | 'y' | 'z' | 'v' | 'w'
 	   ;
 	   
 WS : (' ' | '\t' | '\r' | '\n') -> skip ;

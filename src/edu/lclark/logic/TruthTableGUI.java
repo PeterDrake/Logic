@@ -7,6 +7,7 @@ import javax.swing.*;
 
 /** A GUI that displays a truth table */
 public class TruthTableGUI extends JFrame {
+	
 	private static final long serialVersionUID = 1L;
 	
 	public static final int DEFAULT_WIDTH = 800;
