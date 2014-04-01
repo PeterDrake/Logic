@@ -13,9 +13,11 @@ negation : NEGATION? parentheses ;
 parentheses : LEFTPAREN ( biconditional | conditional ) RIGHTPAREN | predicate ;
 predicate : preposition predicateTuple ;
 predicateTuple : term (',' term)* ;
-term : function | variable ;
-function : constant functionTuple | constant ;
-functionTuple : LEFTPAREN (constant | variable) (',' (constant | variable) )* RIGHTPAREN;
+//term : function | variable ;
+term : variable* ;
+
+//function : constant functionTuple | constant ;
+//functionTuple : (constant | variable)*;
 
 variable : VARIABLES('\'')? ;
 constant : CONSTANTS('\'')? ;

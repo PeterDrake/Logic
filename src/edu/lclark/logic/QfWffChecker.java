@@ -36,8 +36,7 @@ public class QfWffChecker extends WffChecker {
 	
 	// Super basic test
 	public static void main(String[] args) {
-//		QfWffChecker qfwc = new QfWffChecker("(∀x) (Fx) -> (Gx)");
-		QfWffChecker qfwc = new QfWffChecker("(∀x)(∃y)(Fx,y)");
+		QfWffChecker qfwc = new QfWffChecker("(∀x) Fxy");
 		System.out.println(qfwc.checkWff());
 		System.out.println(qfwc.printTree());
 		System.out.println(qfwc.getErrors());
