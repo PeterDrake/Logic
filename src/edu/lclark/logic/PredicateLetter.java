@@ -9,9 +9,10 @@ public class PredicateLetter {
 	/** the name of the prediace letter. e.g F, G, H, UD. */
 	private String name;
 
-	public PredicateLetter(String name) {
+	public PredicateLetter(String name, String elements) {
 		this.name = name;
 		hashSet = new HashSet<Integer>();
+		parse(elements);
 	}
 
 	public void remove(int i) {
@@ -37,6 +38,10 @@ public class PredicateLetter {
 		for (String element : letters) {
 			add(Integer.parseInt(element.trim()));
 		}
+	}
+
+	public HashSet<Integer> getHashSet() {
+		return hashSet;
 	}
 
 }
