@@ -91,7 +91,7 @@ public class TruthTable {
 				// ...for each row in that partition:
 				for (int row = 0; row < partionLength; row++) {
 					truthValues[row + start][col] = true;
-					columns.get(col).setValue(row + start + 1, true);
+					columns.get(col).setValue(row + start, true);
 				}
 			}
 		}

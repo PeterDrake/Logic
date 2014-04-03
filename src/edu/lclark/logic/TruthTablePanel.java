@@ -178,9 +178,6 @@ public class TruthTablePanel extends JPanel {
             	letters[i] = truthTable.getLetter(i);
             }
             boolean[] correct = new TruthTableChecker(truthTable.getTargetFormula(), values, letters).evaluateFormula(formula);
-            if (!correct[row]) {
-            	System.out.println(row + " WRONG");
-            }
         }
 	}
 	
