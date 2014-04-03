@@ -17,8 +17,8 @@ public class TestButton {
            public void run()
            {
               JFrame frame = new JFrame();
-              ActionListener submitAction = new SubmitAction();
-              frame.add(buttons = new ButtonPanel(submitAction));
+              //ActionListener submitAction = new SubmitAction();
+              frame.add(buttons = new ButtonPanel());
               frame.pack();
               frame.setTitle("Buttons");               
               frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

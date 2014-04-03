@@ -3,71 +3,71 @@ package edu.lclark.logic;
 import org.antlr.v4.runtime.*;
 
 public class WffChecker {
-	
+
 	private ANTLRInputStream input;
-	private wffLexer lexer;
 	private CommonTokenStream tokens;
-	private wffParser parser;
 	private RuleContext tree;
+	private Parser parser;
 
-	// This overrides the lexer's error messages
-	public static class BailwffLexer extends wffLexer {
-		public BailwffLexer(CharStream input) {
-			super(input);
-		}
-		
-		@Override
-		public void recover(LexerNoViableAltException e) {
-			throw new RuntimeException(e); // Bail out }
-		}
+	private WffCheckerListener errorListener;
+
+	public String printTree() {
+		return getTree().toStringTree(parser);
 	}
 
-	public void printTree() {
-		System.out.println(tree.toStringTree(parser));
-	}
-	
 	// Opens a dialogue box with the parser tree broken down
-	
 	public void guiTree() {
-		tree.inspect(parser);
+			getTree().inspect(parser);
 	}
 	
-	// Basically a constructor, but because of the way
-	// ANTLR works we can't do that unless we pass a string
-	// to the constructor which is not optimal
-	
-	public boolean setInputString(String is) {
-		input = new ANTLRInputStream(is);
-		lexer = new wffLexer(input); 
-		tokens = new CommonTokenStream(lexer); 
-		parser = new wffParser(tokens);
+	public void swapParserErrorHandling(Parser parser) {
+		// Removes error listeners from the parser (gets rid of ANTLR error output!)
+		parser.removeErrorListeners(); // remove ConsoleErrorListener
+
+		// Throw exceptions instead of correcting errors
+		parser.setErrorHandler(new WffCheckerErrorStrategy());
+
+		setErrorListener(new WffCheckerListener());
+		parser.addErrorListener(getErrorListener());
+	}
 		
-		// Removes error listeners from the lexer (gets rid of ANTLR error input!)
-		lexer.removeErrorListeners();
-		
-		// Removes error listeners from the parser (gets rid of ANTLR error input!)
-		parser.removeErrorListeners();
-		
-		// Sets the error handler strategy BailErrorStrategy is an example
-		// from the ANTLR reference, basically just throws exceptions
-		parser.setErrorHandler(new BailErrorStrategy());
-		
-		// There will be a RuntimeException if there is invalid syntax, so we catch it 
-		try {
-			tree = parser.prog();
-		}
-		catch (RuntimeException re) {
-//			System.out.println("invalid");
-			return false;
-		}
-		return true;
+	public String getErrors() {
+		return getErrorListener().getErrors();
+	}
+
+	public int getErrorPositionInLine() {
+		return errorListener.getErrorPositionInLine();
 	}
 	
-	// Super basic test
-	public static void main(String[] args) {
-		WffChecker wc = new WffChecker();
-		wc.setInputString("p.q");
-		wc.printTree();
+	public WffCheckerListener getErrorListener() {
+		return errorListener;
+	}
+
+	public void setErrorListener(WffCheckerListener errorListener) {
+		this.errorListener = errorListener;
+	}
+
+	public ANTLRInputStream getInput() {
+		return input;
+	}
+
+	public void setInput(ANTLRInputStream input) {
+		this.input = input;
+	}
+
+	public CommonTokenStream getTokens() {
+		return tokens;
+	}
+
+	public void setTokens(CommonTokenStream tokens) {
+		this.tokens = tokens;
+	}
+
+	public RuleContext getTree() {
+		return tree;
+	}
+
+	public void setTree(RuleContext tree) {
+		this.tree = tree;
 	}
 }
-
