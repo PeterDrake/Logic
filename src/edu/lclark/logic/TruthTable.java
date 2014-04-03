@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** A truth table model for a well-formed formula */
-public class TruthTable implements Model {
+public class TruthTable {
 	/** The well-formed formula this truth table represents */
 	private final String formula;
 
@@ -60,7 +60,7 @@ public class TruthTable implements Model {
 	public void addColumn(TruthTableColumn column) {
 		columns.add(column);
 	}
-
+	
 	/**
 	 * Updates letter and numLetters to reflect how many letters are in target
 	 * formula
@@ -91,14 +91,15 @@ public class TruthTable implements Model {
 				// ...for each row in that partition:
 				for (int row = 0; row < partionLength; row++) {
 					truthValues[row + start][col] = true;
-					columns.get(col).setValue(row + start + 1, true);
+					columns.get(col).setValue(row + start, true);
 				}
 			}
 		}
 	}
 
 	public boolean getValue(int row, int column) {
-		return truthValues[row][column];
+		return getColumn(column).getValue(row);
+//		return truthValues[row][column];
 	}
 
 	public void addTargetFormula() {
@@ -107,5 +108,9 @@ public class TruthTable implements Model {
 
 	public void checkFragment() {
 		// TODO
+	}
+	
+	public String getTargetFormula() {
+		return formula;
 	}
 }

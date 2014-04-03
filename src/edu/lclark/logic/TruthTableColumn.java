@@ -21,7 +21,11 @@ public class TruthTableColumn {
 		rows[row] = value;
 	}
 
-	public String getLabel() {
-		return label;
-	}
+    public String getLabel() {
+        return label;
+    }
+    
+    public int getNumRows() {
+    	return rows.length;
+    }
 }

@@ -14,6 +14,7 @@ public class TruthTableTest {
 		table = new TruthTable("pqr");
 	}
 
+	@Test
 	public void testNumLetters() {
 		assertEquals(3, table.getNumLetters());
 		// fail("Not yet implemented");

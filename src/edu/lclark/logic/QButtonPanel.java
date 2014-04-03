@@ -1,16 +1,19 @@
 package edu.lclark.logic;
 
 import java.awt.*;
-import java.awt.event.*;
-
 import javax.swing.*;
 
 public class QButtonPanel extends ButtonPanel {
+
+	// TODO
+	private static final long serialVersionUID = 1L;
 
 	public QButtonPanel(Action submitAction) {
 		setLayout(new BorderLayout());
 		setTextField(new JTextField());
 		getTextField().setEditable(true);
+		setErrorTextField (new JTextField());
+		getErrorTextField().setEditable(true);
 		add(getTextField(), BorderLayout.NORTH);
 
 		// A panel that all the buttons, but the submit button are added to
@@ -52,6 +55,16 @@ public class QButtonPanel extends ButtonPanel {
 		addButton("v", "sentence letter", lowerCase, new InsertAction("v"));
 		addButton("w", "sentence letter", lowerCase, new InsertAction("w"));
 		buttons.add(lowerCase);
+		
+		JPanel constants = new JPanel();
+		constants.setLayout(new GridLayout(5, 1));
+
+		addButton("a", "constant", constants, new InsertAction("a"));
+		addButton("b", "constant", constants, new InsertAction("b"));
+		addButton("c", "constant", constants, new InsertAction("c"));
+		addButton("d", "constant", constants, new InsertAction("d"));
+		addButton("e", "constant", constants, new InsertAction("e"));
+		buttons.add(constants);
 
 		// Creates a new panel with the remaining buttons
 		JPanel misc = new JPanel();
@@ -61,18 +74,12 @@ public class QButtonPanel extends ButtonPanel {
 		JPanel capSentenceLetters = new JPanel();
 		capSentenceLetters.setLayout(new GridLayout(6, 1));
 
-		addButton("F", "sentence letter", capSentenceLetters, new InsertAction(
-				"F"));
-		addButton("G", "sentence letter", capSentenceLetters, new InsertAction(
-				"G"));
-		addButton("H", "sentence letter", capSentenceLetters, new InsertAction(
-				"H"));
-		addButton("I", "sentence letter", capSentenceLetters, new InsertAction(
-				"I"));
-		addButton("J", "sentence letter", capSentenceLetters, new InsertAction(
-				"J"));
-		addButton("K", "sentence letter", capSentenceLetters, new InsertAction(
-				"K"));
+		addButton("F", "sentence letter", capSentenceLetters, new InsertAction("F"));
+		addButton("G", "sentence letter", capSentenceLetters, new InsertAction("G"));
+		addButton("H", "sentence letter", capSentenceLetters, new InsertAction("H"));
+		addButton("I", "sentence letter", capSentenceLetters, new InsertAction("I"));
+		addButton("J", "sentence letter", capSentenceLetters, new InsertAction("J"));
+		addButton("K", "sentence letter", capSentenceLetters, new InsertAction("K"));
 		buttons.add(capSentenceLetters);
 
 		JPanel quantifiers = new JPanel();
@@ -114,7 +121,10 @@ public class QButtonPanel extends ButtonPanel {
 		submitButton.setToolTipText("submits what is in the text field");
 		submitButton.addActionListener(submitAction);
 		submitButton.setFocusable(false);
-		add(submitButton, BorderLayout.SOUTH);
+		JPanel tpanel = new JPanel(new GridLayout(2,1));
+		tpanel.add(submitButton);
+		tpanel.add(getErrorTextField());
+		add(tpanel, BorderLayout.SOUTH);
 
 		// associate the enter key with submitAction
 		initializeEnterKey(submitAction);
