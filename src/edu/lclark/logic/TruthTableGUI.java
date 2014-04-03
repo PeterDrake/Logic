@@ -60,7 +60,7 @@ public class TruthTableGUI extends JFrame {
 					gui.validate(); // Because we've added a component: truthTablePanel
 				} else {
 					TruthTable table = truthTablePanel.getTruthTable();
-					if (table.isValidColumn(formula)) {
+					if (table.isSubformula(formula)) {
 						buttons.setVisible(false);
 						int numRows = table.getNumRows();
 						truthTablePanel.addColumn(new TruthTableColumn(formula,

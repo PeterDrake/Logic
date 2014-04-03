@@ -114,7 +114,12 @@ public class TruthTable {
 		return formula;
 	}
 
-	public boolean isValidColumn(String f) {
+	/**
+	 * Returns true if f is a subformula of the formula associated with this TruthTable.
+	 * Assumes f is a Wff.
+	 */
+	public boolean isSubformula(String f) {
+		// TODO This obviously does not work correctly yet!
 		// TODO Auto-generated method stub
 		return false;
 	}
