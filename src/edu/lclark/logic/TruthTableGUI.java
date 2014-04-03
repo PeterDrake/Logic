@@ -51,6 +51,7 @@ public class TruthTableGUI extends JFrame {
 			String formula = buttons.getText();
 			TfWffChecker checker = new TfWffChecker(formula);
 
+			//TODO Fix old, non-Wff target formula appearing in truth table when the old formula is cleared and new one is entered.
 			if (firstClick && checker.checkWff()) {
 				truthTablePanel = new TruthTablePanel(buttons);
 				gui.add(truthTablePanel);
