@@ -57,7 +57,6 @@ public class TruthTableGUI extends JFrame {
 				firstClick = false;
 				buttons.setErrorText("");
 			}
-
 			
 			if (checker.checkWff()) {
 				buttons.clearText();

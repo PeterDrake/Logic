@@ -91,13 +91,14 @@ public class ButtonPanel extends JPanel {
 	public void hilitTextField(int errorPositionInLine, int formulaLength) {
 
 		try {
-			if (errorPositionInLine == formulaLength && !textField.getText().substring(formulaLength-1, formulaLength).equals(" ")) {
-				textField.setText(textField.getText() + " ");
-			} else if (errorPositionInLine == formulaLength && textField.getText().substring(formulaLength-1, formulaLength).equals(" ")) {
-				errorPositionInLine--;
+			if (!textField.getText().isEmpty() && !textField.getText().equals(null)) {
+				if (errorPositionInLine == formulaLength && !textField.getText().substring(formulaLength-1, formulaLength).equals(" ")) {
+					textField.setText(textField.getText() + " ");
+				} else if (errorPositionInLine == formulaLength && textField.getText().substring(formulaLength-1, formulaLength).equals(" ")) {
+					errorPositionInLine--;
+				}
+				hilit.addHighlight(errorPositionInLine, errorPositionInLine + 1, painter);
 			}
-			hilit.addHighlight(errorPositionInLine, errorPositionInLine + 1,
-					painter);
 		} catch (BadLocationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
