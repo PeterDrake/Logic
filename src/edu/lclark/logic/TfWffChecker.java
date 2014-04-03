@@ -12,7 +12,7 @@ public class TfWffChecker extends WffChecker {
 		setParser(new TfWffParser(getTokens()));
 		
 		super.swapParserErrorHandling(getParser());
-		
+		setWff(checkWff());
 	}
 	
 	public boolean checkWff() {
@@ -34,7 +34,7 @@ public class TfWffChecker extends WffChecker {
 	
 	// Super basic test
 	public static void main(String[] args) {
-		TfWffChecker tfwc = new TfWffChecker("p->q)");
+		TfWffChecker tfwc = new TfWffChecker("p.-q");
 		System.out.println(tfwc.checkWff());
 		System.out.println(tfwc.getErrors());
 	}
