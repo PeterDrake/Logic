@@ -4,6 +4,8 @@ import org.antlr.v4.runtime.*;
 
 public class WffChecker {
 
+	private boolean wff = false;
+	
 	private ANTLRInputStream input;
 	private CommonTokenStream tokens;
 	private RuleContext tree;
@@ -95,5 +97,13 @@ public class WffChecker {
 
 	public void setLexer(Lexer lexer) {
 		this.lexer = lexer;
+	}
+
+	public boolean isWff() {
+		return wff;
+	}
+
+	public void setWff(boolean wff) {
+		this.wff = wff;
 	}
 }
