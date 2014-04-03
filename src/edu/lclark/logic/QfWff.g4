@@ -4,10 +4,10 @@ grammar QfWff;
  * PARSER RULES
  */
 
-formula	: paren* EOF;
-paren : NEGATION* LEFTPAREN? form RIGHTPAREN? ;
-form : (LEFTPAREN? quantifier RIGHTPAREN?)* (biconditional | conditional) ;
-
+formula	: formparen EOF;
+formparen : NEGATION* LEFTPAREN formparen RIGHTPAREN | form ;
+form : quantparen* (biconditional | conditional) ;
+quantparen : NEGATION* LEFTPAREN quantparen RIGHTPAREN | quantifier ;
 quantifier: (FORALL | EXISTS) variable ;
 
 biconditional : disjunction ( BICONDITIONAL disjunction)* ;
@@ -17,14 +17,6 @@ conjunction : negation (CONJUNCTION negation)* ;
 negation : NEGATION? parentheses ;
 parentheses : LEFTPAREN ( biconditional | conditional ) RIGHTPAREN | predicate ;
 predicate: preposition variable* ;
-
-//predicate : preposition predicateTuple ;
-//predicateTuple : term (',' term)* ;
-//term : function | variable ;
-//term : variable* ;
-
-//function : constant functionTuple | constant ;
-//functionTuple : (constant | variable)*;
 
 variable : VARIABLES('\'')? ;
 constant : CONSTANTS('\'')? ;

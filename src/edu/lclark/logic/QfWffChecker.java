@@ -14,7 +14,7 @@ public class QfWffChecker extends WffChecker {
 		setTokens(new CommonTokenStream(getLexer())); 
 		setParser(new QfWffParser(getTokens()));
 		
-		super.swapParserErrorHandling(getParser());
+//		super.swapParserErrorHandling(getParser());
 		
 		setWff(checkWff());
 	}
@@ -29,19 +29,20 @@ public class QfWffChecker extends WffChecker {
 		}
 
 		// a little awkward, but there is one weird case where paren checking is messed up
-		if (getErrors() != "The entered formula is a wff.") {
-			return false;
-		}
+//		if (getErrors() != "The entered formula is a wff.") {
+//			return false;
+//		}
 
 		return true;
 	}
 	
 	// Super basic test
 	public static void main(String[] args) {
-		QfWffChecker qfwc = new QfWffChecker("-((∀x)((∃y)(-Fxy)))");
-		System.out.println(qfwc.checkWff());
+//		QfWffChecker qfwc = new QfWffChecker("-((∀x)((∃y)(-Fxy)))");
+		QfWffChecker qfwc = new QfWffChecker("-((∀x)((∃y))((-Fxy)))");
+		System.out.println(qfwc.isWff());
 		System.out.println(qfwc.printTree());
-		System.out.println(qfwc.getErrors());
+//		System.out.println(qfwc.getErrors());
 	}
 }
 
