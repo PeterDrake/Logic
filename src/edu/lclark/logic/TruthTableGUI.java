@@ -2,7 +2,6 @@ package edu.lclark.logic;
 
 import java.awt.*;
 import java.awt.event.*;
-
 import javax.swing.*;
 
 /** A GUI that displays a truth table */
@@ -51,15 +50,14 @@ public class TruthTableGUI extends JFrame {
 			String formula = buttons.getText();
 			TfWffChecker checker = new TfWffChecker(formula);
 
-			//TODO Fix old, non-Wff target formula appearing in truth table when the old formula is cleared and new one is entered.
-			if (firstClick && checker.checkWff()) {
+			if (firstClick && checker.isWff()) {
 				truthTablePanel = new TruthTablePanel(buttons);
 				gui.add(truthTablePanel);
 				firstClick = false;
 				buttons.setErrorText("");
 			}
 			
-			if (checker.checkWff()) {
+			if (checker.isWff()) {
 				buttons.clearText();
 				buttons.setVisible(false);
 				if (!firstClick) {
