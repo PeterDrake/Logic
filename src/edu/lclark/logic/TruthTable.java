@@ -113,4 +113,9 @@ public class TruthTable {
 	public String getTargetFormula() {
 		return formula;
 	}
+
+	public boolean isValidColumn(String f) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

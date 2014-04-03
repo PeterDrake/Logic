@@ -49,25 +49,33 @@ public class TruthTableGUI extends JFrame {
 			buttons.removeHilits();
 			String formula = buttons.getText();
 			TfWffChecker checker = new TfWffChecker(formula);
-
-			if (firstClick && checker.isWff()) {
-				truthTablePanel = new TruthTablePanel(buttons);
-				gui.add(truthTablePanel);
-				firstClick = false;
-				buttons.setErrorText("");
-			}
-			
 			if (checker.isWff()) {
-				buttons.clearText();
-				buttons.setVisible(false);
-				if (!firstClick) {
-					int numCols = truthTablePanel.getTruthTable().getNumRows();
-					truthTablePanel.addColumn(new TruthTableColumn(formula, new boolean[numCols]));
+				if (firstClick) {
+					truthTablePanel = new TruthTablePanel(buttons);
+					gui.add(truthTablePanel);
+					firstClick = false;
 					buttons.setErrorText("");
+					System.out.println("Finished creating truth table");
+					buttons.setVisible(false);
+					gui.validate(); // Because we've added a component: truthTablePanel
+				} else {
+					TruthTable table = truthTablePanel.getTruthTable();
+					if (table.isValidColumn(formula)) {
+						buttons.setVisible(false);
+						int numRows = table.getNumRows();
+						truthTablePanel.addColumn(new TruthTableColumn(formula,
+								new boolean[numRows]));
+						buttons.setErrorText("");
+					} else {
+						buttons.setErrorText(formula
+								+ " is not a valid column for this truth table.");
+					}
 				}
+				buttons.clearText();
 			} else {
 				buttons.setErrorText(checker.getErrors());
-				buttons.hilitTextField(checker.getErrorPositionInLine(), formula.length());
+				buttons.hilitTextField(checker.getErrorPositionInLine(),
+						formula.length());
 			}
 		}
 
