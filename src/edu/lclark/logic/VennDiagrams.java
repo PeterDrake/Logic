@@ -1,25 +1,27 @@
 package edu.lclark.logic;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
 public class VennDiagrams {
 
 	PredicateLetter UD;
 
-	private HashSet<PredicateLetter> hashSet;
+	private ArrayList<PredicateLetter> sets;
 
 	public VennDiagrams(String UDString) {
-		hashSet = new HashSet<PredicateLetter>();
+		sets = new ArrayList<PredicateLetter>();
 		UD = new PredicateLetter("UD", UDString);
 	}
 
 	public void remove(PredicateLetter p) {
-		hashSet.remove(p);
-
+		sets.remove(p);
 	}
 
 	public void add(PredicateLetter p) {
-		hashSet.add(p);
+		sets.add(p);
 	}
 
+	public ArrayList<PredicateLetter> getSets() {
+	    return sets;
+	}
 }

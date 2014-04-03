@@ -1,47 +1,46 @@
 package edu.lclark.logic;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
 public class PredicateLetter {
 
-	private HashSet<Integer> hashSet;
+	private ArrayList<String> elements;
 
-	/** the name of the prediace letter. e.g F, G, H, UD. */
+	/** the name of the predicate letter. e.g F, G, H, UD. */
 	private String name;
 
 	public PredicateLetter(String name, String elements) {
 		this.name = name;
-		hashSet = new HashSet<Integer>();
+		this.elements = new ArrayList<String>();
 		parse(elements);
 	}
 
-	public void remove(int i) {
-		hashSet.remove(i);
+	public void remove(String s) {
+		elements.remove(s);
 	}
 
-	public void add(int i) {
-		hashSet.add(i);
+	public void add(String s) {
+		elements.add(s);
 	}
 
 	public String getName() {
 		return this.name;
 	}
-
+	
 	/**
 	 * 
 	 * @param elements
 	 *            contains the user input for the elements in the predicate set
 	 */
 	public void parse(String elements) {
-		String[] letters = elements.substring(1, elements.length() - 1).split(
-				",");
+		String[] letters = elements.substring(1, elements.length() - 1).split(",");
 		for (String element : letters) {
-			add(Integer.parseInt(element.trim()));
+			add(element.trim());
 		}
 	}
 
-	public HashSet<Integer> getHashSet() {
-		return hashSet;
+	public ArrayList<String> getElements() {
+		return elements;
 	}
 
 }
