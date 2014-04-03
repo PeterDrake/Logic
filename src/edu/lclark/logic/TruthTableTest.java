@@ -27,4 +27,10 @@ public class TruthTableTest {
 		assertEquals(false, table.getValue(4, 0));
 	}
 
+	@Test
+	public void testIsSubformula() {
+		table = new TruthTable("p.qvr.s");
+		assertTrue(table.isSubformula("p.q"));
+		assertFalse(table.isSubformula("qvr"));
+	}
 }
