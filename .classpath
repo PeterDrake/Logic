@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="target"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="lib" path="antlr-4.2-complete.jar" sourcepath="antlr-4.2-complete.jar"/>
 	<classpathentry exported="true" kind="lib" path="asg.cliche-110413.jar"/>
