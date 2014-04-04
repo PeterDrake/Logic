@@ -4,18 +4,27 @@ grammar QfWff;
  * PARSER RULES
  */
 
-formula	: (LEFTPAREN (FORALL | EXISTS) variable RIGHTPAREN)? (biconditional | conditional) EOF;
+formula	: paren* EOF;
+paren : NEGATION* LEFTPAREN? form RIGHTPAREN? ;
+form : (LEFTPAREN? quantifier RIGHTPAREN?)* (biconditional | conditional) ;
+
+quantifier: (FORALL | EXISTS) variable ;
+
 biconditional : disjunction ( BICONDITIONAL disjunction)* ;
 conditional : disjunction CONDITIONAL disjunction ;
 disjunction : conjunction (INCLUSIVE_OR conjunction)* ;
 conjunction : negation (CONJUNCTION negation)* ;
 negation : NEGATION? parentheses ;
 parentheses : LEFTPAREN ( biconditional | conditional ) RIGHTPAREN | predicate ;
-predicate : preposition predicateTuple ;
-predicateTuple : term (',' term)* ;
-term : function | variable ;
-function : constant functionTuple | constant ;
-functionTuple : LEFTPAREN (constant | variable) (',' (constant | variable) )* RIGHTPAREN;
+predicate: preposition variable* ;
+
+//predicate : preposition predicateTuple ;
+//predicateTuple : term (',' term)* ;
+//term : function | variable ;
+//term : variable* ;
+
+//function : constant functionTuple | constant ;
+//functionTuple : (constant | variable)*;
 
 variable : VARIABLES('\'')? ;
 constant : CONSTANTS('\'')? ;
@@ -26,7 +35,7 @@ preposition : PREPOSITIONS('\'')? ;
  */
 
 FORALL: 'V' | '∀' ;
-EXISTS: '#' | '∃' ;
+EXISTS: '#' | '∃' | '∃' ;
 	   
 LEFTPAREN: '(' | '[' ;
 RIGHTPAREN: ')' | ']' ;

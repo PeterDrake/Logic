@@ -4,20 +4,32 @@ import org.antlr.v4.runtime.*;
 
 public class WffChecker {
 
+	private boolean wff = false;
+	
 	private ANTLRInputStream input;
 	private CommonTokenStream tokens;
 	private RuleContext tree;
 	private Parser parser;
+	private Lexer lexer;
 
 	private WffCheckerListener errorListener;
 
 	public String printTree() {
-		return getTree().toStringTree(parser);
+		try {
+			return tree.toStringTree(parser);
+		} catch (NullPointerException re) {
+			// error
+			return null;
+		}
 	}
 
 	// Opens a dialogue box with the parser tree broken down
 	public void guiTree() {
-			getTree().inspect(parser);
+		try {
+			tree.inspect(parser);
+		} catch (NullPointerException re) {
+			// error
+		}
 	}
 	
 	public void swapParserErrorHandling(Parser parser) {
@@ -32,7 +44,7 @@ public class WffChecker {
 	}
 		
 	public String getErrors() {
-		return getErrorListener().getErrors();
+		return errorListener.getErrors();
 	}
 
 	public int getErrorPositionInLine() {
@@ -69,5 +81,29 @@ public class WffChecker {
 
 	public void setTree(RuleContext tree) {
 		this.tree = tree;
+	}
+
+	public Parser getParser() {
+		return parser;
+	}
+
+	public void setParser(Parser parser) {
+		this.parser = parser;
+	}
+
+	public Lexer getLexer() {
+		return lexer;
+	}
+
+	public void setLexer(Lexer lexer) {
+		this.lexer = lexer;
+	}
+
+	public boolean isWff() {
+		return wff;
+	}
+
+	public void setWff(boolean wff) {
+		this.wff = wff;
 	}
 }
