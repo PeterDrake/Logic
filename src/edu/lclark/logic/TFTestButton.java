@@ -42,7 +42,7 @@ public class TFTestButton {
 			buttons.removeHilits();
 			formula = buttons.getText();
 			TfWffChecker wc = new TfWffChecker(formula);
-			if (wc.checkWff()) {
+			if (wc.isWff()) {
 				wc.guiTree();
 			} else {
 				buttons.hilitTextField(wc.getErrorPositionInLine(),
