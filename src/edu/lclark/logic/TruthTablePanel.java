@@ -161,23 +161,25 @@ public class TruthTablePanel extends JPanel {
         public void actionPerformed(ActionEvent event) {
         	value = !value;
         	updateText();
-            truthTable.getColumn(column).setValue(row, value);
             TruthTableColumn col = truthTable.getColumn(column);
+            col.setValue(row, value);
             String formula = col.getLabel();
             int numRows = truthTable.getNumRows();
             int numCols = truthTable.getNumColumns();
-            boolean[][] values = new boolean[numRows][numCols];
+            int numLetters = truthTable.getNumLetters();
+            boolean[][] values = new boolean[numRows][numLetters];
             for (int r = 0; r < numRows; r++) {
-            	for (int c = 0; c < numCols; c++) {
-            		values[r][c] = col.getValue(r);
+            	for (int c = 0; c < numLetters; c++) {
+            		values[r][c] = truthTable.getColumn(c).getValue(r);
             	}
             }
-            int numLetters = truthTable.getNumLetters();
             char[] letters = new char[numLetters];
             for (int i = 0; i < numLetters; i++) {
             	letters[i] = truthTable.getLetter(i);
             }
+            System.out.println("formula: " + formula);
             boolean[] correct = new TruthTableChecker(truthTable.getTargetFormula(), values, letters).evaluateFormula(formula);
+            for (boolean c : correct) System.out.println(c);
         }
 	}
 	

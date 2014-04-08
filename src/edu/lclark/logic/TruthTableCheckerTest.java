@@ -108,7 +108,7 @@ public class TruthTableCheckerTest {
 		formula = "(p.q)vr";
 		assertEquals(-1, checker1.compare(checker1.evaluateFormula(formula),
 				expectedValues1));
-		formula = "¬p";
+		formula = "-p";
 		boolean[] expectedValues2 = { false, false, false, false, true, true,
 				true, true };
 		assertEquals(-1, checker1.compare(checker1.evaluateFormula(formula),
