@@ -4,20 +4,23 @@ grammar QfWff;
  * PARSER RULES
  */
 
-formula	: formparen EOF;
+//formula : formparen EOF;
+formula	: (formparen | (biconditional | conditional)) EOF;
 formparen : NEGATION* LEFTPAREN formparen RIGHTPAREN | form ;
 form : quantparen* (biconditional | conditional) ;
 quantparen : NEGATION* LEFTPAREN quantparen RIGHTPAREN | quantifier ;
 quantifier: (FORALL | EXISTS) variable ;
 
-biconditional : disjunction ( BICONDITIONAL disjunction)* ;
+biconditional : disjunction (BICONDITIONAL disjunction)* ;
 conditional : disjunction CONDITIONAL disjunction ;
 disjunction : conjunction (INCLUSIVE_OR conjunction)* ;
 conjunction : negation (CONJUNCTION negation)* ;
 negation : NEGATION? parentheses ;
-parentheses : LEFTPAREN ( biconditional | conditional ) RIGHTPAREN | predicate ;
+//parentheses : LEFTPAREN (biconditional | conditional) RIGHTPAREN | predicate;
+parentheses : LEFTPAREN (biconditional | conditional) RIGHTPAREN | (predicate | atom);
 predicate: preposition variable* ;
-
+atom : TRUTH | FALSITY | letters ;
+letters : LETTERS('\'')? ;
 variable : VARIABLES('\'')? ;
 constant : CONSTANTS('\'')? ;
 preposition : PREPOSITIONS('\'')? ;
@@ -44,6 +47,11 @@ NEGATION: '-' | '¬' | '~' ;
 		   
 TRUTH: '⊤' | '1';
 FALSITY: '⊥' | '0';
+
+LETTERS: 'p' | 'q' | 'r' | 's' | 't' 
+	   | 'P' | 'Q' | 'R' | 'S' | 'T'
+	   | 'A' | 'B' | 'C' | 'D' | 'E'
+	   ;
 
 PREPOSITIONS: 'F' | 'G' | 'H' | 'I' | 'J' | 'K' ;
 

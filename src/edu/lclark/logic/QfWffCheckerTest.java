@@ -83,4 +83,33 @@ public class QfWffCheckerTest {
 		assertFalse(wc.isWff());
 	}
 
+	@Test
+	public void WffChecker11() {
+		wc = new QfWffChecker("Fx . p");
+		assertTrue(wc.isWff());
+	}
+	
+	@Test
+	public void WffChecker12() {
+		wc = new QfWffChecker("p");
+		assertTrue(wc.isWff());
+	}
+	
+	@Test
+	public void WffChecker13() {
+		wc = new QfWffChecker("∀xFx v (p -> q)");
+		assertTrue(wc.isWff());
+	}
+	
+	@Test
+	public void WffChecker14() {
+		wc = new QfWffChecker("..");
+		assertFalse(wc.isWff());
+	}
+	
+	@Test
+	public void WffChecker15() {
+		wc = new QfWffChecker("∀x Fx -p");
+		assertFalse(wc.isWff());
+	}
 }
