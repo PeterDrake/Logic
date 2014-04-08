@@ -10,7 +10,7 @@ public class LogicCLI {
 	@Command
 	public void tfwff(String s) {
 		TfWffChecker tfwc = new TfWffChecker(s);
-		System.out.println(tfwc.checkWff());
+		System.out.println(tfwc.isWff());
 	}
 	
 	@Command
@@ -28,7 +28,7 @@ public class LogicCLI {
 	@Command
 	public void qfwff(String s) {
 		QfWffChecker qfwc = new QfWffChecker(s);
-		System.out.println(qfwc.checkWff());
+		System.out.println(qfwc.isWff());
 	}
 
 	@Command

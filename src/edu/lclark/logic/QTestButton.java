@@ -42,7 +42,7 @@ public class QTestButton {
 			buttons.removeHilits();
 			formula = buttons.getText();
 			QfWffChecker wc = new QfWffChecker(formula);
-			if (wc.checkWff()) {
+			if (wc.isWff()) {
 				wc.guiTree();
 			} else {
 				buttons.hilitTextField(wc.getErrorPositionInLine(),
