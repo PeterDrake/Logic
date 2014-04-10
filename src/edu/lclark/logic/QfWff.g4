@@ -26,6 +26,11 @@ quantifier: (FORALL | EXISTS) variable ;
 //expr : LEFTPAREN expr (biconditional | conditional) RIGHTPAREN | quantparen ;
 //quantparen : NEGATION? LEFTPAREN quantparen RIGHTPAREN | quantifier ;
 //quantifier: (FORALL | EXISTS) variable ;
+//formula	: quantexpr EOF;
+//quantexpr : NEGATION? LEFTPAREN  expr RIGHTPAREN | quantparen expr? (biconditional | conditional) ;
+//expr : LEFTPAREN expr (biconditional | conditional) RIGHTPAREN | quantparen ;
+//quantparen : NEGATION? LEFTPAREN quantparen RIGHTPAREN | quantifier ;
+//quantifier: (FORALL | EXISTS) variable ;
 
 biconditional : disjunction (BICONDITIONAL disjunction)* ;
 conditional : disjunction CONDITIONAL disjunction ;
