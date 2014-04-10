@@ -46,10 +46,18 @@ public class QfWffChecker extends WffChecker {
 		if (getErrors() != "The entered formula is a wff.") {
 			return false;
 		}
-
+		if (containsRedundantQuantifiers()) {
+			return false;
+		}
 		return true;
 	}
 	
+	/** Returns true iff the same variable is quantified more than once. */
+	public boolean containsRedundantQuantifiers() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 	// Super basic test
 	public static void main(String[] args) {
 //		QfWffChecker qfwc = new QfWffChecker("-((∀x)((∃y)(-Fxy)))");

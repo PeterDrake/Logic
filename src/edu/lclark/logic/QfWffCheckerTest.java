@@ -112,4 +112,12 @@ public class QfWffCheckerTest {
 		wc = new QfWffChecker("∀x Fx -p");
 		assertFalse(wc.isWff());
 	}
+	
+	@Test
+	public void testRedundantQuantification() {
+		wc = new QfWffChecker("Vx Fx");
+		assertFalse(wc.containsRedundantQuantifiers());
+		wc = new QfWffChecker("Vx #y Vx Fx");
+		assertTrue(wc.containsRedundantQuantifiers());
+	}
 }
