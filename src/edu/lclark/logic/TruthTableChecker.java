@@ -181,8 +181,47 @@ public class TruthTableChecker {
         }
         return result;
     }
+    
+    public boolean isSubFormula(String subFormula) {
+        return isSubFormula(formula, subFormula);
+    }
 
-    // TODO Recursion, accept more than one top level operator
+    public boolean isSubFormula(String targetFormula, String subFormula) {
+        if (targetFormula.charAt(0) == '(' && targetFormula.charAt(targetFormula.length() - 1) == ')') {
+            return isSubFormula(targetFormula.substring(1, targetFormula.length() - 1), subFormula);
+        }
+        if (subFormula.equals(targetFormula)) {
+            return true;
+        }
+        targetFormula = targetFormula.replaceAll(" ", "");
+        ArrayList<String> ops = getTopLevelOperators(targetFormula);
+        String[] order = { "<->", "���", "->", "���", "v", "���", ".", "-", "��", "~" };
+        if (ops.size() == 0) {
+            return targetFormula.equals(subFormula);
+        }
+        for (String op : order) {
+            if (!ops.contains(op)) {
+                continue;
+            }
+            String[] subFormulae = targetFormula.split(Pattern.quote(op));
+            String rightSubFormula = combineStrings(subFormulae, op);
+            if (subFormula.equals(subFormulae[0]) || subFormula.equals(rightSubFormula)) {
+                return true;
+            }
+            return isSubFormula(subFormulae[0], subFormula) || isSubFormula(rightSubFormula, subFormula);
+        }
+        return false;
+    }
+    
+    /** Concatenates all but the first String. */
+    public String combineStrings(String[] subFormula, String op) {
+        String result = "";
+        for (int i = 1; i < subFormula.length - 1; i++) {
+            result += subFormula[i] + op;
+        }
+        return result + subFormula[subFormula.length - 1];
+    }
+    
     public boolean[] evaluateFormula(String formula) {
         if (formula.charAt(0) == '(' && formula.charAt(formula.length() - 1) == ')') {
             return evaluateFormula(formula.substring(1, formula.length() - 1));
@@ -198,25 +237,25 @@ public class TruthTableChecker {
                 continue;
             }
             String[] subFormula = formula.split(Pattern.quote(op));
-            
+            String rightSubFormula = combineStrings(subFormula, op);
             if (op.equals("-") || op.equals("��") || op.equals("~")) {
             	return negation(evaluateFormula(subFormula[1]));
             } else if (op.equals("���") || op.equals("->")) {
                 return conditional(
                         evaluateFormula(subFormula[0]),
-                        evaluateFormula(subFormula[1]));
+                        evaluateFormula(rightSubFormula));
             } else if (op.equals('↔') || op.equals('<')) {
                 return biconditional(
                         evaluateFormula(subFormula[0]),
-                        evaluateFormula(subFormula[1]));
+                        evaluateFormula(rightSubFormula));
             } else if (op.equals('⋁') || op.equals("v")) {
                 return disjunction(
                         evaluateFormula(subFormula[0]),
-                        evaluateFormula(subFormula[1]));
+                        evaluateFormula(rightSubFormula));
             } else {
                 return conjunction(
                         evaluateFormula(subFormula[0]),
-                        evaluateFormula(subFormula[1]));
+                        evaluateFormula(rightSubFormula));
             }
         }
         return null;

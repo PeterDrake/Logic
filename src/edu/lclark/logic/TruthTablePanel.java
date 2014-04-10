@@ -33,8 +33,8 @@ public class TruthTablePanel extends JPanel {
 	
 	/** The truth-table checker that checks column */
 	private TruthTableChecker checker;
-	
-	/** The label for the target formula */
+
+    /** The label for the target formula */
 	private JLabel targetFormulaLabel;
 	
 	private JButton[][] jbuttons;
@@ -49,6 +49,7 @@ public class TruthTablePanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent event) {
                buttons.setVisible(true);
+               buttons.getTextField().requestFocus();
             }
         });
         checkValuesButton = new JButton("Check Values");
@@ -93,6 +94,10 @@ public class TruthTablePanel extends JPanel {
         checker = new TruthTableChecker(truthTable.getTargetFormula(), values, letters);
     }
 
+    public TruthTableChecker getChecker() {
+        return checker;
+    }
+    
 	/**
 	 * Initializes truth table by drawing every truth-value combination for the
 	 * letters in the formula
@@ -209,16 +214,6 @@ public class TruthTablePanel extends JPanel {
             TruthTableColumn col = truthTable.getColumn(column);
             col.setValue(row, value);
             String formula = col.getLabel();
-            boolean[] correct = checker.evaluateFormula(formula);
-            for (int r = 0; r < correct.length; r++) {
-                if (r != row) continue;
-                Color color = Color.BLUE;
-                if (col.getValue(r) != correct[r]) {
-//                    System.out.println("(" + r + "," + column + ") is wrong.");
-                    color = Color.RED;
-                }
-//                jbuttons[r][column - truthTable.getNumLetters()].setForeground(color);
-            }
         }
 	}
 	

@@ -24,10 +24,6 @@ public class ButtonPanel extends JPanel {
 	private Highlighter.HighlightPainter painter;
 	private JTextField errorField;
 
-	public ButtonPanel() {
-
-	}
-
 	public void initializeEnterKey(Action submitAction) {
 		InputMap imap = getTextField().getInputMap(
 				JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
@@ -39,6 +35,7 @@ public class ButtonPanel extends JPanel {
 	
 	public void setErrorTextField(JTextField errorField) {
 		this.errorField = errorField;
+		this.errorField.setEditable(false);
 	}
 	
 	public JTextField getErrorTextField() {
