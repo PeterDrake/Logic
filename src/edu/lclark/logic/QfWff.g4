@@ -5,7 +5,7 @@ grammar QfWff;
  */
 
 //formula : formparen EOF;
-formula	: (formparen | (biconditional | conditional)) EOF;
+formula	: (formparen | (biconditional | conditional)) (connective (biconditional | conditional | formparen))* EOF;
 formparen : NEGATION* LEFTPAREN formparen RIGHTPAREN | form ;
 form : quantparen* (biconditional | conditional) ;
 quantparen : NEGATION* LEFTPAREN quantparen RIGHTPAREN | quantifier ;
@@ -24,6 +24,7 @@ letters : LETTERS('\'')? ;
 variable : VARIABLES('\'')? ;
 constant : CONSTANTS('\'')? ;
 preposition : PREPOSITIONS('\'')? ;
+connective : BICONDITIONAL | CONDITIONAL | CONJUNCTION | INCLUSIVE_OR;
 
 /*
  * LEXER RULES
