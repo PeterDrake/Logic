@@ -1,5 +1,7 @@
 package edu.lclark.logic;
 
+import java.util.HashSet;
+
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -23,21 +25,33 @@ import edu.lclark.logic.QfWffParser.QuantparenContext;
 import edu.lclark.logic.QfWffParser.VariableContext;
 
 public class QfTreeListener implements QfWffListener {
+	
+	/** A place to leave error messages. */
+	private StringBox box;
+	
+	/** Quantified variables seen so far. */
+	private HashSet<String> quantifiedVariables;
+	
+	/** True when, while walking the tree, we are looking for a variable within a quantifier. */
+	private boolean lookingForVariable;
+	
+	public QfTreeListener(StringBox box) {
+		this.box = box;
+		quantifiedVariables = new HashSet<String>();
+		System.out.println("Creating a QfTreeListener");
+	}
+	
 	@Override
 	public void enterFormula(@NotNull QfWffParser.FormulaContext ctx) {
-		System.out.println("entering formula");
 	}
 	@Override
 	public void exitFormula(@NotNull QfWffParser.FormulaContext ctx) {
-		System.out.println("leaving formula");
 	}
 	@Override
 	public void enterEveryRule(@NotNull ParserRuleContext ctx) {
-//		System.out.println(ctx.getText());
 	}
 	@Override public void exitEveryRule(@NotNull ParserRuleContext ctx) { }
 	@Override public void visitTerminal(@NotNull TerminalNode node) {
-//		System.out.println(node.getText());
 	}
 	@Override public void visitErrorNode(@NotNull ErrorNode node) { }
 	@Override
@@ -142,14 +156,15 @@ public class QfTreeListener implements QfWffListener {
 	}
 	@Override
 	public void enterQuantifier(QuantifierContext ctx) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Entering quantifier: " + ctx.getText());
+		lookingForVariable = true;
 	}
 	@Override
 	public void exitQuantifier(QuantifierContext ctx) {
-		// TODO Auto-generated method stub
-		
+//		System.out.println("Exiting quantifier: " + ctx.getText());
+		lookingForVariable = false;
 	}
+
 	@Override
 	public void enterNegation(NegationContext ctx) {
 		// TODO Auto-generated method stub
@@ -182,8 +197,15 @@ public class QfTreeListener implements QfWffListener {
 	}
 	@Override
 	public void enterVariable(VariableContext ctx) {
-		// TODO Auto-generated method stub
-		
+		if (lookingForVariable) {
+			String variable = ctx.getText();
+			System.out.println("Variable being quantified: " + variable);
+			if (quantifiedVariables.contains(variable)) {
+				box.setContents("Redundant quantification: " + variable);
+			} else {
+				quantifiedVariables.add(variable);
+			}
+		}		
 	}
 	@Override
 	public void exitVariable(VariableContext ctx) {

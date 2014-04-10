@@ -8,26 +8,21 @@ public class QfWffChecker extends WffChecker {
 		
 	ParseTreeWalker walker;
 	
+	/** Text of the potential Wff being checked. */
+	private String text;
+	
 	// Basically a constructor, but because of the way
 	// ANTLR works we can't do that unless we pass a string
 	// to the constructor which is not optimal
 	
 	public QfWffChecker(String is) {
+		text = is;
 		setInput(new ANTLRInputStream(is));
 		setLexer(new QfWffLexer(getInput())); 
 		setTokens(new CommonTokenStream(getLexer())); 
 		setParser(new QfWffParser(getTokens()));
-		
-		ANTLRInputStream inputb = new ANTLRInputStream(is);
-		QfWffLexer lexerb = new QfWffLexer(inputb);
-		CommonTokenStream tokenstream = new CommonTokenStream(lexerb);
-		QfWffParser parserb = new QfWffParser(tokenstream);
-		ParseTree treeb = parserb.formula();
-//		System.out.println(treeb.toStringTree(parserb));
 
-		walker = new ParseTreeWalker();
-		walker.walk(new QfTreeListener(), treeb);
-//		System.out.println();
+		
 		
 		super.swapParserErrorHandling(getParser());
 		setWff(checkWff());
@@ -53,9 +48,11 @@ public class QfWffChecker extends WffChecker {
 	}
 	
 	/** Returns true iff the same variable is quantified more than once. */
-	public boolean containsRedundantQuantifiers() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean containsRedundantQuantifiers() {		
+		ParseTree tree = new QfWffParser(new CommonTokenStream(new QfWffLexer(new ANTLRInputStream(text)))).formula();
+		StringBox box = new StringBox();
+		new ParseTreeWalker().walk(new QfTreeListener(box), tree);
+		return box.isSet();
 	}
 
 	// Super basic test
