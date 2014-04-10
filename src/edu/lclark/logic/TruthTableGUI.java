@@ -28,6 +28,34 @@ public class TruthTableGUI extends JFrame {
             public void run() {
                 TruthTableGUI gui = new TruthTableGUI();
                 gui.setTitle("Truth Table");
+                JMenuBar menuBar = new JMenuBar();
+                JMenu fileMenu = new JMenu("Actions");
+                JMenuItem addTargetFormulaItem = new JMenuItem("Target Formula");
+                addTargetFormulaItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent event) {
+                        
+                    }
+                });
+                fileMenu.add(addTargetFormulaItem);
+                JMenuItem addColumnItem = new JMenuItem("Scratchwork Column");
+                addColumnItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent event) {
+                        truthTablePanel.addColumn();
+                    }
+                });
+                fileMenu.add(addColumnItem);
+                JMenuItem checkValuesItem = new JMenuItem("Check Values");
+                checkValuesItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent event) {
+                        truthTablePanel.checkValues();
+                    }
+                });
+                fileMenu.add(checkValuesItem);
+                menuBar.add(fileMenu);
+                gui.setJMenuBar(menuBar);
                 gui.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
                 gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 gui.setVisible(true);
@@ -55,6 +83,7 @@ public class TruthTableGUI extends JFrame {
                 gui.add(truthTablePanel);
                 firstClick = false;
                 buttons.setErrorText("");
+                gui.setTitle(formula);
             }
 
             if (tfWffChecker.isWff()) {
