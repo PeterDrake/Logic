@@ -4,33 +4,11 @@ grammar QfWff;
  * PARSER RULES
  */
 
-//formula : formparen EOF;
 formula	: (formparen | (biconditional | conditional)) EOF;
 formparen : NEGATION* LEFTPAREN formparen RIGHTPAREN | form ;
 form : quantparen* (biconditional | conditional) ;
 quantparen : NEGATION* LEFTPAREN quantparen RIGHTPAREN | quantifier ;
-//formula	: formparen EOF;
-//formparen : NEGATION* LEFTPAREN formparen RIGHTPAREN | form ;
-//form : quantparen* (biconditional | conditional) ;
-//quantparen : NEGATION* LEFTPAREN quantparen RIGHTPAREN | quantifier ;
 quantifier: (FORALL | EXISTS) variable ;
-
-//formula	: quantexpr EOF;
-//quantexpr : NEGATION? LEFTPAREN quantexpr RIGHTPAREN | expr ;
-//expr : LEFTPAREN expr (biconditional | conditional) RIGHTPAREN | quantparen expr ;
-//quantparen : NEGATION? LEFTPAREN quantparen RIGHTPAREN | quantifier ;
-//quantifier: (FORALL | EXISTS) variable ;
-
-//formula	: quantexpr EOF;
-//quantexpr : NEGATION? LEFTPAREN quantparen expr RIGHTPAREN | expr (biconditional | conditional) ;
-//expr : LEFTPAREN expr (biconditional | conditional) RIGHTPAREN | quantparen ;
-//quantparen : NEGATION? LEFTPAREN quantparen RIGHTPAREN | quantifier ;
-//quantifier: (FORALL | EXISTS) variable ;
-//formula	: quantexpr EOF;
-//quantexpr : NEGATION? LEFTPAREN  expr RIGHTPAREN | quantparen expr? (biconditional | conditional) ;
-//expr : LEFTPAREN expr (biconditional | conditional) RIGHTPAREN | quantparen ;
-//quantparen : NEGATION? LEFTPAREN quantparen RIGHTPAREN | quantifier ;
-//quantifier: (FORALL | EXISTS) variable ;
 
 biconditional : disjunction (BICONDITIONAL disjunction)* ;
 conditional : disjunction CONDITIONAL disjunction ;

@@ -1,9 +1,13 @@
 package edu.lclark.logic;
 
 import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 public class QfWffChecker extends WffChecker {
 		
+	ParseTreeWalker walker;
+	
 	// Basically a constructor, but because of the way
 	// ANTLR works we can't do that unless we pass a string
 	// to the constructor which is not optimal
@@ -14,8 +18,18 @@ public class QfWffChecker extends WffChecker {
 		setTokens(new CommonTokenStream(getLexer())); 
 		setParser(new QfWffParser(getTokens()));
 		
-		super.swapParserErrorHandling(getParser());
+		ANTLRInputStream inputb = new ANTLRInputStream(is);
+		QfWffLexer lexerb = new QfWffLexer(inputb);
+		CommonTokenStream tokenstream = new CommonTokenStream(lexerb);
+		QfWffParser parserb = new QfWffParser(tokenstream);
+		ParseTree treeb = parserb.formula();
+//		System.out.println(treeb.toStringTree(parserb));
+
+		walker = new ParseTreeWalker();
+		walker.walk(new QfTreeListener(), treeb);
+//		System.out.println();
 		
+		super.swapParserErrorHandling(getParser());
 		setWff(checkWff());
 	}
 	
