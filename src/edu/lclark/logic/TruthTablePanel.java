@@ -12,9 +12,12 @@ import javax.swing.*;
 public class TruthTablePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+	
+	/** Maximum number of columns the user can add (including the target formula column) */
+	private static final int MAX_COLUMNS = 11;
 
 	/** Width, in pixels, of each 'cell' in the truth table grid */
-	private static final int CELL_WIDTH = 50;
+	private static final int CELL_WIDTH = 70;
 
 	/** Height, in pixels, of each 'cell' in the truth table grid */
 	private static final int CELL_HEIGHT = 20;
@@ -33,6 +36,10 @@ public class TruthTablePanel extends JPanel {
 	
 	/** The label for the target formula */
 	private JLabel targetFormulaLabel;
+	
+	private JButton[][] jbuttons;
+	
+	private final JButton checkValuesButton;
 
     public TruthTablePanel(final ButtonPanel buttons) {
     	String formula = buttons.getText();
@@ -44,14 +51,46 @@ public class TruthTablePanel extends JPanel {
                buttons.setVisible(true);
             }
         });
+        checkValuesButton = new JButton("Check Values");
+        checkValuesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                for (int c = truthTable.getNumLetters(); c < truthTable.getNumColumns(); c++) {
+                    String formula = truthTable.getColumn(c).getLabel();
+                    boolean[] correctValues = checker.evaluateFormula(formula);
+                    for (int r = 0; r < correctValues.length; r++) {
+                        Color color = Color.BLUE;
+                        if (truthTable.getColumn(c).getValue(r) != correctValues[r]) {
+                            color = Color.RED;
+                        }
+                        jbuttons[r][c].setForeground(color);
+                    }
+                }
+            }
+        });
         setLayout(new FlowLayout(FlowLayout.LEFT));   
         truthTable = new TruthTable(formula);
         initTable();
         JPanel temp = new JPanel(new BorderLayout());
         temp.add(targetFormulaLabel, BorderLayout.NORTH);
-        temp.add(addColumnButton, BorderLayout.SOUTH);
+        temp.add(addColumnButton, BorderLayout.CENTER);
+        temp.add(checkValuesButton, BorderLayout.SOUTH);
         add(temp);
         add(panel);
+        int numLetters = truthTable.getNumLetters();
+        int numRows = truthTable.getNumRows(); 
+        boolean[][] values = new boolean[numLetters][numRows];
+        for (int r = 0; r < numRows; r++) {
+            for (int c = 0; c < numLetters; c++) {
+                values[c][r] = truthTable.getColumn(c).getValue(r);
+            }
+        }
+        jbuttons = new JButton[numRows][MAX_COLUMNS];
+        char[] letters = new char[numLetters];
+        for (int c = 0; c < numLetters; c++) {
+            letters[c] = truthTable.getLetter(c);
+        }
+        checker = new TruthTableChecker(truthTable.getTargetFormula(), values, letters);
     }
 
 	/**
@@ -94,13 +133,15 @@ public class TruthTablePanel extends JPanel {
 				addCell(new JLabel(truthTable.getColumn(col).getValue(row) ? "T" : "F"));
 			} else {
 				// Add a JButton:
-				final JButton cell = new JButton("");
+				JButton cell = new JButton("");
+				cell.setForeground(Color.BLACK);
+				jbuttons[row][col] = cell;
 				TruthTableColumn column = truthTable.getColumn(col);
 				boolean value = false;
 				if (column != null) {
 					value = column.getValue(row);
 				}
-				cell.addActionListener(new TruthTableButton(value, cell, row, col));
+				cell.addActionListener(new AddColumnButton(value, cell, row, col));
 				addCell(cell);
 			}
 		}
@@ -119,6 +160,10 @@ public class TruthTablePanel extends JPanel {
 		// Replaces existing panel with new panel that has 1 extra added column:
 		remove(panel);
 		panel = new JPanel();
+//		boolean[] correctValues = checker.evaluateFormula(column.getLabel());
+//		for (int row = 0; row < correctValues.length; row++) {
+//		    column.setValue(row, correctValues[row]);
+//		}
 		truthTable.addColumn(column);
 		panel.setLayout(new GridLayout(numRows + 1, truthTable.getNumColumns()));
 		fillInTruthTable();
@@ -135,7 +180,7 @@ public class TruthTablePanel extends JPanel {
 		// g2.draw(new Line2D.Double(x1,y2, x2,y2);
 	}
 	
-	private class TruthTableButton extends AbstractAction {
+	private class AddColumnButton extends AbstractAction {
 		private static final long serialVersionUID = 1L;
 		
 		private int row;
@@ -145,7 +190,7 @@ public class TruthTablePanel extends JPanel {
 		
 		private JButton button;
 
-		TruthTableButton(boolean value, JButton button, int row, int column) {
+		AddColumnButton(boolean value, JButton button, int row, int column) {
 			this.value = value;
 			this.button = button;
 			this.row = row;
@@ -164,22 +209,16 @@ public class TruthTablePanel extends JPanel {
             TruthTableColumn col = truthTable.getColumn(column);
             col.setValue(row, value);
             String formula = col.getLabel();
-            int numRows = truthTable.getNumRows();
-            int numCols = truthTable.getNumColumns();
-            int numLetters = truthTable.getNumLetters();
-            boolean[][] values = new boolean[numRows][numLetters];
-            for (int r = 0; r < numRows; r++) {
-            	for (int c = 0; c < numLetters; c++) {
-            		values[r][c] = truthTable.getColumn(c).getValue(r);
-            	}
+            boolean[] correct = checker.evaluateFormula(formula);
+            for (int r = 0; r < correct.length; r++) {
+                if (r != row) continue;
+                Color color = Color.BLUE;
+                if (col.getValue(r) != correct[r]) {
+//                    System.out.println("(" + r + "," + column + ") is wrong.");
+                    color = Color.RED;
+                }
+//                jbuttons[r][column - truthTable.getNumLetters()].setForeground(color);
             }
-            char[] letters = new char[numLetters];
-            for (int i = 0; i < numLetters; i++) {
-            	letters[i] = truthTable.getLetter(i);
-            }
-            System.out.println("formula: " + formula);
-            boolean[] correct = new TruthTableChecker(truthTable.getTargetFormula(), values, letters).evaluateFormula(formula);
-            for (boolean c : correct) System.out.println(c);
         }
 	}
 	

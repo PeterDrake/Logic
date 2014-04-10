@@ -9,8 +9,8 @@ public class TruthTableGUI extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public static final int DEFAULT_WIDTH = 800;
-	public static final int DEFAULT_HEIGHT = 693;
+	public static final int DEFAULT_WIDTH = 1000;
+	public static final int DEFAULT_HEIGHT = 750;
 
 	private static ButtonPanel buttons;
 	private static TruthTablePanel truthTablePanel;
@@ -36,8 +36,9 @@ public class TruthTableGUI extends JFrame {
 	}
 
 	private static class SubmitAction extends AbstractAction {
-
-		private TruthTableGUI gui;
+        private static final long serialVersionUID = 1L;
+        
+        private TruthTableGUI gui;
 		private boolean firstClick;
 
 		SubmitAction(TruthTableGUI gui) {
