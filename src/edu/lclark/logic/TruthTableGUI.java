@@ -24,6 +24,10 @@ public class TruthTableGUI extends JFrame {
     }
 
     public static void main(String[] args) {
+        newWindow();
+    }
+
+    public static void newWindow() {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 TruthTableGUI gui = new TruthTableGUI();
@@ -34,7 +38,7 @@ public class TruthTableGUI extends JFrame {
                 addTargetFormulaItem.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent event) {
-                        
+                        newWindow();
                     }
                 });
                 fileMenu.add(addTargetFormulaItem);
@@ -57,7 +61,7 @@ public class TruthTableGUI extends JFrame {
                 menuBar.add(fileMenu);
                 gui.setJMenuBar(menuBar);
                 gui.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-                gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//                gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 gui.setVisible(true);
             }
         });
