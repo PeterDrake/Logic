@@ -13,40 +13,42 @@ public class TruthTableGUI extends JFrame {
     public static final int DEFAULT_HEIGHT = 750;
 
     private static ButtonPanel buttons;
-    private static TruthTablePanel truthTablePanel;
-
+    
+    private TruthTablePanel truthTablePanel;
+    
     public TruthTableGUI() {
+        buttons = new TFButtonPanel(new SubmitAction(this));
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        buttons = new TFButtonPanel(new SubmitAction(this));
         panel.add(buttons);
         add(panel, BorderLayout.NORTH);
     }
 
     public static void main(String[] args) {
-        newWindow();
+        newWindow(0);
     }
 
-    public static void newWindow() {
+    public static void newWindow(final int index) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
-                TruthTableGUI gui = new TruthTableGUI();
+//                System.setProperty("apple.laf.useScreenMenuBar", "true");
+                final TruthTableGUI gui = new TruthTableGUI();
                 gui.setTitle("Truth Table");
                 JMenuBar menuBar = new JMenuBar();
                 JMenu fileMenu = new JMenu("Actions");
-                JMenuItem addTargetFormulaItem = new JMenuItem("Target Formula");
+                JMenuItem addTargetFormulaItem = new JMenuItem("Add Target Formula");
                 addTargetFormulaItem.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent event) {
-                        newWindow();
+                        newWindow(index + 1);
                     }
                 });
                 fileMenu.add(addTargetFormulaItem);
-                JMenuItem addColumnItem = new JMenuItem("Scratchwork Column");
-                addColumnItem.addActionListener(new ActionListener() {
+                JMenuItem addColumnItem = new JMenuItem("Add Scratchwork Column");
+                addColumnItem.addActionListener(new ActionListener() {                    
                     @Override
                     public void actionPerformed(ActionEvent event) {
-                        truthTablePanel.addColumn();
+                        gui.truthTablePanel.addColumn();
                     }
                 });
                 fileMenu.add(addColumnItem);
@@ -54,7 +56,7 @@ public class TruthTableGUI extends JFrame {
                 checkValuesItem.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent event) {
-                        truthTablePanel.checkValues();
+                        gui.truthTablePanel.checkValues();
                     }
                 });
                 fileMenu.add(checkValuesItem);
@@ -82,18 +84,23 @@ public class TruthTableGUI extends JFrame {
             buttons.removeHilits();
             String formula = buttons.getText();
             TfWffChecker tfWffChecker = new TfWffChecker(formula);
+            TruthTablePanel panel;
+
             if (firstClick && tfWffChecker.isWff()) {
-                truthTablePanel = new TruthTablePanel(buttons);
-                gui.add(truthTablePanel);
+                panel = new TruthTablePanel(buttons);
+                gui.truthTablePanel = panel;
+                gui.add(panel);
                 firstClick = false;
                 buttons.setErrorText("");
                 gui.setTitle(formula);
+            } else {
+                panel = gui.truthTablePanel;
             }
 
             if (tfWffChecker.isWff()) {
                 if (!firstClick) {
-                    int numCols = truthTablePanel.getTruthTable().getNumRows();
-                    TruthTableChecker checker = truthTablePanel.getChecker();
+                    int numCols = panel.getTruthTable().getNumRows();
+                    TruthTableChecker checker = panel.getChecker();
                     if (!checker.isSubFormula(formula)) {
                         buttons.setErrorText("Illegal column! " + formula
                                 + " is not a sub-formula of "
@@ -101,7 +108,7 @@ public class TruthTableGUI extends JFrame {
                     } else {
                         buttons.clearText();
                         buttons.setVisible(false);
-                        truthTablePanel.addColumn(new TruthTableColumn(formula,
+                        panel.addColumn(new TruthTableColumn(formula,
                             new boolean[numCols]));
                         buttons.setErrorText("");
                     }
@@ -112,6 +119,5 @@ public class TruthTableGUI extends JFrame {
                         formula.length());
             }
         }
-
     }
 }
