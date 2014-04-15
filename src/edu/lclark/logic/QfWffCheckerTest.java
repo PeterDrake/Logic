@@ -67,13 +67,13 @@ public class QfWffCheckerTest {
 
 	@Test
 	public void WffChecker8() {
-		wc = new QfWffChecker("(∀x) G(x) . (∃x) G(x)");
+		wc = new QfWffChecker("(∀x) (Gx) . (∃x) (Gx)");
 		assertTrue(wc.isWff());
 	}
 
 	@Test
 	public void WffChecker9() {
-		wc = new QfWffChecker("(∀x)G(x)F(x)");
+		wc = new QfWffChecker("(∀x)(Gx)(Fx)");
 		assertFalse(wc.isWff());
 	}
 
@@ -112,4 +112,11 @@ public class QfWffCheckerTest {
 		wc = new QfWffChecker("∀x Fx -p");
 		assertFalse(wc.isWff());
 	}
+	
+	@Test
+	public void WffChecker16() {
+		wc = new QfWffChecker("(∀x)[Hx.(∃y)(Fy.Gxy).(∃y)(Iy.Gxy)->(∃y)((Fy v Iy).Gyx)]");
+		assertTrue(wc.isWff());
+	}
+	
 }
