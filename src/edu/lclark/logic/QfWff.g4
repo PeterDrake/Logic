@@ -7,7 +7,7 @@ grammar QfWff;
 //formula : formparen EOF;
 formula	: (formparen | (biconditional | conditional)) (connective (biconditional | conditional | formparen))* EOF;
 formparen : NEGATION* LEFTPAREN formparen RIGHTPAREN | form ;
-form : quantparen* (biconditional | conditional) ;
+form : quantparen* ((biconditional | conditional) | (LEFTPAREN form+ RIGHTPAREN));
 quantparen : NEGATION* LEFTPAREN quantparen RIGHTPAREN | quantifier ;
 quantifier: (FORALL | EXISTS) variable ;
 

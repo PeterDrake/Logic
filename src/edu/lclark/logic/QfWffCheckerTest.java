@@ -73,7 +73,7 @@ public class QfWffCheckerTest {
 
 	@Test
 	public void WffChecker9() {
-		wc = new QfWffChecker("(∀x)G(x)F(x)");
+		wc = new QfWffChecker("(∀x)(Gx)(Fx)");
 		assertFalse(wc.isWff());
 	}
 
@@ -121,4 +121,5 @@ public class QfWffCheckerTest {
 		wc = new QfWffChecker("Vx #y Vx Fx");
 		assertFalse(wc.isWff());
 	}
+	
 }
