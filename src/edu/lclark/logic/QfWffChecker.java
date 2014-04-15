@@ -51,7 +51,7 @@ public class QfWffChecker extends WffChecker {
 	public boolean containsRedundantQuantifiers() {		
 		ParseTree tree = new QfWffParser(new CommonTokenStream(new QfWffLexer(new ANTLRInputStream(text)))).formula();
 		StringBox box = new StringBox();
-		new ParseTreeWalker().walk(new QfTreeListener(box), tree);
+		new ParseTreeWalker().walk(new QfWffTreeListener(box), tree);
 		return box.isSet();
 	}
 
