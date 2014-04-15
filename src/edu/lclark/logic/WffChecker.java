@@ -12,7 +12,7 @@ public class WffChecker {
 	private Parser parser;
 	private Lexer lexer;
 
-	private WffCheckerListener errorListener;
+	private WffCheckerErrorListener errorListener;
 
 	public String printTree() {
 		try {
@@ -39,7 +39,7 @@ public class WffChecker {
 		// Throw exceptions instead of correcting errors
 		parser.setErrorHandler(new WffCheckerErrorStrategy());
 
-		setErrorListener(new WffCheckerListener());
+		setErrorListener(new WffCheckerErrorListener());
 		parser.addErrorListener(getErrorListener());
 	}
 		
@@ -51,11 +51,11 @@ public class WffChecker {
 		return errorListener.getErrorPositionInLine();
 	}
 	
-	public WffCheckerListener getErrorListener() {
+	public WffCheckerErrorListener getErrorListener() {
 		return errorListener;
 	}
 
-	public void setErrorListener(WffCheckerListener errorListener) {
+	public void setErrorListener(WffCheckerErrorListener errorListener) {
 		this.errorListener = errorListener;
 	}
 
