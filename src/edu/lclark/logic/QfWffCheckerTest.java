@@ -2,6 +2,11 @@ package edu.lclark.logic;
 
 import static org.junit.Assert.*;
 
+import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.tree.ErrorNode;
+import org.antlr.v4.runtime.tree.ParseTreeListener;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import org.antlr.v4.runtime.tree.TerminalNode;
 import org.junit.After;
 import org.junit.Test;
 
@@ -115,7 +120,35 @@ public class QfWffCheckerTest {
 	
 	@Test
 	public void WffChecker16() {
-		wc = new QfWffChecker("(∀x)[Hx.(∃y)(Fy.Gxy).(∃y)(Iy.Gxy)->(∃y)((Fy v Iy).Gyx)]");
+//		wc = new QfWffChecker("(∀x)[Hx.(∃y)(Fy.Gxy).(∃y)(Iy.Gxy)->(∃y)((Fy v Iy).Gyx)]");
+		wc = new QfWffChecker("(∀x)[Hx.(∃y)(Fy.Gxy)]");
+		System.out.println(wc.isWff());
+		System.out.println(wc.getTree());
+		new ParseTreeWalker().walk(new ParseTreeListener() {
+
+			@Override
+			public void enterEveryRule(ParserRuleContext arg0) {
+				// TODO Auto-generated method stub
+				System.out.println(arg0.getText());
+			}
+
+			@Override
+			public void exitEveryRule(ParserRuleContext arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void visitErrorNode(ErrorNode arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void visitTerminal(TerminalNode arg0) {
+				// TODO Auto-generated method stub
+				
+			}}, wc.getTree());
 		assertTrue(wc.isWff());
 	}
 	

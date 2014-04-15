@@ -14,7 +14,7 @@ public class QfWffChecker extends WffChecker {
 		setTokens(new CommonTokenStream(getLexer())); 
 		setParser(new QfWffParser(getTokens()));
 		
-//		super.swapParserErrorHandling(getParser());
+		super.swapParserErrorHandling(getParser());
 		
 		setWff(checkWff());
 	}
@@ -29,9 +29,9 @@ public class QfWffChecker extends WffChecker {
 		}
 
 		// a little awkward, but there is one weird case where paren checking is messed up
-//		if (getErrors() != "The entered formula is a wff.") {
-//			return false;
-//		}
+		if (getErrors() != "The entered formula is a wff.") {
+			return false;
+		}
 
 		return true;
 	}
