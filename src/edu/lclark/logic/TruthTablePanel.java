@@ -62,7 +62,7 @@ public class TruthTablePanel extends JPanel {
 //                checkValues();
 //            }
 //        });
-        setLayout(new FlowLayout(FlowLayout.LEFT));   
+        setLayout(new FlowLayout(FlowLayout.LEFT)); 
         truthTable = new TruthTable(formula);
         initTable();
 //        JPanel temp = new JPanel(new BorderLayout());

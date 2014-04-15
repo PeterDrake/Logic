@@ -11,7 +11,10 @@ public class QTestButton {
 	private static ButtonPanel buttons;
 
 	public static void main(String[] args) {
-
+	    newWindow();
+	}
+	
+	public static void newWindow() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				JFrame frame = new JFrame();
@@ -22,7 +25,7 @@ public class QTestButton {
 						BorderLayout.CENTER);
 				frame.pack();
 				frame.setTitle("Buttons");
-				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.setVisible(true);
 			}
 		});
