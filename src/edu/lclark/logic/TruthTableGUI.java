@@ -9,8 +9,8 @@ public class TruthTableGUI extends JFrame {
 
     private static final long serialVersionUID = 1L;
 
-    public static final int DEFAULT_WIDTH = 1000;
-    public static final int DEFAULT_HEIGHT = 750;
+    public static final int DEFAULT_WIDTH = 400;
+    public static final int DEFAULT_HEIGHT = 300;
 
     private ButtonPanel buttons;
     
@@ -49,6 +49,7 @@ public class TruthTableGUI extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent event) {
                         gui.truthTablePanel.addColumn();
+                        gui.pack();
                     }
                 });
                 fileMenu.add(addColumnItem);
@@ -93,6 +94,7 @@ public class TruthTableGUI extends JFrame {
                 firstClick = false;
                 gui.buttons.setErrorText("");
                 gui.setTitle(formula);
+                gui.pack();
             } else {
                 panel = gui.truthTablePanel;
             }
@@ -111,6 +113,7 @@ public class TruthTableGUI extends JFrame {
                         panel.addColumn(new TruthTableColumn(formula,
                             new boolean[numCols]));
                         gui.buttons.setErrorText("");
+                        gui.pack();
                     }
                 }
             } else {
