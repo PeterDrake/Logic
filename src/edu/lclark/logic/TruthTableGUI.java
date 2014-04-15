@@ -25,10 +25,10 @@ public class TruthTableGUI extends JFrame {
     }
 
     public static void main(String[] args) {
-        newWindow(0);
+        newWindow();
     }
 
-    public static void newWindow(final int index) {
+    public static void newWindow() {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
 //                System.setProperty("apple.laf.useScreenMenuBar", "true");
@@ -40,7 +40,7 @@ public class TruthTableGUI extends JFrame {
                 addTargetFormulaItem.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent event) {
-                        newWindow(index + 1);
+                        newWindow();
                     }
                 });
                 fileMenu.add(addTargetFormulaItem);
@@ -84,8 +84,8 @@ public class TruthTableGUI extends JFrame {
             buttons.removeHilits();
             String formula = buttons.getText();
             TfWffChecker tfWffChecker = new TfWffChecker(formula);
+            
             TruthTablePanel panel;
-
             if (firstClick && tfWffChecker.isWff()) {
                 panel = new TruthTablePanel(buttons);
                 gui.truthTablePanel = panel;
