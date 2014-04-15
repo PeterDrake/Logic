@@ -120,35 +120,7 @@ public class QfWffCheckerTest {
 	
 	@Test
 	public void WffChecker16() {
-//		wc = new QfWffChecker("(∀x)[Hx.(∃y)(Fy.Gxy).(∃y)(Iy.Gxy)->(∃y)((Fy v Iy).Gyx)]");
-		wc = new QfWffChecker("(∀x)[Hx.(∃y)(Fy.Gxy)]");
-		System.out.println(wc.isWff());
-		System.out.println(wc.getTree());
-		new ParseTreeWalker().walk(new ParseTreeListener() {
-
-			@Override
-			public void enterEveryRule(ParserRuleContext arg0) {
-				// TODO Auto-generated method stub
-				System.out.println(arg0.getText());
-			}
-
-			@Override
-			public void exitEveryRule(ParserRuleContext arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void visitErrorNode(ErrorNode arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void visitTerminal(TerminalNode arg0) {
-				// TODO Auto-generated method stub
-				
-			}}, wc.getTree());
+		wc = new QfWffChecker("(∀x)[Hx.(∃y)(Fy.Gxy).(∃y)(Iy.Gxy)->(∃y)((Fy v Iy).Gyx)]");
 		assertTrue(wc.isWff());
 	}
 	
