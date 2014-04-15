@@ -45,6 +45,7 @@ public class TruthTablePanel extends JPanel {
 
     public TruthTablePanel(final ButtonPanel buttons) {
         this.buttons = buttons;
+//        add(buttons);
     	String formula = buttons.getText();
 //    	targetFormulaLabel = new JLabel("Target formula: " + formula);
 //        addColumnButton = new JButton("Add Column");
