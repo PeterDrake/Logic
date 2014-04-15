@@ -12,7 +12,7 @@ public class TruthTableGUI extends JFrame {
     public static final int DEFAULT_WIDTH = 1000;
     public static final int DEFAULT_HEIGHT = 750;
 
-    private static ButtonPanel buttons;
+    private ButtonPanel buttons;
     
     private TruthTablePanel truthTablePanel;
     
@@ -25,10 +25,10 @@ public class TruthTableGUI extends JFrame {
     }
 
     public static void main(String[] args) {
-        newWindow(0);
+        newWindow();
     }
 
-    public static void newWindow(final int index) {
+    public static void newWindow() {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
 //                System.setProperty("apple.laf.useScreenMenuBar", "true");
@@ -40,7 +40,7 @@ public class TruthTableGUI extends JFrame {
                 addTargetFormulaItem.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent event) {
-                        newWindow(index + 1);
+                        newWindow();
                     }
                 });
                 fileMenu.add(addTargetFormulaItem);
@@ -81,17 +81,17 @@ public class TruthTableGUI extends JFrame {
         }
 
         public void actionPerformed(ActionEvent event) {
-            buttons.removeHilits();
-            String formula = buttons.getText();
+            gui.buttons.removeHilits();
+            String formula = gui.buttons.getText();
             TfWffChecker tfWffChecker = new TfWffChecker(formula);
             TruthTablePanel panel;
 
             if (firstClick && tfWffChecker.isWff()) {
-                panel = new TruthTablePanel(buttons);
+                panel = new TruthTablePanel(gui.buttons);
                 gui.truthTablePanel = panel;
                 gui.add(panel);
                 firstClick = false;
-                buttons.setErrorText("");
+                gui.buttons.setErrorText("");
                 gui.setTitle(formula);
             } else {
                 panel = gui.truthTablePanel;
@@ -102,20 +102,20 @@ public class TruthTableGUI extends JFrame {
                     int numCols = panel.getTruthTable().getNumRows();
                     TruthTableChecker checker = panel.getChecker();
                     if (!checker.isSubFormula(formula)) {
-                        buttons.setErrorText("Illegal column! " + formula
+                        gui.buttons.setErrorText("Illegal column! " + formula
                                 + " is not a sub-formula of "
                                 + checker.getFormula());
                     } else {
-                        buttons.clearText();
-                        buttons.setVisible(false);
+                        gui.buttons.clearText();
+                        gui.buttons.setVisible(false);
                         panel.addColumn(new TruthTableColumn(formula,
                             new boolean[numCols]));
-                        buttons.setErrorText("");
+                        gui.buttons.setErrorText("");
                     }
                 }
             } else {
-                buttons.setErrorText(tfWffChecker.getErrors());
-                buttons.hilitTextField(tfWffChecker.getErrorPositionInLine(),
+                gui.buttons.setErrorText(tfWffChecker.getErrors());
+                gui.buttons.hilitTextField(tfWffChecker.getErrorPositionInLine(),
                         formula.length());
             }
         }
