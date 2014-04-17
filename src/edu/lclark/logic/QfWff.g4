@@ -7,16 +7,22 @@ grammar QfWff;
 formula	: form EOF;
 form : (quantifier form) | leftbiconditional | leftconditional | (LEFTPAREN form RIGHTPAREN);
 quantifier: (FORALL | EXISTS) variable | LEFTPAREN quantifier RIGHTPAREN;
+
 leftbiconditional : leftdisjunction (BICONDITIONAL disjunction)* | (LEFTPAREN biconditional RIGHTPAREN);
 biconditional : disjunction (BICONDITIONAL disjunction)* ;
+
 leftconditional : leftdisjunction (CONDITIONAL disjunction)* | (LEFTPAREN conditional RIGHTPAREN);
 conditional : disjunction (CONDITIONAL disjunction)* ;
+
 leftdisjunction : leftconjunction (INCLUSIVE_OR conjunction)* | (LEFTPAREN disjunction RIGHTPAREN);
 disjunction : conjunction (INCLUSIVE_OR conjunction)* ;
+
 leftconjunction : leftnegation (CONJUNCTION negation)* | (LEFTPAREN conjunction RIGHTPAREN);
 conjunction : negation (CONJUNCTION negation)* ;
+
 leftnegation : NEGATION? (predicate | atom | (quantifier form) | (LEFTPAREN form RIGHTPAREN) ) | (LEFTPAREN negation RIGHTPAREN);
 negation : NEGATION? (form | predicate | atom);
+
 predicate: preposition (variable | constant) + ;
 atom : TRUTH | FALSITY | letters ;
 letters : LETTERS('\'')? ;
