@@ -33,7 +33,7 @@ public class TruthTableGUI extends JFrame {
             public void run() {
 //                System.setProperty("apple.laf.useScreenMenuBar", "true");
                 final TruthTableGUI gui = new TruthTableGUI();
-                gui.setTitle("Truth Table");
+                gui.setTitle("Truth Table Builder");
                 JMenuBar menuBar = new JMenuBar();
                 JMenu fileMenu = new JMenu("Actions");
                 JMenuItem addTargetFormulaItem = new JMenuItem("Add Target Formula");

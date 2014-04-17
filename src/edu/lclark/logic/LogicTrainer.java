@@ -39,6 +39,15 @@ public class LogicTrainer extends JFrame {
                     }
                 });
                 gui.add(button2);
+                JButton button3 = new JButton("Truth Functional Logic");
+                button3.setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+                button3.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent event) {
+                        TFTestButton.newWindow();
+                    }
+                });
+                gui.add(button3);
                 gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 gui.pack();
                 gui.setVisible(true);

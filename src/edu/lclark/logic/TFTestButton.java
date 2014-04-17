@@ -3,6 +3,7 @@ package edu.lclark.logic;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
+
 import javax.swing.*;
 
 public class TFTestButton {
@@ -47,6 +48,23 @@ public class TFTestButton {
 			}
 			buttons.setErrorText(wc.getErrors());
 		}
+	}
+
+	public static void newWindow() {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				JFrame frame = new JFrame();
+				frame.setLayout(new BorderLayout());
+
+				Action submitAction = new SubmitAction();
+				frame.add(buttons = new QButtonPanel(submitAction),
+						BorderLayout.CENTER);
+				frame.pack();
+				frame.setTitle("Truth Functional Logic");
+//				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				frame.setVisible(true);
+			}
+		});
 	}
 
 }
