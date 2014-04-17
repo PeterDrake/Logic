@@ -23,7 +23,6 @@ public class QfWffChecker extends WffChecker {
 		setParser(new QfWffParser(getTokens()));
 
 		
-		
 		super.swapParserErrorHandling(getParser());
 		setWff(checkWff());
 	}
