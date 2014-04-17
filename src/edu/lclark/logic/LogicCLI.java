@@ -16,7 +16,7 @@ public class LogicCLI {
 	@Command
 	public void tftree(String s) {
 		TfWffChecker tfwc = new TfWffChecker(s);
-		System.out.println(tfwc.printTree());
+		tfwc.printTree();
 	}
 	
 	@Command
@@ -34,7 +34,7 @@ public class LogicCLI {
 	@Command
 	public void qftree(String s) {
 		QfWffChecker qfwc = new QfWffChecker(s);
-		System.out.println(qfwc.printTree());
+		qfwc.printTree();
 	}
 
 	@Command

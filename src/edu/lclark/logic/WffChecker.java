@@ -14,12 +14,11 @@ public class WffChecker {
 
 	private WffCheckerErrorListener errorListener;
 
-	public String printTree() {
+	public void printTree() {
 		try {
-			return tree.toStringTree(parser);
+			System.out.println(tree.toStringTree(parser));
 		} catch (NullPointerException re) {
 			// error
-			return null;
 		}
 	}
 
@@ -45,6 +44,10 @@ public class WffChecker {
 		
 	public String getErrors() {
 		return errorListener.getErrors();
+	}
+	
+	public void setErrors(String errors) {
+		errorListener.setErrors(errors);
 	}
 
 	public int getErrorPositionInLine() {

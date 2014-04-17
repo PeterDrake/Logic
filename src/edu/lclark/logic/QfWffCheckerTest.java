@@ -2,11 +2,6 @@ package edu.lclark.logic;
 
 import static org.junit.Assert.*;
 
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.tree.ErrorNode;
-import org.antlr.v4.runtime.tree.ParseTreeListener;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
-import org.antlr.v4.runtime.tree.TerminalNode;
 import org.junit.After;
 import org.junit.Test;
 
@@ -124,4 +119,33 @@ public class QfWffCheckerTest {
 		assertTrue(wc.isWff());
 	}
 	
+	@Test
+	public void testRedundantQuantification() {
+		wc = new QfWffChecker("Vx Fx");
+//		System.out.println(wc.printTree());
+		assertTrue(wc.isWff());
+		wc = new QfWffChecker("Vx #y Vx Fx");
+		assertFalse(wc.isWff());
+	}
+		
+	@Test
+	public void testRedundantQuantification2() {
+		wc = new QfWffChecker("Vx (Vx (Fx))");
+//		System.out.println(wc.printTree());
+		assertFalse(wc.isWff());
+	}
+	
+	@Test
+	public void testRedundantQuantification3() {
+		wc = new QfWffChecker("Vx (Fx . Vx Fx)");
+//		System.out.println(wc.printTree());
+		assertFalse(wc.isWff());
+	}
+	
+//	@Test
+//	public void testRedundantQuantification4() {
+//		wc = new QfWffChecker("#x (Fx . #x Fx)");
+////		System.out.println(wc.printTree());
+//		assertTrue(wc.isWff());
+//	}
 }
