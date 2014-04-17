@@ -7,7 +7,6 @@ grammar QfWff;
 formula	: form EOF;
 form : (quantifier form) | leftbiconditional | leftconditional | (LEFTPAREN form RIGHTPAREN);
 quantifier: (FORALL | EXISTS) variable | LEFTPAREN quantifier RIGHTPAREN;
-
 leftbiconditional : leftdisjunction (BICONDITIONAL disjunction)* | (LEFTPAREN biconditional RIGHTPAREN);
 biconditional : disjunction (BICONDITIONAL disjunction)* ;
 
@@ -50,7 +49,6 @@ LETTERS: 'p' | 'q' | 'r' | 's' | 't'
 	   | 'P' | 'Q' | 'R' | 'S' | 'T'
 	   | 'A' | 'B' | 'C' | 'D' | 'E'
 	   ;
-	   
 PREPOSITIONS: 'F' | 'G' | 'H' | 'I' | 'J' | 'K' ;
 VARIABLES: 'x' | 'y' | 'z' | 'v' | 'w' ;
 CONSTANTS: 'a' | 'b' | 'c' | 'd' | 'e' ;
