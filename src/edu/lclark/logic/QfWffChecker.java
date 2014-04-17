@@ -34,21 +34,21 @@ public class QfWffChecker extends WffChecker {
 			setErrors("Parentheses mismatched.");
 			return false;
 		}
-//		try {
-//			setTree(((QfWffParser) getParser()).formula());
-//		}
-//		catch (RuntimeException re) {
-//			return false;
-//		}
-//
-//		// a little awkward, but there is one weird case where paren checking is messed up
-//		if (getErrors() != "The entered formula is a wff.") {
-//			return false;
-//		}
-//		if (containsRedundantQuantifiers()) {
-//			setErrors("Redundant quantifiers.");
-//			return false;
-//		}
+		try {
+			setTree(((QfWffParser) getParser()).formula());
+		}
+		catch (RuntimeException re) {
+			return false;
+		}
+
+		// a little awkward, but there is one weird case where paren checking is messed up
+		if (getErrors() != "The entered formula is a wff.") {
+			return false;
+		}
+		if (containsRedundantQuantifiers()) {
+			setErrors("Redundant quantifiers.");
+			return false;
+		}
 		return true;
 	}
 	

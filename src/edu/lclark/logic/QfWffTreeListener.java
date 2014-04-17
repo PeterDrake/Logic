@@ -50,33 +50,19 @@ public class QfWffTreeListener extends QfWffBaseListener {
 		}		
 	}
 	
-	@Override
-	public void enterLeftparen(QfWffParser.LeftparenContext ctx) {
-		parenthesesCounter++;
-		System.out.println(ctx.getText());
-		System.out.println(parenthesesCounter);
-	}
-
-	@Override
-	public void enterRightparen(QfWffParser.RightparenContext ctx) {
-		parenthesesCounter--;		
-		System.out.println(ctx.getText());
-		System.out.println(parenthesesCounter);
-	}
-	
 //	@Override
-//	public void enterParentheses(QfWffParser.ParenthesesContext ctx) {
+//	public void enterLeftparen(QfWffParser.LeftparenContext ctx) {
 //		parenthesesCounter++;
+//		System.out.println(ctx.getText());
 //		System.out.println(parenthesesCounter);
 //	}
 //
 //	@Override
-//	public void exitParentheses(QfWffParser.ParenthesesContext ctx) {
+//	public void enterRightparen(QfWffParser.RightparenContext ctx) {
 //		parenthesesCounter--;		
 //		System.out.println(ctx.getText());
 //		System.out.println(parenthesesCounter);
 //	}
-
 	
 	public boolean parenthesesNotMatched() {
 //		System.out.println(parenthesesCounter);
