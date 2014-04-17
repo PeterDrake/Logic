@@ -25,9 +25,9 @@ public class QButtonPanel extends ButtonPanel {
 		connectives.setLayout(new GridLayout(5, 1));
 		addButton("-", "negation", connectives, new InsertAction("-"));
 		addButton(".", "and", connectives, new InsertAction("."));
-		addButton("���", "or", connectives, new InsertAction("���"));
-		addButton("���", "conditional", connectives, new InsertAction("���"));
-		addButton("���", "biconditional", connectives, new InsertAction("���"));
+		addButton("v", "or", connectives, new InsertAction("v"));
+		addButton("→", "conditional", connectives, new InsertAction("→"));
+		addButton("↔", "biconditional", connectives, new InsertAction("↔"));
 		buttons.add(connectives);
 
 		// Makes a panel with all the sentence letters
@@ -84,15 +84,15 @@ public class QButtonPanel extends ButtonPanel {
 
 		JPanel quantifiers = new JPanel();
 		quantifiers.setLayout(new GridLayout(1, 2));
-		addButton("���", "for all", quantifiers, new InsertAction("���"));
-		addButton("���", "there exists", quantifiers, new InsertAction("���"));
+		addButton("∀", "for all", quantifiers, new InsertAction("∀"));
+		addButton("∃", "there exists", quantifiers, new InsertAction("∃"));
 		misc.add(quantifiers);
 
 		// Makes a panel with the prime and space buttons
 		JPanel primenspace = new JPanel();
 		primenspace.setLayout(new GridLayout(1, 2));
 		addButton("'", "prime", primenspace, new InsertAction("'"));
-		addButton("���", "space", primenspace, new InsertAction(" "));
+		addButton("⨆", "space", primenspace, new InsertAction(" "));
 		misc.add(primenspace);
 
 		// Makes a panel with left and right parens
