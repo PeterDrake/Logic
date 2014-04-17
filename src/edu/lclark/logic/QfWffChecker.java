@@ -29,10 +29,6 @@ public class QfWffChecker extends WffChecker {
 	
 	public boolean checkWff() {
 		// There will be a RuntimeException if there is invalid syntax, so we catch it 
-		if (parenthesesNotMatched()) {
-			setErrors("Parentheses mismatched.");
-			return false;
-		}
 		try {
 			setTree(((QfWffParser) getParser()).formula());
 		}
@@ -46,6 +42,10 @@ public class QfWffChecker extends WffChecker {
 		}
 		if (containsRedundantQuantifiers()) {
 			setErrors("Redundant quantifiers.");
+			return false;
+		}
+		if (parenthesesNotMatched()) {
+			setErrors("Parentheses mismatched.");
 			return false;
 		}
 		return true;

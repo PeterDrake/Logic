@@ -1,9 +1,6 @@
 package edu.lclark.logic;
 
 import java.util.HashSet;
-
-import org.antlr.v4.runtime.misc.NotNull;
-
 import edu.lclark.logic.QfWffParser.*;
 
 public class QfWffTreeListener extends QfWffBaseListener {
