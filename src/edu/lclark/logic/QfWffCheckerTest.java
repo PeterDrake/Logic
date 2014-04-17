@@ -118,5 +118,12 @@ public class QfWffCheckerTest {
 		wc = new QfWffChecker("(∀x)[Hx.(∃y)(Fy.Gxy).(∃y)(Iy.Gxy)->(∃y)((Fy v Iy).Gyx)]");
 		assertTrue(wc.isWff());
 	}
-	
+		@Test
+	public void testRedundantQuantification() {
+		wc = new QfWffChecker("Vx Fx");
+//		System.out.println(wc.printTree());
+		assertTrue(wc.isWff());
+		wc = new QfWffChecker("Vx #y Vx Fx");
+		assertFalse(wc.isWff());
+	}
 }
