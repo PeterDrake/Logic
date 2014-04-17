@@ -58,8 +58,7 @@ public class QfWffChecker extends WffChecker {
 
 	// Super basic test
 	public static void main(String[] args) {
-//		QfWffChecker qfwc = new QfWffChecker("-((∀x)((∃y)(-Fxy)))");
-		QfWffChecker qfwc = new QfWffChecker("(∀x)(Fy)");
+		QfWffChecker qfwc = new QfWffChecker("(∀x)[Hx.(∃y)(Fy.Gxy).(∃y)(Iy.Gxy)->(∃y)((Fy v Iy).Gyx)]");
 		System.out.println(qfwc.isWff());
 		System.out.println(qfwc.printTree());
 		System.out.println(qfwc.getErrors());
