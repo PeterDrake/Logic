@@ -44,10 +44,10 @@ public class QfWffChecker extends WffChecker {
 			setErrors("Redundant quantifiers.");
 			return false;
 		}
-		if (parenthesesNotMatched()) {
-			setErrors("Parentheses mismatched.");
-			return false;
-		}
+//		if (parenthesesNotMatched()) {
+//			setErrors("Parentheses mismatched.");
+//			return false;
+//		}
 		return true;
 	}
 	
@@ -80,7 +80,7 @@ public class QfWffChecker extends WffChecker {
 		QfWffChecker qfwc = new QfWffChecker("-((∀x)((∃y)(-Fxy)))");
 //		QfWffChecker qfwc = new QfWffChecker("(Fx))");
 		System.out.println(qfwc.isWff());
-		System.out.println(qfwc.printTree());
+		qfwc.printTree();
 		System.out.println(qfwc.getErrors());
 	}
 }
