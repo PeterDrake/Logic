@@ -16,6 +16,10 @@ public class WffCheckerErrorListener extends BaseErrorListener {
 	public String getErrors() {
 		return errors;
 	}
+	
+	public void setErrors(String errors) {
+		this.errors = errors;
+	}
 
 	@Override
 	public void syntaxError(Recognizer<?, ?> recognizer,

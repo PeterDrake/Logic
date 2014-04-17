@@ -5,9 +5,9 @@ grammar QfWff;
  */
 
 formula	: (formparen | (biconditional | conditional)) EOF;
-formparen : NEGATION* LEFTPAREN formparen RIGHTPAREN | form ;
+formparen : NEGATION* leftparen formparen rightparen | form ;
 form : quantparen* (biconditional | conditional) ;
-quantparen : NEGATION* LEFTPAREN quantparen RIGHTPAREN | quantifier ;
+quantparen : NEGATION* leftparen quantparen rightparen | quantifier ;
 quantifier: (FORALL | EXISTS) variable ;
 
 biconditional : disjunction (BICONDITIONAL disjunction)* ;
@@ -15,14 +15,17 @@ conditional : disjunction CONDITIONAL disjunction ;
 disjunction : conjunction (INCLUSIVE_OR conjunction)* ;
 conjunction : negation (CONJUNCTION negation)* ;
 negation : NEGATION? parentheses ;
-//parentheses : LEFTPAREN (biconditional | conditional) RIGHTPAREN | predicate;
-parentheses : LEFTPAREN (biconditional | conditional) RIGHTPAREN | (predicate | atom);
+//parentheses : leftparen (biconditional | conditional) rightparen | predicate;
+parentheses : leftparen (biconditional | conditional) rightparen | (predicate | atom);
 predicate: preposition variable* ;
 atom : TRUTH | FALSITY | letters ;
 letters : LETTERS('\'')? ;
 variable : VARIABLES('\'')? ;
 constant : CONSTANTS('\'')? ;
 preposition : PREPOSITIONS('\'')? ;
+
+leftparen : LEFTPAREN ;
+rightparen : RIGHTPAREN ;
 
 /*
  * LEXER RULES

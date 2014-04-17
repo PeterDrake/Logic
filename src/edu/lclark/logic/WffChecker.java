@@ -46,6 +46,10 @@ public class WffChecker {
 	public String getErrors() {
 		return errorListener.getErrors();
 	}
+	
+	public void setErrors(String errors) {
+		errorListener.setErrors(errors);
+	}
 
 	public int getErrorPositionInLine() {
 		return errorListener.getErrorPositionInLine();
