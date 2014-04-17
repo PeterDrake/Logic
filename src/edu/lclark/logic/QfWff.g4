@@ -45,10 +45,12 @@ INCLUSIVE_OR: 'v' | '⋁' ;
 NEGATION: '-' | '¬' | '~' ;
 TRUTH: '⊤' | '1';
 FALSITY: '⊥' | '0';
+
 LETTERS: 'p' | 'q' | 'r' | 's' | 't' 
 	   | 'P' | 'Q' | 'R' | 'S' | 'T'
 	   | 'A' | 'B' | 'C' | 'D' | 'E'
 	   ;
+	   
 PREPOSITIONS: 'F' | 'G' | 'H' | 'I' | 'J' | 'K' ;
 VARIABLES: 'x' | 'y' | 'z' | 'v' | 'w' ;
 CONSTANTS: 'a' | 'b' | 'c' | 'd' | 'e' ;

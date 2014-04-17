@@ -19,8 +19,10 @@ public class TFButtonPanel extends ButtonPanel {
 		setLayout(new BorderLayout());
 		setTextField (new JTextField());
 		getTextField().setEditable(true);
+		setErrorTextField (new JTextField());
+		getErrorTextField().setEditable(true);
 		add(getTextField(), BorderLayout.NORTH);
-
+		
 		// A panel that all the buttons, but the submit button are added to
 		JPanel buttons = new JPanel();
 		buttons.setLayout(new FlowLayout());
@@ -81,7 +83,10 @@ public class TFButtonPanel extends ButtonPanel {
 		submitButton.setToolTipText("submits what is in the text field");
 		submitButton.addActionListener(submitAction);
 		submitButton.setFocusable(false);
-		add(submitButton, BorderLayout.SOUTH);
+		JPanel tpanel = new JPanel(new GridLayout(2,1));
+		tpanel.add(submitButton);
+		tpanel.add(getErrorTextField());
+		add(tpanel, BorderLayout.SOUTH);
 		
 		// associate the enter key with submitAction
 		initializeEnterKey(submitAction);

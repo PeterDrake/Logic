@@ -3,16 +3,12 @@ package edu.lclark.logic;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.JFrame;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 public class TFTestButton {
 
 	private static String formula;
 	private static ButtonPanel buttons;
-	private static JTextField output;
 
 	public static void main(String[] args) {
 
@@ -20,13 +16,11 @@ public class TFTestButton {
 			public void run() {
 				JFrame frame = new JFrame();
 				frame.setLayout(new BorderLayout());
-				output = new JTextField();
-				output.setEditable(false);
 
+				
 				Action submitAction = new SubmitAction();
 				frame.add(buttons = new TFButtonPanel(submitAction),
 						BorderLayout.CENTER);
-				frame.add(output, BorderLayout.SOUTH);
 				frame.pack();
 				frame.setTitle("Buttons");
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,7 +45,7 @@ public class TFTestButton {
 				buttons.hilitTextField(wc.getErrorPositionInLine(),
 						formula.length());
 			}
-			output.setText(wc.getErrors());
+			buttons.setErrorText(wc.getErrors());
 		}
 	}
 
