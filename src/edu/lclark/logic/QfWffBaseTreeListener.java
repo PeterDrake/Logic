@@ -3,7 +3,6 @@ package edu.lclark.logic;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
-
 import edu.lclark.logic.QfWffParser.*;
 
 public class QfWffBaseTreeListener implements QfWffListener {
@@ -28,30 +27,6 @@ public class QfWffBaseTreeListener implements QfWffListener {
 
 	@Override
 	public void visitTerminal(TerminalNode arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void enterParentheses(ParenthesesContext ctx) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void exitParentheses(ParenthesesContext ctx) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void enterFormparen(FormparenContext ctx) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void exitFormparen(FormparenContext ctx) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -177,18 +152,6 @@ public class QfWffBaseTreeListener implements QfWffListener {
 	}
 
 	@Override
-	public void enterQuantparen(QuantparenContext ctx) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void exitQuantparen(QuantparenContext ctx) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void enterConditional(ConditionalContext ctx) {
 		// TODO Auto-generated method stub
 		
@@ -232,6 +195,66 @@ public class QfWffBaseTreeListener implements QfWffListener {
 
 	@Override
 	public void exitFormula(FormulaContext ctx) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void enterLeftconditional(LeftconditionalContext ctx) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void exitLeftconditional(LeftconditionalContext ctx) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void enterLeftbiconditional(LeftbiconditionalContext ctx) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void exitLeftbiconditional(LeftbiconditionalContext ctx) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void enterLeftnegation(LeftnegationContext ctx) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void exitLeftnegation(LeftnegationContext ctx) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void enterLeftconjunction(LeftconjunctionContext ctx) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void exitLeftconjunction(LeftconjunctionContext ctx) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void enterLeftdisjunction(LeftdisjunctionContext ctx) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void exitLeftdisjunction(LeftdisjunctionContext ctx) {
 		// TODO Auto-generated method stub
 		
 	}
