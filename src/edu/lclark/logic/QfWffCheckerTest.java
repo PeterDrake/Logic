@@ -2,6 +2,11 @@ package edu.lclark.logic;
 
 import static org.junit.Assert.*;
 
+import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.tree.ErrorNode;
+import org.antlr.v4.runtime.tree.ParseTreeListener;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import org.antlr.v4.runtime.tree.TerminalNode;
 import org.junit.After;
 import org.junit.Test;
 
@@ -67,13 +72,13 @@ public class QfWffCheckerTest {
 
 	@Test
 	public void WffChecker8() {
-		wc = new QfWffChecker("(∀x) G(x) . (∃x) G(x)");
+		wc = new QfWffChecker("(∀x) (Gx) . (∃x) (Gx)");
 		assertTrue(wc.isWff());
 	}
 
 	@Test
 	public void WffChecker9() {
-		wc = new QfWffChecker("(∀x)G(x)F(x)");
+		wc = new QfWffChecker("(∀x)(Gx)(Fx)");
 		assertFalse(wc.isWff());
 	}
 
@@ -114,11 +119,9 @@ public class QfWffCheckerTest {
 	}
 	
 	@Test
-	public void testRedundantQuantification() {
-		wc = new QfWffChecker("Vx Fx");
-//		System.out.println(wc.printTree());
+	public void WffChecker16() {
+		wc = new QfWffChecker("(∀x)[Hx.(∃y)(Fy.Gxy).(∃y)(Iy.Gxy)->(∃y)((Fy v Iy).Gyx)]");
 		assertTrue(wc.isWff());
-		wc = new QfWffChecker("Vx #y Vx Fx");
-		assertFalse(wc.isWff());
 	}
+	
 }
