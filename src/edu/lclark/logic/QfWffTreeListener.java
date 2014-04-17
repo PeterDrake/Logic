@@ -1,6 +1,8 @@
 package edu.lclark.logic;
 
 import java.util.HashSet;
+import java.util.Stack;
+
 import edu.lclark.logic.QfWffParser.*;
 
 public class QfWffTreeListener extends QfWffBaseListener {
@@ -9,7 +11,9 @@ public class QfWffTreeListener extends QfWffBaseListener {
 	private StringBox box;
 	
 	/** Quantified variables seen so far. */
-	private HashSet<String> quantifiedVariables;
+	private HashSet<String> currentQuantifiedVariables;
+	
+	private Stack<HashSet> formStack;
 	
 	/** True when, while walking the tree, we are looking for a variable within a quantifier. */
 	private boolean lookingForVariable;
@@ -19,7 +23,10 @@ public class QfWffTreeListener extends QfWffBaseListener {
 	
 	public QfWffTreeListener(StringBox box) {
 		this.box = box;
-		quantifiedVariables = new HashSet<String>();
+		currentQuantifiedVariables = new HashSet<String>();
+		
+		formStack = new Stack<HashSet>();
+		
 //		System.out.println("Creating a QfTreeListener");
 	}
 
@@ -28,6 +35,7 @@ public class QfWffTreeListener extends QfWffBaseListener {
 //		System.out.println("Entering quantifier: " + ctx.getText());
 		lookingForVariable = true;
 	}
+	
 	@Override
 	public void exitQuantifier(QuantifierContext ctx) {
 //		System.out.println("Exiting quantifier: " + ctx.getText());
@@ -39,27 +47,23 @@ public class QfWffTreeListener extends QfWffBaseListener {
 		if (lookingForVariable) {
 			String variable = ctx.getText();
 //			System.out.println("Variable being quantified: " + variable);
-			if (quantifiedVariables.contains(variable)) {
+			if (currentQuantifiedVariables.contains(variable)) {
 				box.setContents("Redundant quantification: " + variable);
 			} else {
-				quantifiedVariables.add(variable);
+				currentQuantifiedVariables.add(variable);
 			}
 		}		
 	}
 	
-//	@Override
-//	public void enterLeftparen(QfWffParser.LeftparenContext ctx) {
-//		parenthesesCounter++;
-//		System.out.println(ctx.getText());
-//		System.out.println(parenthesesCounter);
-//	}
-//
-//	@Override
-//	public void enterRightparen(QfWffParser.RightparenContext ctx) {
-//		parenthesesCounter--;		
-//		System.out.println(ctx.getText());
-//		System.out.println(parenthesesCounter);
-//	}
+	@Override
+	public void enterForm(FormContext ctx) {
+		formStack.push(currentQuantifiedVariables);
+	}
+	
+	@Override
+	public void exitForm(FormContext ctx) {
+		formStack.pop();
+	}
 	
 	public boolean parenthesesNotMatched() {
 //		System.out.println(parenthesesCounter);

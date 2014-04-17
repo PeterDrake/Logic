@@ -77,10 +77,10 @@ public class QfWffChecker extends WffChecker {
 
 	// Super basic test
 	public static void main(String[] args) {
-		QfWffChecker qfwc = new QfWffChecker("-((∀x)((∃y)(-Fxy)))");
-//		QfWffChecker qfwc = new QfWffChecker("(Fx))");
+//		QfWffChecker qfwc = new QfWffChecker("-((∀x)((∃y)(-Fxy)))");
+		QfWffChecker qfwc = new QfWffChecker("#x (Fx . #x Fx)");
 		System.out.println(qfwc.isWff());
-		qfwc.printTree();
+		qfwc.guiTree();
 		System.out.println(qfwc.getErrors());
 	}
 }
