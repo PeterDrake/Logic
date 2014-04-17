@@ -22,10 +22,7 @@ public class ButtonPanel extends JPanel {
 	private JTextField textField;
 	private Highlighter hilit;
 	private Highlighter.HighlightPainter painter;
-
-	public ButtonPanel() {
-
-	}
+	private JTextField errorField;
 
 	public void initializeEnterKey(Action submitAction) {
 		InputMap imap = getTextField().getInputMap(
@@ -34,6 +31,23 @@ public class ButtonPanel extends JPanel {
 
 		ActionMap amap = getTextField().getActionMap();
 		amap.put("panel.submit", submitAction);
+	}
+	
+	public void setErrorTextField(JTextField errorField) {
+		this.errorField = errorField;
+		this.errorField.setEditable(false);
+	}
+	
+	public JTextField getErrorTextField() {
+		return errorField;
+	}
+	
+	public void setErrorText(String error) {
+		errorField.setText(error);
+	}
+	
+	public String getErrorText() {
+		return errorField.getText();
 	}
 
 	public void setTextField(JTextField textField) {
@@ -46,6 +60,10 @@ public class ButtonPanel extends JPanel {
 
 	public String getText() {
 		return textField.getText();
+	}
+	
+	public void clearText() {
+		textField.setText("");
 	}
 
 	protected void addButton(String label, String toolTip, JPanel panel,
@@ -70,13 +88,14 @@ public class ButtonPanel extends JPanel {
 	public void hilitTextField(int errorPositionInLine, int formulaLength) {
 
 		try {
-			if (errorPositionInLine == formulaLength && !textField.getText().substring(formulaLength-1, formulaLength).equals(" ")) {
-				textField.setText(textField.getText() + " ");
-			} else if (errorPositionInLine == formulaLength && textField.getText().substring(formulaLength-1, formulaLength).equals(" ")) {
-				errorPositionInLine--;
+			if (!textField.getText().isEmpty() && !textField.getText().equals(null)) {
+				if (errorPositionInLine == formulaLength && !textField.getText().substring(formulaLength-1, formulaLength).equals(" ")) {
+					textField.setText(textField.getText() + " ");
+				} else if (errorPositionInLine == formulaLength && textField.getText().substring(formulaLength-1, formulaLength).equals(" ")) {
+					errorPositionInLine--;
+				}
+				hilit.addHighlight(errorPositionInLine, errorPositionInLine + 1, painter);
 			}
-			hilit.addHighlight(errorPositionInLine, errorPositionInLine + 1,
-					painter);
 		} catch (BadLocationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

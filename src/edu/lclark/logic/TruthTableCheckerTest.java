@@ -93,6 +93,18 @@ public class TruthTableCheckerTest {
 
 	TruthTableChecker checker1 = new TruthTableChecker("p . qvr",
 			calculatedValues1, letters1);
+	
+	@Test
+	public void isSubFormulaTest() {
+	    char[] letters = {'p', 'q', 'r'};
+	    String formula = "p.qvr";
+	    TruthTableChecker checker = new TruthTableChecker(formula, calculatedValues1, letters);
+	    assertFalse(checker.isSubFormula(formula, "qvr"));
+	    assertTrue(checker.isSubFormula("p.q"));
+	    assertTrue(checker.isSubFormula(formula, "p"));
+	    assertTrue(checker.isSubFormula(formula, "q"));
+	    assertTrue(checker.isSubFormula(formula, "r"));
+	}
 
 	@Test
 	public void evaluateFormulaTest() {
@@ -108,7 +120,7 @@ public class TruthTableCheckerTest {
 		formula = "(p.q)vr";
 		assertEquals(-1, checker1.compare(checker1.evaluateFormula(formula),
 				expectedValues1));
-		formula = "¬p";
+		formula = "-p";
 		boolean[] expectedValues2 = { false, false, false, false, true, true,
 				true, true };
 		assertEquals(-1, checker1.compare(checker1.evaluateFormula(formula),

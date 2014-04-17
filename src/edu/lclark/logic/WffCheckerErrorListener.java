@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.List;
 import org.antlr.v4.runtime.*;
 
-public class WffCheckerListener extends BaseErrorListener {
+public class WffCheckerErrorListener extends BaseErrorListener {
 
 	private String errors = "The entered formula is a wff.";
 	private int errorPositionInLine = 0;
