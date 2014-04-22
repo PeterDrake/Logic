@@ -58,8 +58,30 @@ public class TruthTable {
 
 	/** Adds a column to the right side of the truth table. */
 	public void addColumn(TruthTableColumn column) {
-		columns.add(column);
+	    String newFormula = column.getLabel();
+	    for (int index = 0; index < columns.size(); index++) {
+	        TruthTableColumn col = columns.get(index);
+	        String currentFormula = col.getLabel();
+	        
+	        char[] letters = getLetters(currentFormula);
+	        TruthTableChecker checker = new TruthTableChecker(currentFormula, letters);
+	        
+	        if (checker.isSubFormula(currentFormula, newFormula)) {
+	            if (checker.removeParentheses(currentFormula).equals(checker.removeParentheses(newFormula))) {
+	                // TODO: show an error message
+	                return;
+	            }
+	            columns.add(index, column);
+	            return;
+	        }
+	    }
+	    columns.add(column);
 	}
+	
+	/** Removes a column to the right side of the truth table. */
+    public void removeColumn(TruthTableColumn column) {
+        columns.remove(column);
+    }
 	
 	/**
 	 * Updates letter and numLetters to reflect how many letters are in target
@@ -72,6 +94,19 @@ public class TruthTable {
 			}
 		}
 	}
+	
+	 /**
+     * Returns a list of letters in the given formula
+     */
+    private static char[] getLetters(String formula) {
+        String result = "";
+        for (char letter : "pqrst".toCharArray()) {
+            if (formula.indexOf(letter) >= 0) {
+                result += letter;
+            }
+        }
+        return result.toCharArray();
+    }
 
 	/** Initializes truth-table with each truth-value combination of the letters */
 	private void initTable() {
