@@ -40,10 +40,10 @@ public class QfWffChecker extends WffChecker {
 		if (getErrors() != "The entered formula is a wff.") {
 			return false;
 		}
-		if (containsRedundantQuantifiers()) {
-			setErrors("Redundant quantifiers.");
-			return false;
-		}
+ 		if (containsRedundantQuantifiers()) {
+ 			setErrors("Redundant quantifiers.");
+ 			return false;
+ 		}
 //		if (parenthesesNotMatched()) {
 //			setErrors("Parentheses mismatched.");
 //			return false;
@@ -78,7 +78,7 @@ public class QfWffChecker extends WffChecker {
 	// Super basic test
 	public static void main(String[] args) {
 //		QfWffChecker qfwc = new QfWffChecker("-((∀x)((∃y)(-Fxy)))");
-		QfWffChecker qfwc = new QfWffChecker("#x (Fx . #x Fx)");
+		QfWffChecker qfwc = new QfWffChecker("(∀x)[Hx.(∃y)(Fy.Gxy).(∃y)(Iy.Gxy)->(∃y)((Fy v Iy).Gyx)]");
 		System.out.println(qfwc.isWff());
 		qfwc.guiTree();
 		System.out.println(qfwc.getErrors());

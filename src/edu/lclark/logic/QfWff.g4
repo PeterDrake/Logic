@@ -1,11 +1,11 @@
 grammar QfWff;
-
+// (∀x)[Hx.(∃y)(Fy.Gxy).(∃y)(Iy.Gxy)->(∃y)((Fy v Iy).Gyx)]
 /*
  * PARSER RULES
  */
 
 formula	: form EOF;
-form : (quantifier form) | leftbiconditional | leftconditional | (LEFTPAREN form RIGHTPAREN);
+form : leftbiconditional | leftconditional | (LEFTPAREN form RIGHTPAREN);
 quantifier: (FORALL | EXISTS) variable | LEFTPAREN quantifier RIGHTPAREN;
 
 leftbiconditional : leftdisjunction (BICONDITIONAL disjunction)* | (LEFTPAREN biconditional RIGHTPAREN);
@@ -20,7 +20,7 @@ disjunction : conjunction (INCLUSIVE_OR conjunction)* ;
 leftconjunction : leftnegation (CONJUNCTION negation)* | (LEFTPAREN conjunction RIGHTPAREN);
 conjunction : negation (CONJUNCTION negation)* ;
 
-leftnegation : NEGATION? (predicate | atom | (quantifier form) | (LEFTPAREN form RIGHTPAREN) ) | (LEFTPAREN negation RIGHTPAREN);
+leftnegation : NEGATION? (predicate | atom | (quantifier leftnegation) | (LEFTPAREN form RIGHTPAREN) ) | (LEFTPAREN negation RIGHTPAREN);
 negation : NEGATION? (form | predicate | atom);
 
 predicate: preposition (variable | constant) + ;
