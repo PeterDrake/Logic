@@ -24,7 +24,7 @@ public class QTestButton {
 				frame.add(buttons = new QButtonPanel(submitAction),
 						BorderLayout.CENTER);
 				frame.pack();
-				frame.setTitle("Quantificational Logic");
+				frame.setTitle("Quantificational Wff Checker");
 //				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.setVisible(true);
 			}

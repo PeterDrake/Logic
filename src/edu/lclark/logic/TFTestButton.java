@@ -23,7 +23,7 @@ public class TFTestButton {
 				frame.add(buttons = new TFButtonPanel(submitAction),
 						BorderLayout.CENTER);
 				frame.pack();
-				frame.setTitle("Buttons");
+				frame.setTitle("Truth Functional Wff Checker");
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.setVisible(true);
 			}
@@ -57,10 +57,10 @@ public class TFTestButton {
 				frame.setLayout(new BorderLayout());
 
 				Action submitAction = new SubmitAction();
-				frame.add(buttons = new QButtonPanel(submitAction),
+				frame.add(buttons = new TFButtonPanel(submitAction),
 						BorderLayout.CENTER);
 				frame.pack();
-				frame.setTitle("Truth Functional Logic");
+				frame.setTitle("Truth Functional Wff Checker");
 //				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.setVisible(true);
 			}
