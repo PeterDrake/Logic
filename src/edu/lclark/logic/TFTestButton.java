@@ -20,7 +20,7 @@ public class TFTestButton {
 
 				
 				Action submitAction = new SubmitAction();
-				frame.add(buttons = new TFButtonPanel(submitAction),
+				frame.add(buttons = new TFButtonPanel(submitAction, null),
 						BorderLayout.CENTER);
 				frame.pack();
 				frame.setTitle("Truth Functional Wff Checker");
@@ -50,14 +50,14 @@ public class TFTestButton {
 		}
 	}
 
-	public static void newWindow() {
+	public static void newWindow(final String[] symbols) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				JFrame frame = new JFrame();
 				frame.setLayout(new BorderLayout());
 
 				Action submitAction = new SubmitAction();
-				frame.add(buttons = new TFButtonPanel(submitAction),
+				frame.add(buttons = new TFButtonPanel(submitAction, symbols),
 						BorderLayout.CENTER);
 				frame.pack();
 				frame.setTitle("Truth Functional Wff Checker");

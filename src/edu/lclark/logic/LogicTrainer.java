@@ -16,6 +16,8 @@ public class LogicTrainer extends JFrame {
     public static final int DEFAULT_HEIGHT = 100;
     public static final int GAP = 5;
     
+    private static PreferencePane preferences;
+    
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -26,16 +28,19 @@ public class LogicTrainer extends JFrame {
                 gui.setLayout(flowLayout);
                 gui.setTitle("Logic Trainer");
                 
+                preferences = new PreferencePane();
+                
                 JMenuBar menuBar = new JMenuBar();
                 JMenu actionsMenu = new JMenu("Actions");
                 JMenuItem preferencesItem = new JMenuItem("Preferences");
                 preferencesItem.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent event) {
-                        new PreferencePane();
+                        preferences.newWindow();
                     }
 
                 });
+                actionsMenu.add(preferencesItem);
                 
                 menuBar.add(actionsMenu);
                 gui.setJMenuBar(menuBar);
@@ -45,7 +50,7 @@ public class LogicTrainer extends JFrame {
                 button1.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent event) {
-                        TruthTableGUI.newWindow();
+                        TruthTableGUI.newWindow(preferences.getSymbols());
                     }
                 });
                 gui.add(button1);
@@ -54,7 +59,7 @@ public class LogicTrainer extends JFrame {
                 button2.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent event) {
-                        QTestButton.newWindow();
+                        QTestButton.newWindow(preferences.getSymbols());
                     }
                 });
                 gui.add(button2);
@@ -63,7 +68,7 @@ public class LogicTrainer extends JFrame {
                 button3.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent event) {
-                        TFTestButton.newWindow();
+                        TFTestButton.newWindow(preferences.getSymbols());
                     }
                 });
                 gui.add(button3);

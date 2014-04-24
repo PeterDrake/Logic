@@ -11,17 +11,17 @@ public class QTestButton {
 	private static ButtonPanel buttons;
 
 	public static void main(String[] args) {
-	    newWindow();
+	    newWindow(null);
 	}
 	
-	public static void newWindow() {
+	public static void newWindow(final String[] symbols) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				JFrame frame = new JFrame();
 				frame.setLayout(new BorderLayout());
 
 				Action submitAction = new SubmitAction();
-				frame.add(buttons = new QButtonPanel(submitAction),
+				frame.add(buttons = new QButtonPanel(submitAction, symbols),
 						BorderLayout.CENTER);
 				frame.pack();
 				frame.setTitle("Quantificational Wff Checker");

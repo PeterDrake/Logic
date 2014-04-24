@@ -8,7 +8,7 @@ public class QButtonPanel extends ButtonPanel {
 	// TODO
 	private static final long serialVersionUID = 1L;
 
-	public QButtonPanel(Action submitAction) {
+	public QButtonPanel(Action submitAction, String[] symbols) {
 		setLayout(new BorderLayout());
 		setTextField(new JTextField());
 		getTextField().setEditable(true);
@@ -19,15 +19,19 @@ public class QButtonPanel extends ButtonPanel {
 		// A panel that all the buttons, but the submit button are added to
 		JPanel buttons = new JPanel();
 		buttons.setLayout(new FlowLayout());
+		
+//		for (String symbol : symbols) {
+//			System.out.println(symbol);
+//		}
 
 		// Makes a panel with all the connectives
 		JPanel connectives = new JPanel();
 		connectives.setLayout(new GridLayout(5, 1));
-		addButton("-", "negation", connectives, new InsertAction("-"));
-		addButton(".", "and", connectives, new InsertAction("."));
-		addButton("v", "or", connectives, new InsertAction("v"));
-		addButton("→", "conditional", connectives, new InsertAction("→"));
-		addButton("↔", "biconditional", connectives, new InsertAction("↔"));
+		addButton(symbols[0], "biconditional", connectives, new InsertAction(symbols[0]));
+		addButton(symbols[1], "conditional", connectives, new InsertAction(symbols[1]));
+		addButton(symbols[2], "conjunction", connectives, new InsertAction(symbols[2]));
+		addButton(symbols[3], "disjunction", connectives, new InsertAction(symbols[3]));
+		addButton(symbols[4], "negation", connectives, new InsertAction(symbols[4]));
 		buttons.add(connectives);
 
 		// Makes a panel with all the sentence letters

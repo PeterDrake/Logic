@@ -29,12 +29,12 @@ public class PreferencePane extends JFrame {
     	return newPanel;
     }
     
-    private JButton[] makeButtons(String[] strings) {
+    private JButton[] makeButtons(String[] strings, int row) {
     	JButton[] buttons = new JButton[strings.length];
     	int i = 0;
     	for(String string : strings) {
     		JButton button = new JButton(string);
-    		button.addActionListener(new ButtonPressAction(i, string));
+    		button.addActionListener(new ButtonPressAction(row, string));
     		buttons[i++] = button;
     	}
     	return buttons;
@@ -44,19 +44,21 @@ public class PreferencePane extends JFrame {
     	// TODO add default symbols
     	// TODO add submit and/or save button for preferences
     	symbols = new String[] {"↔", "→", ".", "⋁", "-"};
+    }
+    
+    public void newWindow() {
     	JPanel panel = new JPanel();
     	panel.setLayout(new GridLayout(5, 1));
     	
-    	panel.add(createRow("biconditional", makeButtonPanel(makeButtons(new String[]{"↔","<->","≡"}))));
-    	panel.add(createRow("conditional", makeButtonPanel(makeButtons(new String[]{"→","->","⊃"}))));
-    	panel.add(createRow("conjunction", makeButtonPanel(makeButtons(new String[]{".","&","^"}))));
-    	panel.add(createRow("inclusive or", makeButtonPanel(makeButtons(new String[]{"v","⋁"}))));
-    	panel.add(createRow("negation", makeButtonPanel(makeButtons(new String[]{"-","¬", "~"}))));
+    	panel.add(createRow("biconditional", makeButtonPanel(makeButtons(new String[]{"↔","<->","≡"}, 0))));
+    	panel.add(createRow("conditional", makeButtonPanel(makeButtons(new String[]{"→","->","⊃"}, 1))));
+    	panel.add(createRow("conjunction", makeButtonPanel(makeButtons(new String[]{".","&","^"}, 2))));
+    	panel.add(createRow("inclusive or", makeButtonPanel(makeButtons(new String[]{"v","⋁"}, 3))));
+    	panel.add(createRow("negation", makeButtonPanel(makeButtons(new String[]{"-","¬", "~"}, 4))));
 
     	this.add(panel);
     	
 		this.pack();
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
     	this.setTitle("Preferences");
     }
@@ -77,6 +79,7 @@ public class PreferencePane extends JFrame {
 		
 		public void actionPerformed(ActionEvent event) {
 			symbols[i] = symbol;
+//			System.out.println(i + " " + symbol);
 		}
 	}
 	

@@ -16,8 +16,8 @@ public class TruthTableGUI extends JFrame {
     
     private TruthTablePanel truthTablePanel;
     
-    public TruthTableGUI() {
-        buttons = new TFButtonPanel(new SubmitAction(this));
+    public TruthTableGUI(String[] symbols) {
+        buttons = new TFButtonPanel(new SubmitAction(this), symbols);
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(buttons);
@@ -25,14 +25,14 @@ public class TruthTableGUI extends JFrame {
     }
 
     public static void main(String[] args) {
-        newWindow();
+        newWindow(null);
     }
 
-    public static void newWindow() {
+    public static void newWindow(final String[] symbols) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
 //                System.setProperty("apple.laf.useScreenMenuBar", "true");
-                final TruthTableGUI gui = new TruthTableGUI();
+                final TruthTableGUI gui = new TruthTableGUI(symbols);
                 gui.setTitle("Truth Table Builder");
                 JMenuBar menuBar = new JMenuBar();
                 JMenu fileMenu = new JMenu("Actions");
@@ -40,7 +40,7 @@ public class TruthTableGUI extends JFrame {
                 addTargetFormulaItem.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent event) {
-                        newWindow();
+                        newWindow(symbols);
                     }
                 });
                 fileMenu.add(addTargetFormulaItem);
