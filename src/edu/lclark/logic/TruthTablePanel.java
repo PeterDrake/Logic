@@ -172,7 +172,7 @@ public class TruthTablePanel extends JPanel {
 	}
 
 	/** Adds a column to the truth table, on the right */
-	public void addColumn(TruthTableColumn column) {
+	public boolean addColumn(TruthTableColumn column) {
 		int numRows = truthTable.getNumRows();
 		// Replaces existing panel with new panel that has 1 extra added column:
 		remove(panel);
@@ -181,10 +181,11 @@ public class TruthTablePanel extends JPanel {
 //		for (int row = 0; row < correctValues.length; row++) {
 //		    column.setValue(row, correctValues[row]);
 //		}
-		truthTable.addColumn(column);
+		boolean success = truthTable.addColumn(column);
 		panel.setLayout(new GridLayout(numRows + 1, truthTable.getNumColumns()));
 		fillInTruthTable();
 		add(panel);
+		return success;
 	}
 
 	/*

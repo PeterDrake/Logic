@@ -57,7 +57,7 @@ public class TruthTable {
 	}
 
 	/** Adds a column to the right side of the truth table. */
-	public void addColumn(TruthTableColumn column) {
+	public boolean addColumn(TruthTableColumn column) {
 	    String newFormula = column.getLabel();
 	    for (int index = 0; index < columns.size(); index++) {
 	        TruthTableColumn col = columns.get(index);
@@ -69,13 +69,14 @@ public class TruthTable {
 	        if (checker.isSubFormula(currentFormula, newFormula)) {
 	            if (checker.removeParentheses(currentFormula).equals(checker.removeParentheses(newFormula))) {
 	                // TODO: show an error message
-	                return;
+	                return false;
 	            }
 	            columns.add(index, column);
-	            return;
+	            return true;
 	        }
 	    }
 	    columns.add(column);
+	    return true;
 	}
 	
 	/** Removes a column to the right side of the truth table. */

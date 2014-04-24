@@ -129,8 +129,8 @@ public class TruthTableChecker {
     public int numOperators(String formula) {
         formula = formula.replaceAll("\\s+", "");
         int count = 0;
-        String[] ops = { "���������������������������", "<->", "���������������������������", "[^<]->", "\\.", "&", "^", "v",
-                "���������������������������", "[^<]\\-[^>]", "������������������", "~" };
+        String[] ops = { "↔", "<->", "→", "[^<]->", "\\.", "&", "^", "v",
+                "⋁", "[^<]\\-[^>]", "¬", "~" };
         for (String op : ops) {
             String[] formula2 = formula.split(op);
             int sum = 0;
@@ -150,8 +150,8 @@ public class TruthTableChecker {
     }
 
     public boolean isOperator(String c) {
-        String[] ops = { "��", "-", "���", "<->", ".", "&", "^", "v", "���",
-                "->", "���", "~" };
+        String[] ops = { "⋁", "-", "↔", "<->", ".", "&", "^", "v", "→",
+                "->", "¬", "~" };
         for (String op : ops) {
             if (op.equals(c)) {
                 return true;
@@ -209,7 +209,7 @@ public class TruthTableChecker {
             return true;
         }
         ArrayList<String> ops = getTopLevelOperators(targetFormula);
-        String[] order = { "<->", "���", "->", "���", "v", "���", ".", "-", "��", "~" };
+        String[] order = { "<->", "↔", "->", "→", "v", "⋁", ".", "-", "¬", "~" };
         if (ops.size() == 0) {
             return targetFormula.equals(subFormula);
         }
@@ -242,7 +242,7 @@ public class TruthTableChecker {
         }
         formula = formula.replaceAll(" ", "");
         ArrayList<String> ops = getTopLevelOperators(formula);
-        String[] order = { "<->", "���", "->", "���", "v", "���", ".", "-", "��", "~" };
+        String[] order = { "<->", "↔", "->", "→", "v", "⋁", ".", "-", "¬", "~" };
         if (ops.size() == 0) {
             return getColumnCalculatedValues(formula.charAt(0));
         }
@@ -252,9 +252,9 @@ public class TruthTableChecker {
             }
             String[] subFormula = formula.split(Pattern.quote(op));
             String rightSubFormula = combineStrings(subFormula, op);
-            if (op.equals("-") || op.equals("��") || op.equals("~")) {
+            if (op.equals("-") || op.equals("¬") || op.equals("~")) {
             	return negation(evaluateFormula(subFormula[1]));
-            } else if (op.equals("���") || op.equals("->")) {
+            } else if (op.equals("→") || op.equals("->")) {
                 return conditional(
                         evaluateFormula(subFormula[0]),
                         evaluateFormula(rightSubFormula));
