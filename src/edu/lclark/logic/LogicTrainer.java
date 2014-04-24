@@ -2,8 +2,12 @@ package edu.lclark.logic;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 public class LogicTrainer extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -21,6 +25,21 @@ public class LogicTrainer extends JFrame {
                 flowLayout.setVgap(GAP);
                 gui.setLayout(flowLayout);
                 gui.setTitle("Logic Trainer");
+                
+                JMenuBar menuBar = new JMenuBar();
+                JMenu actionsMenu = new JMenu("Actions");
+                JMenuItem preferencesItem = new JMenuItem("Preferences");
+                preferencesItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent event) {
+                        new PreferencePane();
+                    }
+
+                });
+                
+                menuBar.add(actionsMenu);
+                gui.setJMenuBar(menuBar);
+                
                 JButton button1 = new JButton("Truth Table Builder");
                 button1 .setPreferredSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
                 button1.addActionListener(new ActionListener() {
