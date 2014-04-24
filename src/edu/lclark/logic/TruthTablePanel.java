@@ -99,8 +99,9 @@ public class TruthTablePanel extends JPanel {
 	private void initTable() {
 		int numLetters = truthTable.getNumLetters();
 		int numRows = truthTable.getNumRows();
-		// Makes one extra row for the top 'label' row:
-		panel.setLayout(new GridLayout(numRows + 1, numLetters));
+		// Makes two extra rows for the top 'label' row and for the row of
+		// delete buttons:
+		panel.setLayout(new GridLayout(numRows + 2, numLetters));
 		fillInTruthTable();
 	}
 
@@ -117,8 +118,28 @@ public class TruthTablePanel extends JPanel {
 			cellLabel.setToolTipText(cellLabel.getText());
 			addCell(cellLabel);
 		}
-		for (int row = 0; row < numRows; row++)
+
+		for (int row = 0; row < numRows; row++) {
 			addRow(row);
+		}
+
+		for (int col = 0; col < numColumns; col++) {
+			final int c = col;
+			JButton delete = new JButton("Delete");
+			if (col < truthTable.getNumLetters()) {
+				delete.setVisible(false);
+			}
+			delete.setToolTipText("Delete the above colum");
+			delete.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					// TODO Remove column
+					System.out.println("Column " + c + " deleted.");
+				}
+			});
+			panel.add(delete);
+
+		}
+
 	}
 
 	/** Draws the ith row of the truth table. */
@@ -166,7 +187,7 @@ public class TruthTablePanel extends JPanel {
 		// column.setValue(row, correctValues[row]);
 		// }
 		boolean success = truthTable.addColumn(column);
-		panel.setLayout(new GridLayout(numRows + 1, truthTable.getNumColumns()));
+		panel.setLayout(new GridLayout(numRows + 2, truthTable.getNumColumns()));
 		fillInTruthTable();
 		add(panel);
 		return success;
