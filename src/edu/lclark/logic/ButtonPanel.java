@@ -15,7 +15,7 @@ public class ButtonPanel extends JPanel {
 	/**
 	 * The text field that buttons output to
 	 */
-	
+
 	// TODO
 	private static final long serialVersionUID = 1L;
 
@@ -23,6 +23,12 @@ public class ButtonPanel extends JPanel {
 	private Highlighter hilit;
 	private Highlighter.HighlightPainter painter;
 	private JTextField errorField;
+
+	private boolean firstPress = true;
+	
+	public void setFirstPress(boolean value){
+		firstPress = value ;
+	}
 
 	public void initializeEnterKey(Action submitAction) {
 		InputMap imap = getTextField().getInputMap(
@@ -32,20 +38,20 @@ public class ButtonPanel extends JPanel {
 		ActionMap amap = getTextField().getActionMap();
 		amap.put("panel.submit", submitAction);
 	}
-	
+
 	public void setErrorTextField(JTextField errorField) {
 		this.errorField = errorField;
 		this.errorField.setEditable(false);
 	}
-	
+
 	public JTextField getErrorTextField() {
 		return errorField;
 	}
-	
+
 	public void setErrorText(String error) {
 		errorField.setText(error);
 	}
-	
+
 	public String getErrorText() {
 		return errorField.getText();
 	}
@@ -61,7 +67,7 @@ public class ButtonPanel extends JPanel {
 	public String getText() {
 		return textField.getText();
 	}
-	
+
 	public void clearText() {
 		textField.setText("");
 	}
@@ -88,13 +94,21 @@ public class ButtonPanel extends JPanel {
 	public void hilitTextField(int errorPositionInLine, int formulaLength) {
 
 		try {
-			if (!textField.getText().isEmpty() && !textField.getText().equals(null)) {
-				if (errorPositionInLine == formulaLength && !textField.getText().substring(formulaLength-1, formulaLength).equals(" ")) {
+			if (!textField.getText().isEmpty()
+					&& !textField.getText().equals(null)) {
+				if (errorPositionInLine == formulaLength
+						&& !textField.getText()
+								.substring(formulaLength - 1, formulaLength)
+								.equals(" ")) {
 					textField.setText(textField.getText() + " ");
-				} else if (errorPositionInLine == formulaLength && textField.getText().substring(formulaLength-1, formulaLength).equals(" ")) {
+				} else if (errorPositionInLine == formulaLength
+						&& textField.getText()
+								.substring(formulaLength - 1, formulaLength)
+								.equals(" ")) {
 					errorPositionInLine--;
 				}
-				hilit.addHighlight(errorPositionInLine, errorPositionInLine + 1, painter);
+				hilit.addHighlight(errorPositionInLine,
+						errorPositionInLine + 1, painter);
 			}
 		} catch (BadLocationException e) {
 			// TODO Auto-generated catch block
@@ -117,8 +131,13 @@ public class ButtonPanel extends JPanel {
 		}
 
 		public void actionPerformed(ActionEvent event) {
-			String result = textField.getText();
-			textField.setText(result + symbol);
+			if (firstPress) {
+				textField.setText(symbol);
+				firstPress = false;
+			} else {
+				String result = textField.getText();
+				textField.setText(result + symbol);
+			}
 		}
 	}
 

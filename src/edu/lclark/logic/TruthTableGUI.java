@@ -38,6 +38,9 @@ public class TruthTableGUI extends JFrame {
 				JMenu fileMenu = new JMenu("Actions");
 				JMenuItem addTargetFormulaItem = new JMenuItem(
 						"Add Target Formula");
+				gui.buttons.getTextField().setText("Type a target formula");
+				Font font = new Font("SANS_SERIF", Font.PLAIN, 10);
+				gui.buttons.getTextField().setFont(font);
 				addTargetFormulaItem.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent event) {
@@ -50,6 +53,7 @@ public class TruthTableGUI extends JFrame {
 				addColumnItem.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent event) {
+						gui.buttons.getTextField().setText("Type a scratchwork formula");
 						gui.truthTablePanel.addColumn();
 						gui.pack();
 					}
@@ -117,6 +121,7 @@ public class TruthTableGUI extends JFrame {
 							gui.buttons.clearText();
 							gui.buttons.setErrorText("");
 							gui.buttons.setVisible(false);
+							gui.buttons.setFirstPress(true);
 						}
 						gui.pack();
 					}
