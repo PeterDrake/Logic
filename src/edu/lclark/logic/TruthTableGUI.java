@@ -3,6 +3,9 @@ package edu.lclark.logic;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.Highlighter;
 
 /** A GUI that displays a truth table */
 public class TruthTableGUI extends JFrame {
@@ -13,7 +16,8 @@ public class TruthTableGUI extends JFrame {
 	public static final int DEFAULT_HEIGHT = 300;
 
 	private ButtonPanel buttons;
-
+	private Highlighter hilit;
+	private Highlighter.HighlightPainter painter;
 	private TruthTablePanel truthTablePanel;
 
 	public TruthTableGUI() {
@@ -53,6 +57,20 @@ public class TruthTableGUI extends JFrame {
 				addColumnItem.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent event) {
+						if (gui.truthTablePanel == null) {
+							String error = "Add a target formula first" ;
+							gui.buttons.setErrorText(error);
+							gui.hilit = new DefaultHighlighter();
+							gui.painter = new DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW);
+							gui.buttons.getErrorTextField().setHighlighter(gui.hilit);
+							try {
+								gui.hilit.addHighlight(0, error.length(), gui.painter);
+							} catch (BadLocationException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							return;
+						}
 						gui.buttons.getTextField().setText("Type a scratchwork formula");
 						gui.truthTablePanel.addColumn();
 						gui.pack();
