@@ -13,6 +13,7 @@ public class PreferencePane extends JFrame {
     public static final int DEFAULT_WIDTH = 400;
     public static final int DEFAULT_HEIGHT = 300;
     
+	private final String[] defaults = new String[] {"↔", "→", ".", "⋁", "-"};
     private String[] symbols;
     private JRadioButton[][] buttons = new JRadioButton[5][];
         
@@ -47,7 +48,7 @@ public class PreferencePane extends JFrame {
     public PreferencePane() {
     	// TODO add default symbols
     	// TODO add submit and/or save button for preferences
-    	symbols = new String[] {"↔", "→", ".", "⋁", "-"};
+    	symbols = defaults;
     	
     	JPanel panel = new JPanel();
     	panel.setLayout(new GridLayout(6, 1));
@@ -60,7 +61,17 @@ public class PreferencePane extends JFrame {
 
     	JButton submitButton = new JButton("Submit");
     	submitButton.addActionListener(new SubmitButtonAction());
-    	panel.add(submitButton);
+    	
+    	JButton defaultsButton = new JButton("Defaults");
+    	defaultsButton.addActionListener(new DefaultsButtonAction());
+    	
+    	JPanel buttonsRow = new JPanel();
+    	buttonsRow.setLayout(new GridLayout(1, 2));
+    	
+    	buttonsRow.add(defaultsButton);
+    	buttonsRow.add(submitButton);
+    	
+    	panel.add(buttonsRow);
     	
     	this.add(panel);
     	
@@ -84,6 +95,17 @@ public class PreferencePane extends JFrame {
     
     private void hideWindow() {
     	this.setVisible(false);
+    }
+    
+
+    private class DefaultsButtonAction extends AbstractAction {
+
+    	private static final long serialVersionUID = 1L;
+
+    	public void actionPerformed(ActionEvent event) {
+    		symbols = defaults;
+    		newWindow();
+    	}
     }
     
 	private class SubmitButtonAction extends AbstractAction {
