@@ -9,11 +9,18 @@ public class TruthTableChecker {
 
     private boolean[][] truthValues;
     private char[] letters;
+    
+//    private TruthTable truthTable;
 
     public TruthTableChecker(String formula, boolean[][] truthValues,
             char[] letters) {
         this.setFormula(formula);
         this.truthValues = truthValues;
+        this.letters = letters;
+    }
+    
+    public TruthTableChecker(String formula, char[] letters) {
+        this.setFormula(formula);
         this.letters = letters;
     }
 
@@ -185,14 +192,22 @@ public class TruthTableChecker {
         return isSubFormula(formula, subFormula);
     }
 
+    public String removeParentheses(String string) {
+        if (string.charAt(0) == '(' && string.charAt(string.length() - 1) == ')') {
+            return string.substring(1, string.length() - 1);
+        }
+        return string;
+    }
+    
     public boolean isSubFormula(String targetFormula, String subFormula) {
+        targetFormula = targetFormula.replaceAll(" ", "");
+        subFormula = subFormula.replaceAll(" ", "");
         if (targetFormula.charAt(0) == '(' && targetFormula.charAt(targetFormula.length() - 1) == ')') {
             return isSubFormula(targetFormula.substring(1, targetFormula.length() - 1), subFormula);
         }
-        if (subFormula.equals(targetFormula)) {
+        if (removeParentheses(subFormula).equals(targetFormula)) {
             return true;
         }
-        targetFormula = targetFormula.replaceAll(" ", "");
         ArrayList<String> ops = getTopLevelOperators(targetFormula);
         String[] order = { "<->", "���", "->", "���", "v", "���", ".", "-", "��", "~" };
         if (ops.size() == 0) {

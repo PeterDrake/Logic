@@ -1,27 +1,27 @@
 grammar QfWff;
-
+// (∀x)[Hx.(∃y)(Fy.Gxy).(∃y)(Iy.Gxy)->(∃y)((Fy v Iy).Gyx)]
 /*
  * PARSER RULES
  */
 
 formula	: form EOF;
-form : (quantifier form) | leftbiconditional | leftconditional | (LEFTPAREN form RIGHTPAREN);
+form : leftbiconditional | leftconditional | (LEFTPAREN form RIGHTPAREN);
 quantifier: (FORALL | EXISTS) variable | LEFTPAREN quantifier RIGHTPAREN;
 
-leftbiconditional : leftdisjunction (BICONDITIONAL disjunction)* | (LEFTPAREN biconditional RIGHTPAREN);
-biconditional : disjunction (BICONDITIONAL disjunction)* ;
+leftbiconditional : leftdisjunction (BICONDITIONAL biconditional)* | (LEFTPAREN biconditional RIGHTPAREN);
+biconditional : disjunction (BICONDITIONAL disjunction)* | leftbiconditional;
 
 leftconditional : leftdisjunction (CONDITIONAL disjunction)* | (LEFTPAREN conditional RIGHTPAREN);
-conditional : disjunction (CONDITIONAL disjunction)* ;
+conditional : disjunction (CONDITIONAL disjunction)* | leftconditional;
 
-leftdisjunction : leftconjunction (INCLUSIVE_OR conjunction)* | (LEFTPAREN disjunction RIGHTPAREN);
-disjunction : conjunction (INCLUSIVE_OR conjunction)* ;
+leftdisjunction : leftconjunction (INCLUSIVE_OR disjunction)* | (LEFTPAREN disjunction RIGHTPAREN) | (quantifier leftdisjunction);
+disjunction : conjunction (INCLUSIVE_OR conjunction)* | leftdisjunction;
 
-leftconjunction : leftnegation (CONJUNCTION negation)* | (LEFTPAREN conjunction RIGHTPAREN);
-conjunction : negation (CONJUNCTION negation)* ;
+leftconjunction : leftnegation (CONJUNCTION conjunction)* | (LEFTPAREN conjunction RIGHTPAREN) | (quantifier leftconjunction);
+conjunction : negation (CONJUNCTION negation)* | leftconjunction;
 
-leftnegation : NEGATION? (predicate | atom | (quantifier form) | (LEFTPAREN form RIGHTPAREN) ) | (LEFTPAREN negation RIGHTPAREN);
-negation : NEGATION? (form | predicate | atom);
+leftnegation : NEGATION? (predicate | atom | (quantifier leftnegation) | (LEFTPAREN form RIGHTPAREN) ) | (LEFTPAREN negation RIGHTPAREN);
+negation : NEGATION? (predicate | atom) | leftnegation;
 
 predicate: preposition (variable | constant) + ;
 atom : TRUTH | FALSITY | letters ;

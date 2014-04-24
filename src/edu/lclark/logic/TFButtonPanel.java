@@ -1,7 +1,6 @@
 package edu.lclark.logic;
 
 import java.awt.*;
-
 import javax.swing.*;
 
 public class TFButtonPanel extends ButtonPanel {
