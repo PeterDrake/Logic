@@ -26,6 +26,7 @@ public class TruthTableGUI extends JFrame {
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		panel.add(buttons);
 		add(panel, BorderLayout.NORTH);
+		buttons.getErrorTextField().setEditable(false);
 	}
 
 	public static void main(String[] args) {
@@ -43,8 +44,8 @@ public class TruthTableGUI extends JFrame {
 				JMenuItem addTargetFormulaItem = new JMenuItem(
 						"Add Target Formula");
 				gui.buttons.getTextField().setText("Type a target formula");
-				Font font = new Font("SANS_SERIF", Font.PLAIN, 10);
-				gui.buttons.getTextField().setFont(font);
+//				Font font = new Font("SANS_SERIF", Font.PLAIN, 10);
+//				gui.buttons.getTextField().setFont(font);
 				addTargetFormulaItem.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent event) {
@@ -58,20 +59,13 @@ public class TruthTableGUI extends JFrame {
 					@Override
 					public void actionPerformed(ActionEvent event) {
 						if (gui.truthTablePanel == null) {
-							String error = "Add a target formula first" ;
+							String error = "Add a target formula first";
 							gui.buttons.setErrorText(error);
-							gui.hilit = new DefaultHighlighter();
-							gui.painter = new DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW);
-							gui.buttons.getErrorTextField().setHighlighter(gui.hilit);
-							try {
-								gui.hilit.addHighlight(0, error.length(), gui.painter);
-							} catch (BadLocationException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+							gui.highlight(error);
 							return;
 						}
-						gui.buttons.getTextField().setText("Type a scratchwork formula");
+						gui.buttons.getTextField().setText(
+								"Type a scratchwork formula");
 						gui.truthTablePanel.addColumn();
 						gui.pack();
 					}
@@ -92,6 +86,18 @@ public class TruthTableGUI extends JFrame {
 				gui.setVisible(true);
 			}
 		});
+	}
+
+	private void highlight(String error) {
+		hilit = new DefaultHighlighter();
+		painter = new DefaultHighlighter.DefaultHighlightPainter(Color.YELLOW);
+		buttons.getErrorTextField().setHighlighter(hilit);
+		try {
+			hilit.addHighlight(0, error.length(), painter);
+		} catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private static class SubmitAction extends AbstractAction {
@@ -128,13 +134,17 @@ public class TruthTableGUI extends JFrame {
 					int numCols = panel.getTruthTable().getNumRows();
 					TruthTableChecker checker = panel.getChecker();
 					if (!checker.isSubFormula(formula)) {
-						gui.buttons.setErrorText("Illegal column! " + formula
+						String error = "Illegal column: " + formula
 								+ " is not a sub-formula of "
-								+ checker.getFormula());
+								+ checker.getFormula();
+						gui.buttons.setErrorText(error);
+						gui.highlight(error);
 					} else {
 						if (!panel.addColumn(new TruthTableColumn(formula,
 								new boolean[numCols]))) {
-							gui.buttons.setErrorText("Redundant column");
+							String error = "Redundant column";
+							gui.buttons.setErrorText(error);
+							gui.highlight(error);
 						} else {
 							gui.buttons.clearText();
 							gui.buttons.setErrorText("");
