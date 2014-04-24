@@ -20,44 +20,40 @@ public class TruthTableGUI extends JFrame {
 	private Highlighter.HighlightPainter painter;
 	private TruthTablePanel truthTablePanel;
 
-	public TruthTableGUI() {
-		buttons = new TFButtonPanel(new SubmitAction(this));
-		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		panel.add(buttons);
-		add(panel, BorderLayout.NORTH);
+    
+    public TruthTableGUI(String[] symbols) {
+        buttons = new TFButtonPanel(new SubmitAction(this), symbols);
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(buttons);
+        add(panel, BorderLayout.NORTH);
 		buttons.getErrorTextField().setEditable(false);
-	}
+    }
 
-	public static void main(String[] args) {
-		newWindow();
-	}
+    public static void main(String[] args) {
+        newWindow(null);
+    }
 
-	public static void newWindow() {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				// System.setProperty("apple.laf.useScreenMenuBar", "true");
-				final TruthTableGUI gui = new TruthTableGUI();
-				gui.setTitle("Truth Table Builder");
-				JMenuBar menuBar = new JMenuBar();
-				JMenu fileMenu = new JMenu("Actions");
-				JMenuItem addTargetFormulaItem = new JMenuItem(
-						"Add Target Formula");
-				gui.buttons.getTextField().setText("Type a target formula");
-//				Font font = new Font("SANS_SERIF", Font.PLAIN, 10);
-//				gui.buttons.getTextField().setFont(font);
-				addTargetFormulaItem.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent event) {
-						newWindow();
-					}
-				});
-				fileMenu.add(addTargetFormulaItem);
-				JMenuItem addColumnItem = new JMenuItem(
-						"Add Scratchwork Column");
-				addColumnItem.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent event) {
+    public static void newWindow(final String[] symbols) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+//                System.setProperty("apple.laf.useScreenMenuBar", "true");
+                final TruthTableGUI gui = new TruthTableGUI(symbols);
+                gui.setTitle("Truth Table Builder");
+                JMenuBar menuBar = new JMenuBar();
+                JMenu fileMenu = new JMenu("Actions");
+                JMenuItem addTargetFormulaItem = new JMenuItem("Add Target Formula");
+                addTargetFormulaItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent event) {
+                        newWindow(symbols);
+                    }
+                });
+                fileMenu.add(addTargetFormulaItem);
+                JMenuItem addColumnItem = new JMenuItem("Add Scratchwork Column");
+                addColumnItem.addActionListener(new ActionListener() {                    
+                    @Override
+                    public void actionPerformed(ActionEvent event) {
 						if (gui.truthTablePanel == null) {
 							String error = "Add a target formula first";
 							gui.buttons.setErrorText(error);
@@ -69,24 +65,25 @@ public class TruthTableGUI extends JFrame {
 						gui.truthTablePanel.addColumn();
 						gui.pack();
 					}
-				});
-				fileMenu.add(addColumnItem);
-				JMenuItem checkValuesItem = new JMenuItem("Check Values");
-				checkValuesItem.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent event) {
-						gui.truthTablePanel.checkValues();
-					}
-				});
-				fileMenu.add(checkValuesItem);
-				menuBar.add(fileMenu);
-				gui.setJMenuBar(menuBar);
-				gui.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-				// gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				gui.setVisible(true);
-			}
-		});
-	}
+                });
+                fileMenu.add(addColumnItem);
+                JMenuItem checkValuesItem = new JMenuItem("Check Values");
+                checkValuesItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent event) {
+                        gui.truthTablePanel.checkValues();
+                    }
+                });
+                fileMenu.add(checkValuesItem);
+                menuBar.add(fileMenu);
+                gui.setJMenuBar(menuBar);
+                gui.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+//                gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                gui.setVisible(true);
+            }
+        });
+    }
+
 
 	private void highlight(String error) {
 		hilit = new DefaultHighlighter();

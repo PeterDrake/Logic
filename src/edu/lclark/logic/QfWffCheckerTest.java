@@ -120,6 +120,12 @@ public class QfWffCheckerTest {
 	}
 	
 	@Test
+	public void WffChecker17() {
+		wc = new QfWffChecker("(∀x)Fx . Gx → (∃y)Hy");
+		assertTrue(wc.isWff());
+	}
+	
+	@Test
 	public void testRedundantQuantification() {
 		wc = new QfWffChecker("Vx Fx");
 //		System.out.println(wc.printTree());

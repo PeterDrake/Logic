@@ -15,7 +15,7 @@ public class TFButtonPanel extends ButtonPanel {
 	// TODO
 	private static final long serialVersionUID = 1L;
 
-	public TFButtonPanel(Action submitAction) {
+	public TFButtonPanel(Action submitAction, String[] symbols) {
 		setLayout(new BorderLayout());
 		setTextField (new JTextField());
 		getTextField().setEditable(true);
@@ -40,11 +40,11 @@ public class TFButtonPanel extends ButtonPanel {
 		// Makes a panel with all the connectives
 		JPanel connectives = new JPanel();
 		connectives.setLayout(new GridLayout(5, 1));
-		addButton("-", "negation", connectives, new InsertAction("-"));
-		addButton(".", "and", connectives, new InsertAction("."));
-		addButton("⋁", "or", connectives, new InsertAction("⋁"));
-		addButton("→", "conditional", connectives, new InsertAction("→"));
-		addButton("↔", "biconditional", connectives, new InsertAction("↔"));
+		addButton(symbols[0], "biconditional", connectives, new InsertAction(symbols[0]));
+		addButton(symbols[1], "conditional", connectives, new InsertAction(symbols[1]));
+		addButton(symbols[2], "conjunction", connectives, new InsertAction(symbols[2]));
+		addButton(symbols[3], "disjunction", connectives, new InsertAction(symbols[3]));
+		addButton(symbols[4], "negation", connectives, new InsertAction(symbols[4]));
 		buttons.add(connectives);
 
 		// Creates a new panel with the remaining buttons
