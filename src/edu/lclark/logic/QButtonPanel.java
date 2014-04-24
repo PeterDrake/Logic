@@ -24,8 +24,8 @@ public class QButtonPanel extends ButtonPanel {
 		JPanel connectives = new JPanel();
 		connectives.setLayout(new GridLayout(5, 1));
 		addButton("-", "negation", connectives, new InsertAction("-"));
-		addButton(".", "and", connectives, new InsertAction("."));
-		addButton("v", "or", connectives, new InsertAction("v"));
+		addButton(".", "conjunction", connectives, new InsertAction("."));
+		addButton("v", "disjunction", connectives, new InsertAction("v"));
 		addButton("→", "conditional", connectives, new InsertAction("→"));
 		addButton("↔", "biconditional", connectives, new InsertAction("↔"));
 		buttons.add(connectives);

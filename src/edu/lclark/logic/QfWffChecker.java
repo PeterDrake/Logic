@@ -37,9 +37,9 @@ public class QfWffChecker extends WffChecker {
 		}
 
 		// a little awkward, but there is one weird case where paren checking is messed up
-		if (getErrors() != "The entered formula is a wff.") {
-			return false;
-		}
+//		if (getErrors() != "The entered formula is a wff.") {
+//			return false;
+//		}
  		if (containsRedundantQuantifiers()) {
  			setErrors("Redundant quantifiers.");
  			return false;
@@ -78,7 +78,8 @@ public class QfWffChecker extends WffChecker {
 	// Super basic test
 	public static void main(String[] args) {
 //		QfWffChecker qfwc = new QfWffChecker("-((∀x)((∃y)(-Fxy)))");
-		QfWffChecker qfwc = new QfWffChecker("(∀x)[Hx.(∃y)(Fy.Gxy).(∃y)(Iy.Gxy)->(∃y)((Fy v Iy).Gyx)]");
+//		QfWffChecker qfwc = new QfWffChecker("(∀x)[Hx.(∃y)(Fy.Gxy).(∃y)(Iy.Gxy)->(∃y)((Fy v Iy).Gyx)]");
+		QfWffChecker qfwc = new QfWffChecker("(∀x)Fx . Gx → (∃y)Hy");
 		System.out.println(qfwc.isWff());
 		qfwc.guiTree();
 		System.out.println(qfwc.getErrors());

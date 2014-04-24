@@ -41,8 +41,8 @@ public class TFButtonPanel extends ButtonPanel {
 		JPanel connectives = new JPanel();
 		connectives.setLayout(new GridLayout(5, 1));
 		addButton("-", "negation", connectives, new InsertAction("-"));
-		addButton(".", "and", connectives, new InsertAction("."));
-		addButton("⋁", "or", connectives, new InsertAction("⋁"));
+		addButton(".", "conjunction", connectives, new InsertAction("."));
+		addButton("⋁", "disjunction", connectives, new InsertAction("⋁"));
 		addButton("→", "conditional", connectives, new InsertAction("→"));
 		addButton("↔", "biconditional", connectives, new InsertAction("↔"));
 		buttons.add(connectives);
