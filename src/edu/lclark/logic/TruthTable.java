@@ -50,6 +50,7 @@ public class TruthTable {
 	public TruthTableColumn getColumn(int col) {
 		return columns.get(col);
 	}
+	
 
 	/** Returns the number of columns in the truth table. */
 	public int getNumColumns() {
@@ -79,7 +80,7 @@ public class TruthTable {
 	    return true;
 	}
 	
-	/** Removes a column to the right side of the truth table. */
+	/** Removes the specified column. */
     public void removeColumn(TruthTableColumn column) {
         columns.remove(column);
     }

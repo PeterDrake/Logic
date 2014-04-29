@@ -257,9 +257,6 @@ public class TruthTableChecker {
 			if (!ops.contains(op)) {
 				continue;
 			}
-			
-			System.out.println(op);
-			
 			String[] subFormula = formula.split(Pattern.quote(op));
 			String rightSubFormula = combineStrings(subFormula, op);
 			if (op.equals("-") || op.equals("¬") || op.equals("~")) {

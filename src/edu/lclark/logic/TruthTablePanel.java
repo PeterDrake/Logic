@@ -24,6 +24,8 @@ public class TruthTablePanel extends JPanel {
 	/** Height, in pixels, of each 'cell' in the truth table grid */
 	private static final int CELL_HEIGHT = 20;
 
+	private TruthTableGUI gui;
+	
 	/** The underlying model for the truth table */
 	private TruthTable truthTable;
 
@@ -45,8 +47,9 @@ public class TruthTablePanel extends JPanel {
 
 	private final ButtonPanel buttons;
 
-	public TruthTablePanel(final ButtonPanel buttons) {
-		this.buttons = buttons;
+	public TruthTablePanel(final TruthTableGUI gui) {
+		this.gui = gui;
+		this.buttons = gui.getButtons();
 		String formula = buttons.getText();
 		setLayout(new FlowLayout(FlowLayout.LEFT));
 		truthTable = new TruthTable(formula);
@@ -132,8 +135,15 @@ public class TruthTablePanel extends JPanel {
 			delete.setToolTipText("Delete the above colum");
 			delete.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					// TODO Remove column
-					System.out.println("Column " + c + " deleted.");
+					remove(panel);
+					panel = new JPanel();
+					truthTable.removeColumn(truthTable.getColumn(c));
+					int numRows = truthTable.getNumRows();
+					panel.setLayout(new GridLayout(numRows + 2, truthTable.getNumColumns()));
+					fillInTruthTable();
+					add(panel);
+					gui.pack();
+					repaint();
 				}
 			});
 			panel.add(delete);
