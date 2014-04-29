@@ -259,6 +259,8 @@ public class TruthTableChecker {
 			}
 			String[] subFormula = formula.split(Pattern.quote(op));
 			String rightSubFormula = combineStrings(subFormula, op);
+			System.out.println(subFormula[0]);
+			System.out.println(rightSubFormula);
 			if (op.equals("-") || op.equals("¬") || op.equals("~")) {
 				return negation(evaluateFormula(subFormula[1]));
 			} else if (op.equals("→") || op.equals("->")) {
@@ -275,6 +277,7 @@ public class TruthTableChecker {
 						evaluateFormula(rightSubFormula));
 			}
 		}
+		System.out.println("hello");
 		return null;
 	}
 

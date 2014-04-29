@@ -2,6 +2,8 @@ package edu.lclark.logic;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter;
@@ -19,9 +21,12 @@ public class TruthTableGUI extends JFrame {
 	private Highlighter hilit;
 	private Highlighter.HighlightPainter painter;
 	private TruthTablePanel truthTablePanel;
+	private SubmitAction action;
 
 	public TruthTableGUI(String[] symbols) {
-		buttons = new TFButtonPanel(new SubmitAction(this), symbols);
+		action = new SubmitAction(this);
+		buttons = new TFButtonPanel(action, symbols);
+
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		panel.add(buttons);
@@ -46,7 +51,17 @@ public class TruthTableGUI extends JFrame {
 				addTargetFormulaItem.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent event) {
-						newWindow(symbols);
+						gui.action.setIsTargetFormula(true);
+						if (gui.truthTablePanel == null) {
+							String error = "Add a target formula first";
+							gui.buttons.setErrorText(error);
+							gui.highlight(error);
+							return;
+						}
+						gui.buttons.getTextField().setText(
+								"Type a scratchwork formula");
+						gui.truthTablePanel.addColumn();
+						gui.pack();
 					}
 				});
 				fileMenu.add(addTargetFormulaItem);
@@ -55,6 +70,7 @@ public class TruthTableGUI extends JFrame {
 				addColumnItem.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent event) {
+						gui.action.setIsTargetFormula(false);
 						if (gui.truthTablePanel == null) {
 							String error = "Add a target formula first";
 							gui.buttons.setErrorText(error);
@@ -102,6 +118,17 @@ public class TruthTableGUI extends JFrame {
 
 		private TruthTableGUI gui;
 		private boolean firstClick;
+		private boolean isTargetFormula;
+
+		public boolean isTargetFormula() {
+			return isTargetFormula;
+		}
+
+		public void setIsTargetFormula(boolean isTargetFormula) {
+			// System.out.println("Setting isTargetFormula to " +
+			// isTargetFormula);
+			this.isTargetFormula = isTargetFormula;
+		}
 
 		SubmitAction(TruthTableGUI gui) {
 			this.gui = gui;
@@ -129,26 +156,32 @@ public class TruthTableGUI extends JFrame {
 			if (tfWffChecker.isWff()) {
 				if (!firstClick) {
 					int numCols = panel.getTruthTable().getNumRows();
-					TruthTableChecker checker = panel.getChecker();
-					if (!checker.isSubFormula(formula)) {
+					ArrayList<TruthTableChecker> checkers = panel.getCheckers();
+					boolean foundChecker = false;
+					for (TruthTableChecker checker : checkers) {
+						if (checker.isSubFormula(formula)
+								|| gui.action.isTargetFormula()) {
+							foundChecker = true;
+							if (!panel.addColumn(new TruthTableColumn(formula,
+									new boolean[numCols]), gui.action
+									.isTargetFormula())) {
+								String error = "Redundant column";
+								gui.buttons.setErrorText(error);
+								gui.highlight(error);
+							} else {
+								gui.buttons.clearText();
+								gui.buttons.setErrorText("");
+								gui.buttons.setVisible(false);
+								gui.buttons.setFirstPress(true);
+							}
+							gui.pack();
+						}
+					}
+					if (!foundChecker) {
 						String error = "Illegal column: " + formula
-								+ " is not a sub-formula of "
-								+ checker.getFormula();
+								+ " is not a valid sub-formula";
 						gui.buttons.setErrorText(error);
 						gui.highlight(error);
-					} else {
-						if (!panel.addColumn(new TruthTableColumn(formula,
-								new boolean[numCols]))) {
-							String error = "Redundant column";
-							gui.buttons.setErrorText(error);
-							gui.highlight(error);
-						} else {
-							gui.buttons.clearText();
-							gui.buttons.setErrorText("");
-							gui.buttons.setVisible(false);
-							gui.buttons.setFirstPress(true);
-						}
-						gui.pack();
 					}
 				}
 			} else {

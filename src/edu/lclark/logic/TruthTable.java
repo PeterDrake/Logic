@@ -6,7 +6,7 @@ import java.util.List;
 /** A truth table model for a well-formed formula */
 public class TruthTable {
 	/** The well-formed formula this truth table represents */
-	private final String formula;
+	private final ArrayList<String> formulae = new ArrayList<String>();
 
 	/** The letters found in the formula */
 	private final char[] letters = new char[5];
@@ -23,7 +23,7 @@ public class TruthTable {
 
 	/** Constructor; takes target formula */
 	public TruthTable(String formula) {
-		this.formula = formula;
+		this.formulae.add(formula);
 		countLetters();
 		initTable();
 	}
@@ -50,7 +50,6 @@ public class TruthTable {
 	public TruthTableColumn getColumn(int col) {
 		return columns.get(col);
 	}
-	
 
 	/** Returns the number of columns in the truth table. */
 	public int getNumColumns() {
@@ -58,57 +57,64 @@ public class TruthTable {
 	}
 
 	/** Adds a column to the right side of the truth table. */
-	public boolean addColumn(TruthTableColumn column) {
-	    String newFormula = column.getLabel();
-	    for (int index = 0; index < columns.size(); index++) {
-	        TruthTableColumn col = columns.get(index);
-	        String currentFormula = col.getLabel();
-	        
-	        char[] letters = getLetters(currentFormula);
-	        TruthTableChecker checker = new TruthTableChecker(currentFormula, letters);
-	        
-	        if (checker.isSubFormula(currentFormula, newFormula)) {
-	            if (checker.removeParentheses(currentFormula).equals(checker.removeParentheses(newFormula))) {
-	                // TODO: show an error message
-	                return false;
-	            }
-	            columns.add(index, column);
-	            return true;
-	        }
-	    }
-	    columns.add(column);
-	    return true;
+	public boolean addColumn(TruthTableColumn column, boolean isTargetFormula) {
+		System.out.println("TruthTable.addColumn is passed a " + isTargetFormula + " isTargetFormula.");
+		String newFormula = column.getLabel();
+		for (int index = 0; index < columns.size(); index++) {
+			TruthTableColumn col = columns.get(index);
+			String currentFormula = col.getLabel();
+
+			char[] letters = getLetters(currentFormula);
+			TruthTableChecker checker = new TruthTableChecker(currentFormula,
+					letters);
+
+			if (!isTargetFormula
+					&& checker.isSubFormula(currentFormula, newFormula)) {
+				if (checker.removeParentheses(currentFormula).equals(
+						checker.removeParentheses(newFormula))) {
+					// TODO: show an error message
+					return false;
+				}
+				columns.add(index, column);
+				return true;
+			}
+		}
+		columns.add(column);
+		return true;
 	}
-	
+
 	/** Removes the specified column. */
-    public void removeColumn(TruthTableColumn column) {
-        columns.remove(column);
-    }
-	
+	public void removeColumn(TruthTableColumn column) {
+		columns.remove(column);
+	}
+
 	/**
 	 * Updates letter and numLetters to reflect how many letters are in target
 	 * formula
 	 */
 	private void countLetters() {
 		for (char letter : "pqrst".toCharArray()) {
-			if (formula.indexOf(letter) >= 0) {
-				letters[numLetters++] = letter;
+			for (String formula : formulae) {
+				if (formula.indexOf(letter) >= 0) {
+					letters[numLetters++] = letter;
+					break;
+				}
 			}
 		}
 	}
-	
-	 /**
-     * Returns a list of letters in the given formula
-     */
-    private static char[] getLetters(String formula) {
-        String result = "";
-        for (char letter : "pqrst".toCharArray()) {
-            if (formula.indexOf(letter) >= 0) {
-                result += letter;
-            }
-        }
-        return result.toCharArray();
-    }
+
+	/**
+	 * Returns a list of letters in the given formula
+	 */
+	private static char[] getLetters(String formula) {
+		String result = "";
+		for (char letter : "pqrst".toCharArray()) {
+			if (formula.indexOf(letter) >= 0) {
+				result += letter;
+			}
+		}
+		return result.toCharArray();
+	}
 
 	/** Initializes truth-table with each truth-value combination of the letters */
 	private void initTable() {
@@ -136,7 +142,7 @@ public class TruthTable {
 
 	public boolean getValue(int row, int column) {
 		return getColumn(column).getValue(row);
-//		return truthValues[row][column];
+		// return truthValues[row][column];
 	}
 
 	public void addTargetFormula() {
@@ -146,8 +152,12 @@ public class TruthTable {
 	public void checkFragment() {
 		// TODO
 	}
-	
-	public String getTargetFormula() {
-		return formula;
+
+	public ArrayList<String> getTargetFormulae() {
+		return formulae;
+	}
+
+	public String getTargetFormula(int i) {
+		return formulae.get(i);
 	}
 }
