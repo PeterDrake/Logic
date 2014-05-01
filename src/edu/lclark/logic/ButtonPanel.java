@@ -16,7 +16,6 @@ public class ButtonPanel extends JPanel {
 	 * The text field that buttons output to
 	 */
 
-	// TODO
 	private static final long serialVersionUID = 1L;
 
 	private JTextField textField;
@@ -25,9 +24,9 @@ public class ButtonPanel extends JPanel {
 	private JTextField errorField;
 
 	private boolean firstPress = true;
-	
-	public void setFirstPress(boolean value){
-		firstPress = value ;
+
+	public void setFirstPress(boolean value) {
+		firstPress = value;
 	}
 
 	public void initializeEnterKey(Action submitAction) {
@@ -111,7 +110,6 @@ public class ButtonPanel extends JPanel {
 						errorPositionInLine + 1, painter);
 			}
 		} catch (BadLocationException e) {
-			// Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

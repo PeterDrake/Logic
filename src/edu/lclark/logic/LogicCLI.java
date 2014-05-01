@@ -6,19 +6,19 @@ import asg.cliche.Command;
 import asg.cliche.ShellFactory;
 
 public class LogicCLI {
-		
+
 	@Command
 	public void tfwff(String s) {
 		TfWffChecker tfwc = new TfWffChecker(s);
 		System.out.println(tfwc.isWff());
 	}
-	
+
 	@Command
 	public void tftree(String s) {
 		TfWffChecker tfwc = new TfWffChecker(s);
 		tfwc.printTree();
 	}
-	
+
 	@Command
 	public void tfgui(String s) {
 		TfWffChecker tfwc = new TfWffChecker(s);
@@ -44,7 +44,7 @@ public class LogicCLI {
 	}
 
 	public LogicCLI() {
-		
+
 	}
 
 	public static void main(String[] args) throws IOException {

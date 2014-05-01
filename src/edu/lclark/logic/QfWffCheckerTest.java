@@ -144,5 +144,5 @@ public class QfWffCheckerTest {
 		wc = new QfWffChecker("Vx (Fx . Vx Fx)");
 		assertFalse(wc.isWff());
 	}
-	
+
 }
