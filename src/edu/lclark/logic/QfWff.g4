@@ -14,10 +14,10 @@ biconditional : disjunction (BICONDITIONAL disjunction)* | leftbiconditional;
 leftconditional : leftdisjunction (CONDITIONAL disjunction)* | (LEFTPAREN conditional RIGHTPAREN);
 conditional : disjunction (CONDITIONAL disjunction)* | leftconditional;
 
-leftdisjunction : leftconjunction (INCLUSIVE_OR disjunction)* | (LEFTPAREN disjunction RIGHTPAREN) | (quantifier leftdisjunction);
+leftdisjunction : leftconjunction (INCLUSIVE_OR disjunction)* | (LEFTPAREN disjunction RIGHTPAREN) | (quantifier leftdisjunction) ;
 disjunction : conjunction (INCLUSIVE_OR conjunction)* | leftdisjunction;
 
-leftconjunction : leftnegation (CONJUNCTION conjunction)* | (LEFTPAREN conjunction RIGHTPAREN) | (quantifier leftconjunction);
+leftconjunction : leftnegation (CONJUNCTION conjunction)* | (LEFTPAREN conjunction RIGHTPAREN) | (quantifier leftconjunction) ;
 conjunction : negation (CONJUNCTION negation)* | leftconjunction;
 
 leftnegation : NEGATION? (predicate | atom | (quantifier leftnegation) | (LEFTPAREN form RIGHTPAREN) ) | (LEFTPAREN negation RIGHTPAREN);
@@ -35,7 +35,7 @@ preposition : PREPOSITIONS('\'')? ;
  */
 
 FORALL: 'V' | '∀' ;
-EXISTS: '#' | '∃' | '∃' ;
+EXISTS: '#' | '∃' ;
 LEFTPAREN: '(' | '[' ;
 RIGHTPAREN: ')' | ']' ;
 BICONDITIONAL: '↔' | '<->' | '≡';

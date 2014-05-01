@@ -1,5 +1,6 @@
 package edu.lclark.logic;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Stack;
 
@@ -13,8 +14,12 @@ public class QfWffTreeListener extends QfWffBaseListener {
 	/** Quantified variables seen so far. */
 	private HashSet<String> currentQuantifiedVariables;
 	
-	private Stack<HashSet> formStack;
-	
+	private ArrayList<Character> currentLeftNegations;
+		
+	public ArrayList<Character> getCurrentLeftNegations() {
+		return currentLeftNegations;
+	}
+
 	/** True when, while walking the tree, we are looking for a variable within a quantifier. */
 	private boolean lookingForVariable;
 	
@@ -24,9 +29,8 @@ public class QfWffTreeListener extends QfWffBaseListener {
 	public QfWffTreeListener(StringBox box) {
 		this.box = box;
 		currentQuantifiedVariables = new HashSet<String>();
-		
-		formStack = new Stack<HashSet>();
-		
+		currentLeftNegations = new ArrayList<Character>();
+				
 //		System.out.println("Creating a QfTreeListener");
 	}
 
@@ -47,22 +51,24 @@ public class QfWffTreeListener extends QfWffBaseListener {
 		if (lookingForVariable) {
 			String variable = ctx.getText();
 //			System.out.println("Variable being quantified: " + variable);
-			if (currentQuantifiedVariables.contains(variable)) {
-				box.setContents("Redundant quantification: " + variable);
-			} else {
-				currentQuantifiedVariables.add(variable);
-			}
-		}		
+			currentQuantifiedVariables.add(variable);
+			currentLeftNegations.add(variable.toCharArray()[0]);
+		}	
+//		System.out.println("Current Left Negations: " + currentLeftNegations);
 	}
 	
 	@Override
-	public void enterForm(FormContext ctx) {
-		formStack.push(currentQuantifiedVariables);
+	public void enterLeftnegation(LeftnegationContext ctx) {
+//		System.out.println("Entering leftnegation: " + ctx.getText());
+		currentLeftNegations.add('(');
+//		System.out.println(currentLeftNegations);
 	}
 	
 	@Override
-	public void exitForm(FormContext ctx) {
-		formStack.pop();
+	public void exitLeftnegation(LeftnegationContext ctx) {
+//		System.out.println("Exiting leftnegation: " + ctx.getText());
+		currentLeftNegations.add(')');
+//		System.out.println(currentLeftNegations);
 	}
 	
 	public boolean parenthesesNotMatched() {
