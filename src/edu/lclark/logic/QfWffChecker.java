@@ -79,20 +79,20 @@ public class QfWffChecker extends WffChecker {
 		QfWffTreeListener listener = new QfWffTreeListener(box);
 		new ParseTreeWalker().walk(listener, tree);
 		ArrayList<Character> currentLeftNegations = listener.getCurrentLeftNegations();
-		System.out.println(currentLeftNegations.toString());
+//		System.out.println(currentLeftNegations.toString());
 		for (char symbol : currentLeftNegations) {
 			if (symbol == '(') {
 				formula.add(symbol);
-				System.out.println("symbol = ( " + formula.toString());
+//				System.out.println("symbol = ( " + formula.toString());
 			}
 			if (symbol == ')') {
 				if (formula.getLast() != '(' && !formula.isEmpty()) {
 					formula.removeLast();
-					System.out.println("symbol = ) & r " + formula.toString());
+//					System.out.println("symbol = ) & r " + formula.toString());
 
 				}
 				formula.removeLast();	
-				System.out.println("symbol = ) " + formula.toString());
+//				System.out.println("symbol = ) " + formula.toString());
 
 			}
 			if (symbol != '(' && symbol != ')') {
@@ -100,7 +100,7 @@ public class QfWffChecker extends WffChecker {
 					return true;
 				}
 				formula.add(symbol);
-				System.out.println("symbol = " + symbol + " " + formula.toString());
+//				System.out.println("symbol = " + symbol + " " + formula.toString());
 			}
 		}
 		return false;
