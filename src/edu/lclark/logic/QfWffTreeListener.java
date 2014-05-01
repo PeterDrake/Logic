@@ -8,9 +8,6 @@ import edu.lclark.logic.QfWffParser.*;
 
 public class QfWffTreeListener extends QfWffBaseListener {
 	
-	/** A place to leave error messages. */
-	private StringBox box;
-	
 	/** Quantified variables seen so far. */
 	private HashSet<String> currentQuantifiedVariables;
 	
@@ -26,8 +23,7 @@ public class QfWffTreeListener extends QfWffBaseListener {
 	/** A counter that keeps track of the amount of open pairs of parentheses */
 	private int parenthesesCounter = 0;
 	
-	public QfWffTreeListener(StringBox box) {
-		this.box = box;
+	public QfWffTreeListener() {
 		currentQuantifiedVariables = new HashSet<String>();
 		currentLeftNegations = new ArrayList<Character>();
 				
@@ -69,16 +65,6 @@ public class QfWffTreeListener extends QfWffBaseListener {
 //		System.out.println("Exiting leftnegation: " + ctx.getText());
 		currentLeftNegations.add(')');
 //		System.out.println(currentLeftNegations);
-	}
-	
-	public boolean parenthesesNotMatched() {
-//		System.out.println(parenthesesCounter);
-		if (parenthesesCounter != 0) {
-			box.setContents("Parentheses mismatched.");
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 }

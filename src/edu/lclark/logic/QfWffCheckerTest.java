@@ -148,10 +148,10 @@ public class QfWffCheckerTest {
 		assertFalse(wc.isWff());
 	}
 	
-//	@Test
-//	public void testRedundantQuantification4() {
-//		wc = new QfWffChecker("#x (Fx . #x Fx)");
-////		System.out.println(wc.printTree());
-//		assertTrue(wc.isWff());
-//	}
+	@Test
+	public void testRedundantQuantification4() {
+		wc = new QfWffChecker("#x (Fx . #x Fx)");
+//		System.out.println(wc.printTree());
+		assertFalse(wc.isWff());
+	}
 }
