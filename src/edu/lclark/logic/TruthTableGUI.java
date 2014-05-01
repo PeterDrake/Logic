@@ -36,7 +36,6 @@ public class TruthTableGUI extends JFrame {
 	public static void newWindow(final String[] symbols) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				// System.setProperty("apple.laf.useScreenMenuBar", "true");
 				final TruthTableGUI gui = new TruthTableGUI(symbols);
 				gui.setTitle("Truth Table Builder");
 				JMenuBar menuBar = new JMenuBar();
@@ -79,7 +78,6 @@ public class TruthTableGUI extends JFrame {
 				menuBar.add(fileMenu);
 				gui.setJMenuBar(menuBar);
 				gui.setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-				// gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				gui.setVisible(true);
 			}
 		});
@@ -92,7 +90,7 @@ public class TruthTableGUI extends JFrame {
 		try {
 			hilit.addHighlight(0, error.length(), painter);
 		} catch (BadLocationException e) {
-			// TODO Auto-generated catch block
+			// Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

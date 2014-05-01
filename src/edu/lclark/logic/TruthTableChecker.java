@@ -10,8 +10,6 @@ public class TruthTableChecker {
 	private boolean[][] truthValues;
 	private char[] letters;
 
-	// private TruthTable truthTable;
-
 	public TruthTableChecker(String formula, boolean[][] truthValues,
 			char[] letters) {
 		this.setFormula(formula);

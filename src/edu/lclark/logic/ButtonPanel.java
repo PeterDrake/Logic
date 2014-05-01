@@ -111,7 +111,7 @@ public class ButtonPanel extends JPanel {
 						errorPositionInLine + 1, painter);
 			}
 		} catch (BadLocationException e) {
-			// TODO Auto-generated catch block
+			// Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

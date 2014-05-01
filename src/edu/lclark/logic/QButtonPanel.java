@@ -19,10 +19,6 @@ public class QButtonPanel extends ButtonPanel {
 		// A panel that all the buttons, but the submit button are added to
 		JPanel buttons = new JPanel();
 		buttons.setLayout(new FlowLayout());
-		
-//		for (String symbol : symbols) {
-//			System.out.println(symbol);
-//		}
 
 		// Makes a panel with all the connectives
 		JPanel connectives = new JPanel();
@@ -49,7 +45,7 @@ public class QButtonPanel extends ButtonPanel {
 				new InsertAction("t"));
 		buttons.add(sentenceLetters);
 
-		// ///////////
+		//////////////
 		JPanel lowerCase = new JPanel();
 		lowerCase.setLayout(new GridLayout(5, 1));
 
@@ -74,7 +70,7 @@ public class QButtonPanel extends ButtonPanel {
 		JPanel misc = new JPanel();
 		misc.setLayout(new GridLayout(6, 1));
 
-		// ///////////////
+		//////////////////
 		JPanel capSentenceLetters = new JPanel();
 		capSentenceLetters.setLayout(new GridLayout(6, 1));
 

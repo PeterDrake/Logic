@@ -30,19 +30,15 @@ public class QfWffTreeListener extends QfWffBaseListener {
 		this.box = box;
 		currentQuantifiedVariables = new HashSet<String>();
 		currentLeftNegations = new ArrayList<Character>();
-				
-//		System.out.println("Creating a QfTreeListener");
 	}
 
 	@Override
 	public void enterQuantifier(QuantifierContext ctx) {
-//		System.out.println("Entering quantifier: " + ctx.getText());
 		lookingForVariable = true;
 	}
 	
 	@Override
 	public void exitQuantifier(QuantifierContext ctx) {
-//		System.out.println("Exiting quantifier: " + ctx.getText());
 		lookingForVariable = false;
 	}
 
@@ -50,29 +46,22 @@ public class QfWffTreeListener extends QfWffBaseListener {
 	public void enterVariable(VariableContext ctx) {
 		if (lookingForVariable) {
 			String variable = ctx.getText();
-//			System.out.println("Variable being quantified: " + variable);
 			currentQuantifiedVariables.add(variable);
 			currentLeftNegations.add(variable.toCharArray()[0]);
-		}	
-//		System.out.println("Current Left Negations: " + currentLeftNegations);
+		}
 	}
 	
 	@Override
 	public void enterLeftnegation(LeftnegationContext ctx) {
-//		System.out.println("Entering leftnegation: " + ctx.getText());
 		currentLeftNegations.add('(');
-//		System.out.println(currentLeftNegations);
 	}
 	
 	@Override
 	public void exitLeftnegation(LeftnegationContext ctx) {
-//		System.out.println("Exiting leftnegation: " + ctx.getText());
 		currentLeftNegations.add(')');
-//		System.out.println(currentLeftNegations);
 	}
 	
 	public boolean parenthesesNotMatched() {
-//		System.out.println(parenthesesCounter);
 		if (parenthesesCounter != 0) {
 			box.setContents("Parentheses mismatched.");
 			return true;

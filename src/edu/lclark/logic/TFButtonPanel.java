@@ -12,7 +12,6 @@ public class TFButtonPanel extends ButtonPanel {
 	 * Other: ', ⨆
 	 */
 
-	// TODO
 	private static final long serialVersionUID = 1L;
 
 	public TFButtonPanel(Action submitAction, String[] symbols) {

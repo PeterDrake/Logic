@@ -136,15 +136,14 @@ public class TruthTable {
 
 	public boolean getValue(int row, int column) {
 		return getColumn(column).getValue(row);
-//		return truthValues[row][column];
 	}
 
 	public void addTargetFormula() {
-		// TODO
+		// TODO Why was this added?
 	}
 
 	public void checkFragment() {
-		// TODO
+		// TODO Why was this added?
 	}
 	
 	public String getTargetFormula() {

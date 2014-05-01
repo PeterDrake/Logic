@@ -46,8 +46,6 @@ public class PreferencePane extends JFrame {
     }
     
     public PreferencePane() {
-    	// TODO add default symbols
-    	// TODO add submit and/or save button for preferences
     	symbols = defaults;
     	
     	JPanel panel = new JPanel();
@@ -86,7 +84,6 @@ public class PreferencePane extends JFrame {
 					c.setSelected(true);;
 				}
 			}
-//			System.out.println(symbols[row]);
 		}
     	
 		this.pack();
@@ -119,7 +116,6 @@ public class PreferencePane extends JFrame {
 						symbols[row] = c.getText();
 					}
 				}
-//				System.out.println(symbols[row]);
 			}
 			hideWindow();
 		}

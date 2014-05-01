@@ -39,39 +39,14 @@ public class QfWffChecker extends WffChecker {
 			return false;
 		}
 
-		// a little awkward, but there is one weird case where paren checking is messed up
-//		if (getErrors() != "The entered formula is a wff.") {
-//			return false;
-//		}
  		if (containsRedundantQuantifiers()) {
  			setErrors("Redundant quantifiers.");
  			return false;
  		}
-//		if (parenthesesNotMatched()) {
-//			setErrors("Parentheses mismatched.");
-//			return false;
-//		}
 		return true;
 	}
 	
 	/** Returns true iff the same variable is quantified more than once. */
-//	public boolean containsRedundantQuantifiers() {
-//		String formula = text;
-//		String quantifiers = "∀ V ∃ #";
-//		char variable;
-//		int positionAt=0;
-//		if (formula.contains("∀") || formula.contains("V") || formula.contains("∃") || formula.contains("#")) {
-//			for (int i=0; !quantifiers.contains(formula.charAt(i) + ""); i++){
-//				positionAt=i;
-//				}
-//			variable = formula.charAt(positionAt+1);
-//			for (int i=positionAt+1; i<formula.length(); i++) {
-//				
-//			}
-//			
-//		}
-//		return false;
-//	}
 	public boolean containsRedundantQuantifiers() {	
 		LinkedList<Character> formula = new LinkedList<Character>();
 		StringBox box = new StringBox();
@@ -79,20 +54,16 @@ public class QfWffChecker extends WffChecker {
 		QfWffTreeListener listener = new QfWffTreeListener(box);
 		new ParseTreeWalker().walk(listener, tree);
 		ArrayList<Character> currentLeftNegations = listener.getCurrentLeftNegations();
-//		System.out.println(currentLeftNegations.toString());
 		for (char symbol : currentLeftNegations) {
 			if (symbol == '(') {
 				formula.add(symbol);
-//				System.out.println("symbol = ( " + formula.toString());
 			}
 			if (symbol == ')') {
 				if (formula.getLast() != '(' && !formula.isEmpty()) {
 					formula.removeLast();
-//					System.out.println("symbol = ) & r " + formula.toString());
 
 				}
-				formula.removeLast();	
-//				System.out.println("symbol = ) " + formula.toString());
+				formula.removeLast();
 
 			}
 			if (symbol != '(' && symbol != ')') {
@@ -100,27 +71,10 @@ public class QfWffChecker extends WffChecker {
 					return true;
 				}
 				formula.add(symbol);
-//				System.out.println("symbol = " + symbol + " " + formula.toString());
 			}
 		}
 		return false;
 	}
-	
-//	/** Returns true iff the there are mismatched parentheses. */
-//	public boolean parenthesesNotMatched() {		
-//		QfWffParser parser = new QfWffParser(new CommonTokenStream(new QfWffLexer(new ANTLRInputStream(text))));
-//		parser.removeErrorListeners();
-//		parser.setErrorHandler(new DefaultErrorStrategy());
-//		
-//		ParseTree tree = parser.formula();
-////		System.out.println(tree.getText());
-////		ParseTree tree = ((QfWffParser) getParser()).formula();
-//		StringBox box = new StringBox();
-//		QfWffTreeListener treeListener = new QfWffTreeListener(box);
-//		new ParseTreeWalker().walk(treeListener, tree);
-////		System.out.println(treeListener.parenthesesNotMatched());
-//		return box.isSet();
-//	}
 
 	// Super basic test
 	public static void main(String[] args) {

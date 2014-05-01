@@ -4,8 +4,6 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-//import java.awt.Graphics2D;
-
 /** A JPanel that displays a truth-table */
 
 public class TruthTablePanel extends JPanel {
@@ -32,19 +30,11 @@ public class TruthTablePanel extends JPanel {
 	/** The panel containing the grid of truth-table columns */
 	private JPanel panel = new JPanel();
 
-	/** The button that adds a new column */
-	// private final JButton addColumnButton;
-
 	/** The truth-table checker that checks column */
 	private TruthTableChecker checker;
 
-	/** The label for the target formula */
-	// private JLabel targetFormulaLabel;
-
 	private JButton[][] jbuttons;
-
-	// private final JButton checkValuesButton;
-
+	
 	private final ButtonPanel buttons;
 
 	public TruthTablePanel(final TruthTableGUI gui) {
@@ -192,10 +182,6 @@ public class TruthTablePanel extends JPanel {
 		// Replaces existing panel with new panel that has 1 extra added column:
 		remove(panel);
 		panel = new JPanel();
-		// boolean[] correctValues = checker.evaluateFormula(column.getLabel());
-		// for (int row = 0; row < correctValues.length; row++) {
-		// column.setValue(row, correctValues[row]);
-		// }
 		boolean success = truthTable.addColumn(column);
 		panel.setLayout(new GridLayout(numRows + 2, truthTable.getNumColumns()));
 		fillInTruthTable();
@@ -209,8 +195,6 @@ public class TruthTablePanel extends JPanel {
 	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		// Graphics2D g2 = (Graphics2D) g;
-		// g2.draw(new Line2D.Double(x1,y2, x2,y2);
 	}
 
 	private class AddColumnButton extends AbstractAction {
