@@ -16,8 +16,10 @@ public class LogicTrainer extends JFrame {
     public static final int DEFAULT_HEIGHT = 100;
     public static final int GAP = 5;
     
+    /** The PreferencePane for LogicTrainer */
     private static PreferencePane preferences;
     
+    /** Initializes the LogicTrainer GUI */
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {

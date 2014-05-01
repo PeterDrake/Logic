@@ -5,6 +5,11 @@ import org.antlr.v4.runtime.CommonTokenStream;
 
 public class TfWffChecker extends WffChecker {
 	
+	/**
+	 * Constructor for TfWffChecker.
+	 * Sets a bunch of parameters defined in WffChecker.
+	 * @param is
+	 */
 	public TfWffChecker(String is) {
 		setInput(new ANTLRInputStream(is));
 		setLexer(new TfWffLexer(getInput())); 
@@ -15,6 +20,10 @@ public class TfWffChecker extends WffChecker {
 		setWff(checkWff());
 	}
 	
+	/**
+	 * Checks whether the entered formula
+	 * is a wff. Return based on that belief. 
+	 */
 	public boolean checkWff() {
 		// There will be a RuntimeException if there is invalid syntax, so we catch it 
 		try {
@@ -31,13 +40,4 @@ public class TfWffChecker extends WffChecker {
 
 		return true;
 	}
-	
-	// Super basic test
-	public static void main(String[] args) {
-		TfWffChecker tfwc = new TfWffChecker("p.-q");
-		System.out.println(tfwc.isWff());
-		System.out.println(tfwc.getErrors());
-	}
-
-	
 }

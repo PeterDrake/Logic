@@ -2,11 +2,14 @@ package edu.lclark.logic;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Enumeration;
 
 import javax.swing.*;
 
-
+/**
+ * PreferencePane defines symbols to be used
+ * throughout LogicTrainer
+ *
+ */
 public class PreferencePane extends JFrame {
 	private static final long serialVersionUID = 1L;
 
@@ -15,8 +18,15 @@ public class PreferencePane extends JFrame {
     
 	private final String[] defaults = new String[] {"↔", "→", ".", "⋁", "-"};
     private String[] symbols;
+    
+    /** This is a little hacky */
     private JRadioButton[][] buttons = new JRadioButton[5][];
         
+    /**
+     * Function to make row creation easy
+     * @param title
+     * @param panel
+     */
     private JPanel createRow(String title, JPanel panel) {
 		JPanel newPanel = new JPanel(new GridLayout(1, 2));
 		newPanel.add(new JLabel(title, JLabel.CENTER), 0);
@@ -24,6 +34,11 @@ public class PreferencePane extends JFrame {
     	return newPanel;
     }
     
+    /**
+     * Takes an array of buttons, returns
+     * a JPanel with them in it
+     * @param buttons
+     */
     private JPanel makeButtonPanel(JRadioButton[] buttons) {
     	JPanel newPanel = new JPanel(new GridLayout(1, buttons.length));
     	for(JRadioButton button : buttons) {
@@ -32,6 +47,13 @@ public class PreferencePane extends JFrame {
     	return newPanel;
     }
     
+    /**
+     * Makes buttons for a specific row with
+     * the names specified in the supplied array
+     * A little bit hacky (shouldn't need to take a row)
+     * @param strings
+     * @param row
+     */
     private JRadioButton[] makeButtons(String[] strings, int row) {
     	ButtonGroup group = new ButtonGroup();
     	JRadioButton[] buttons = new JRadioButton[strings.length];
@@ -45,6 +67,7 @@ public class PreferencePane extends JFrame {
     	return buttons;
     }
     
+    /** Initializes a PreferencePane with buttons to select symbols */
     public PreferencePane() {
     	// TODO add default symbols
     	// TODO add submit and/or save button for preferences
@@ -78,6 +101,7 @@ public class PreferencePane extends JFrame {
     	this.setTitle("Preferences");
     }
     
+    /** Opens the PreferencePane window */
     public void newWindow() {    
     	
 		for (int row = 0; row < buttons.length; row++) {
@@ -86,18 +110,19 @@ public class PreferencePane extends JFrame {
 					c.setSelected(true);;
 				}
 			}
-//			System.out.println(symbols[row]);
+			//System.out.println(symbols[row]);
 		}
     	
 		this.pack();
 		this.setVisible(true);
     }
     
+    /** Hides the PreferencePane window */
     private void hideWindow() {
     	this.setVisible(false);
     }
     
-
+    /** Action for the Defaults button, makes all symbols defaults */
     private class DefaultsButtonAction extends AbstractAction {
 
     	private static final long serialVersionUID = 1L;
@@ -108,6 +133,7 @@ public class PreferencePane extends JFrame {
     	}
     }
     
+    /** Action for the Submit button, sets symbols to selected values */
 	private class SubmitButtonAction extends AbstractAction {
 		
 		private static final long serialVersionUID = 1L;
@@ -119,22 +145,17 @@ public class PreferencePane extends JFrame {
 						symbols[row] = c.getText();
 					}
 				}
-//				System.out.println(symbols[row]);
+				//System.out.println(symbols[row]);
 			}
 			hideWindow();
 		}
 	}
 
+	/**
+	 * Returns the array of selected symbols
+	 * @return symbols
+	 */
 	public String[] getSymbols() {
 		return symbols;
 	}
-    
-    public static void main(String[] args) {
-    	PreferencePane pp = new PreferencePane();
-    	String[] test = pp.getSymbols();
-    	for (String string : test) {
-    		System.out.println(string);
-    	}
-    	pp.newWindow();
-    }
 }
